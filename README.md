@@ -1,9 +1,6 @@
 # Password Toggle Bundle
 
-[![CI](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml)
-[![Latest Stable Version](https://poser.pugx.org/nowo-tech/password-toggle-bundle/v)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
-[![License](https://poser.pugx.org/nowo-tech/password-toggle-bundle/license)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
-[![PHP Version Require](https://poser.pugx.org/nowo-tech/password-toggle-bundle/require/php)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
+[![CI](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml) [![Latest Stable Version](https://poser.pugx.org/nowo-tech/password-toggle-bundle/v)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://poser.pugx.org/nowo-tech/password-toggle-bundle/license)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![PHP Version Require](https://poser.pugx.org/nowo-tech/password-toggle-bundle/require/php)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
 
 Symfony bundle providing a password form type with toggle visibility feature.
 
