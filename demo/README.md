@@ -10,6 +10,9 @@ This directory contains four demo projects demonstrating the usage of the Passwo
 - Tabler icons for the toggle button
 - Docker setup for easy development
 - Independent Docker containers for each demo
+- Symfony Web Profiler included for debugging (dev and test environments)
+- Properly configured nginx with correct PHP-FPM integration
+- Attribute-based routing configuration
 
 ## Demo Projects
 
@@ -219,6 +222,8 @@ Each demo includes:
 - **Docker Setup**: Complete Docker configuration with PHP-FPM and Nginx
 - **Dockerfile**: Custom PHP-FPM image with Composer pre-installed
 - **Test Suite**: Complete PHPUnit test suite to verify bundle integration
+- **Web Profiler**: Symfony Web Profiler bundle for debugging (enabled in dev and test environments)
+- **Proper Configuration**: All demos include correct nginx configuration, routing setup, and required dependencies
 
 ## Demo Structure
 

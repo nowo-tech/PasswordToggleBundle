@@ -141,6 +141,8 @@ Each demo is independent and includes:
 - Complete Docker setup with PHP-FPM and Nginx
 - Comprehensive test suite
 - Port configuration via `.env` file
+- Symfony Web Profiler for debugging (dev and test environments)
+- Properly configured routing with attribute-based routes
 
 ### Quick Start with Docker
 

@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - All demos now properly load routes from controller attributes
   - Web profiler bundle registered for `dev` and `test` environments in all demos
   - Consistent nginx configuration across all demo projects
+  - All `composer.lock` files generated and updated to ensure reproducible builds
 
 ## [1.1.0] - 2024-12-12
 
