@@ -1,0 +1,32 @@
+# Docker Compose configuration for running tests
+# Usage: docker-compose -f docker-compose.test.yml up -d
+# Or: docker-compose -f docker-compose.test.yml run --rm test composer test
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: password-toggle-bundle-test
+    working_dir: /app
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer/cache
+      - coverage-data:/app/coverage
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - XDEBUG_MODE=coverage
+    command: ["tail", "-f", "/dev/null"]
+    networks:
+      - password-toggle-bundle-test-network
+
+volumes:
+  composer-cache:
+    driver: local
+  coverage-data:
+    driver: local
+
+networks:
+  password-toggle-bundle-test-network:
+    driver: bridge
+

@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Nowo\PasswordToggleBundle\Form\Type\:
+    resource: '../../Form/Type/*'
+    tags: ['form.type']
+

@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+LICENSE
+docs/
+
+# Tests
+tests/
+phpunit.xml.dist
+coverage/
+coverage.xml
+
+# CI/CD
+.github/
+.phpunit.cache/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.php-cs-fixer.cache
+var/
+

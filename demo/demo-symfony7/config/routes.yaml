@@ -1,0 +1,5 @@
+demo_form:
+    path: /
+    controller: App\Controller\DemoController::form
+    methods: [GET, POST]
+

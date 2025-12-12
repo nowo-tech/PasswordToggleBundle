@@ -1,0 +1,47 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: password-toggle-bundle-php
+    working_dir: /app
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer/cache
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - XDEBUG_MODE=coverage
+    command: ["tail", "-f", "/dev/null"]
+    networks:
+      - password-toggle-bundle-network
+
+  # Service for running tests
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: password-toggle-bundle-test
+    working_dir: /app
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer/cache
+      - coverage-data:/app/coverage
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - XDEBUG_MODE=coverage
+    command: ["tail", "-f", "/dev/null"]
+    networks:
+      - password-toggle-bundle-network
+    profiles:
+      - test
+
+volumes:
+  composer-cache:
+    driver: local
+  coverage-data:
+    driver: local
+
+networks:
+  password-toggle-bundle-network:
+    driver: bridge
+

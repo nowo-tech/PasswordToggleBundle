@@ -1,0 +1,37 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: password-toggle-demo-symfony8-php85-php
+    working_dir: /app
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer/cache
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+    command: php-fpm
+    networks:
+      - password-toggle-demo-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: password-toggle-demo-symfony8-php85-nginx
+    ports:
+      - "${PORT:-8001}:80"
+    volumes:
+      - ./public:/var/www/html/public:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
+    networks:
+      - password-toggle-demo-network
+
+volumes:
+  composer-cache:
+    driver: local
+
+networks:
+  password-toggle-demo-network:
+    driver: bridge
+
