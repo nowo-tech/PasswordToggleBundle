@@ -61,7 +61,7 @@ jobs:
         run: |
           echo "📦 Installing dependencies for Symfony ${{ matrix.symfony }}..."
           composer require symfony/form:^${{ matrix.symfony }} symfony/framework-bundle:^${{ matrix.symfony }} symfony/twig-bundle:^${{ matrix.symfony }} --no-interaction --no-update
-          composer update symfony/* --with-all-dependencies --no-interaction --prefer-dist --no-progress
+          composer update --with-all-dependencies --no-interaction --prefer-dist --no-progress
 
       - name: Run tests
         run: |
