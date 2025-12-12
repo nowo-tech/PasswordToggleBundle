@@ -17,44 +17,44 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  */
 final class NowoPasswordToggleBundleTest extends TestCase
 {
-  public function testGetContainerExtensionReturnsInstance(): void
-  {
-    $bundle = new NowoPasswordToggleBundle();
-    $extension = $bundle->getContainerExtension();
+    public function testGetContainerExtensionReturnsInstance(): void
+    {
+        $bundle = new NowoPasswordToggleBundle();
+        $extension = $bundle->getContainerExtension();
 
-    $this->assertInstanceOf(ExtensionInterface::class, $extension);
-    $this->assertInstanceOf(NowoPasswordToggleExtension::class, $extension);
-    $this->assertNotNull($extension);
-  }
+        $this->assertInstanceOf(ExtensionInterface::class, $extension);
+        $this->assertInstanceOf(NowoPasswordToggleExtension::class, $extension);
+        $this->assertNotNull($extension);
+    }
 
-  public function testGetContainerExtensionReturnsSameInstance(): void
-  {
-    $bundle = new NowoPasswordToggleBundle();
-    $extension1 = $bundle->getContainerExtension();
-    $extension2 = $bundle->getContainerExtension();
+    public function testGetContainerExtensionReturnsSameInstance(): void
+    {
+        $bundle = new NowoPasswordToggleBundle();
+        $extension1 = $bundle->getContainerExtension();
+        $extension2 = $bundle->getContainerExtension();
 
-    $this->assertSame($extension1, $extension2);
-  }
+        $this->assertSame($extension1, $extension2);
+    }
 
-  public function testGetContainerExtensionAlias(): void
-  {
-    $bundle = new NowoPasswordToggleBundle();
-    $extension = $bundle->getContainerExtension();
-    
-    $this->assertInstanceOf(ExtensionInterface::class, $extension);
-    $this->assertSame('nowo_password_toggle', $extension->getAlias());
-  }
+    public function testGetContainerExtensionAlias(): void
+    {
+        $bundle = new NowoPasswordToggleBundle();
+        $extension = $bundle->getContainerExtension();
 
-  public function testGetContainerExtensionInitializesOnlyOnce(): void
-  {
-    $bundle = new NowoPasswordToggleBundle();
-    
-    // First call should create the extension
-    $extension1 = $bundle->getContainerExtension();
-    $this->assertNotNull($extension1);
-    
-    // Second call should return the same instance (already initialized)
-    $extension2 = $bundle->getContainerExtension();
-    $this->assertSame($extension1, $extension2);
-  }
+        $this->assertInstanceOf(ExtensionInterface::class, $extension);
+        $this->assertSame('nowo_password_toggle', $extension->getAlias());
+    }
+
+    public function testGetContainerExtensionInitializesOnlyOnce(): void
+    {
+        $bundle = new NowoPasswordToggleBundle();
+
+        // First call should create the extension
+        $extension1 = $bundle->getContainerExtension();
+        $this->assertNotNull($extension1);
+
+        // Second call should return the same instance (already initialized)
+        $extension2 = $bundle->getContainerExtension();
+        $this->assertSame($extension1, $extension2);
+    }
 }

@@ -26,22 +26,21 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class NowoPasswordToggleBundle extends Bundle
 {
-  /**
-   * Overridden to allow for the custom extension alias.
-   *
-   * Creates and returns the container extension instance if not already created.
-   * The extension is cached after the first call to ensure the same instance is returned
-   * on subsequent calls.
-   *
-   * @return ExtensionInterface|null The container extension instance, or null if not available
-   */
-  public function getContainerExtension(): ?ExtensionInterface
-  {
-    if (null === $this->extension)
+    /**
+     * Overridden to allow for the custom extension alias.
+     *
+     * Creates and returns the container extension instance if not already created.
+     * The extension is cached after the first call to ensure the same instance is returned
+     * on subsequent calls.
+     *
+     * @return ExtensionInterface|null The container extension instance, or null if not available
+     */
+    public function getContainerExtension(): ?ExtensionInterface
     {
-      $this->extension = new NowoPasswordToggleExtension();
-    }
+        if (null === $this->extension) {
+            $this->extension = new NowoPasswordToggleExtension();
+        }
 
-    return $this->extension;
-  }
+        return $this->extension;
+    }
 }
