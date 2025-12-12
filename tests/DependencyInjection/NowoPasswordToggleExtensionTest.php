@@ -16,42 +16,42 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 final class NowoPasswordToggleExtensionTest extends TestCase
 {
-  private NowoPasswordToggleExtension $extension;
+    private NowoPasswordToggleExtension $extension;
 
-  protected function setUp(): void
-  {
-    $this->extension = new NowoPasswordToggleExtension();
-  }
+    protected function setUp(): void
+    {
+        $this->extension = new NowoPasswordToggleExtension();
+    }
 
-  public function testGetAlias(): void
-  {
-    $this->assertSame('nowo_password_toggle', $this->extension->getAlias());
-  }
+    public function testGetAlias(): void
+    {
+        $this->assertSame('nowo_password_toggle', $this->extension->getAlias());
+    }
 
-  public function testLoad(): void
-  {
-    $container = new ContainerBuilder();
+    public function testLoad(): void
+    {
+        $container = new ContainerBuilder();
 
-    // Should not throw any exception
-    $this->extension->load([], $container);
+        // Should not throw any exception
+        $this->extension->load([], $container);
 
-    // Verify that the PasswordType service is registered
-    $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
-  }
+        // Verify that the PasswordType service is registered
+        $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
+    }
 
-  public function testLoadWithConfig(): void
-  {
-    $container = new ContainerBuilder();
-    $configs   = [
-      [
-        'some_config' => 'value',
-      ],
-    ];
+    public function testLoadWithConfig(): void
+    {
+        $container = new ContainerBuilder();
+        $configs = [
+          [
+            'some_config' => 'value',
+          ],
+        ];
 
-    // Should not throw any exception even with config
-    $this->extension->load($configs, $container);
+        // Should not throw any exception even with config
+        $this->extension->load($configs, $container);
 
-    // Verify that the PasswordType service is registered
-    $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
-  }
+        // Verify that the PasswordType service is registered
+        $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
+    }
 }

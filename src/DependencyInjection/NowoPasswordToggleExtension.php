@@ -20,33 +20,33 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class NowoPasswordToggleExtension extends Extension
 {
-  /**
-   * Loads the services configuration and processes the bundle configuration.
-   *
-   * This method loads the services.yaml file from the bundle's Resources/config directory
-   * and registers all bundle services with the dependency injection container.
-   *
-   * @param array<string, mixed> $configs   Array of configuration values from config files
-   * @param ContainerBuilder     $container The container builder instance
-   *
-   * @return void
-   */
-  public function load(array $configs, ContainerBuilder $container): void
-  {
-    $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-    $loader->load('services.yaml');
-  }
+    /**
+     * Loads the services configuration and processes the bundle configuration.
+     *
+     * This method loads the services.yaml file from the bundle's Resources/config directory
+     * and registers all bundle services with the dependency injection container.
+     *
+     * @param array<string, mixed> $configs   Array of configuration values from config files
+     * @param ContainerBuilder     $container The container builder instance
+     *
+     * @return void
+     */
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('services.yaml');
+    }
 
-  /**
-   * Returns the alias name of the extension.
-   *
-   * This alias is used in Symfony configuration files to reference this extension.
-   * For example: `nowo_password_toggle:` in config files.
-   *
-   * @return string The alias name of the extension
-   */
-  public function getAlias(): string
-  {
-    return 'nowo_password_toggle';
-  }
+    /**
+     * Returns the alias name of the extension.
+     *
+     * This alias is used in Symfony configuration files to reference this extension.
+     * For example: `nowo_password_toggle:` in config files.
+     *
+     * @return string The alias name of the extension
+     */
+    public function getAlias(): string
+    {
+        return 'nowo_password_toggle';
+    }
 }
