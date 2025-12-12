@@ -5,19 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.0] - 2024-12-12
-
 ## [Unreleased]
+
+## [1.1.1] - 2024-12-12
+
+### Fixed
+
+- **Demo Projects**: Fixed multiple issues in all demo projects
+  - Fixed incorrect package name: Changed `symfony/ux-icon` to `symfony/ux-icons` (correct package name)
+  - Fixed bundle registration: Updated `bundles.php` to use correct namespace `Symfony\UX\Icons\UXIconsBundle` instead of `Symfony\UX\Icon\IconBundle`
+  - Fixed nginx configuration: Corrected `SCRIPT_FILENAME` path from `$document_root$fastcgi_script_name` to `/app/public$fastcgi_script_name` for proper file resolution
+  - Fixed routing configuration: Added explicit attribute-based routing configuration in `routes.yaml` for all demos
+  - Added missing dependency: Added `symfony/yaml` to all demo `composer.json` files (required for YAML configuration loading)
+  - Added web profiler: Added `symfony/web-profiler-bundle` to all demos for better debugging experience
+  - Fixed port configuration: Ensured all demos use port 8001 by default and can be configured via environment variables
+
+### Changed
+
+- **Demo Configuration**: Improved demo project configurations
+  - All demos now properly load routes from controller attributes
+  - Web profiler bundle registered for `dev` and `test` environments in all demos
+  - Consistent nginx configuration across all demo projects
+
+## [1.1.0] - 2024-12-12
 
 ### Added
 
 - **Multiple Demo Projects**: Created four independent demo projects for different Symfony/PHP combinations
-  - Symfony 6.4 demo (PHP 8.2) - Port 8001
-  - Symfony 7.0 demo (PHP 8.2) - Port 8002
-  - Symfony 8.0 demo (PHP 8.4) - Port 8003
-  - Symfony 8.0 demo with PHP 8.5 - Port 8004
+  - Symfony 6.4 demo (PHP 8.2) - Port 8001 by default
+  - Symfony 7.0 demo (PHP 8.2) - Port 8001 by default
+  - Symfony 8.0 demo (PHP 8.4) - Port 8001 by default
+  - Symfony 8.0 demo with PHP 8.5 - Port 8001 by default
   - Each demo includes its own Docker setup, tests, and configuration
-  - Port configuration via `.env` files with default values
+  - Port configuration via `.env` files (all use 8001 by default, configurable)
 - **Demo Test Suites**: Each demo project includes comprehensive PHPUnit test suite
   - Controller tests to verify form functionality
   - Bundle integration tests to verify bundle registration
@@ -62,7 +82,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Port Configuration**: Implemented `.env` file support for demo ports
   - Each demo has its own `.env` file with default port configuration
   - Ports can be customized per demo without modifying docker-compose.yml
-  - Default ports: 8001 (Symfony 6.4), 8002 (Symfony 7.0), 8003 (Symfony 8.0), 8004 (Symfony 8.0 + PHP 8.5)
+  - All demos use port 8001 by default (configurable via `.env` file)
 
 ### Improved
 

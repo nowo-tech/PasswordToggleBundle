@@ -1,5 +1,10 @@
 # Password Toggle Bundle
 
+[![CI](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml)
+[![Latest Stable Version](https://poser.pugx.org/nowo-tech/password-toggle-bundle/v)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
+[![License](https://poser.pugx.org/nowo-tech/password-toggle-bundle/license)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
+[![PHP Version Require](https://poser.pugx.org/nowo-tech/password-toggle-bundle/require/php)](https://packagist.org/packages/nowo-tech/password-toggle-bundle)
+
 Symfony bundle providing a password form type with toggle visibility feature.
 
 ## Features
@@ -127,10 +132,10 @@ Example custom styles:
 
 The bundle includes four demo projects demonstrating usage with different Symfony and PHP versions:
 
-- **Symfony 6.4 Demo** (PHP 8.2) - Port 8001
-- **Symfony 7.0 Demo** (PHP 8.2) - Port 8002
-- **Symfony 8.0 Demo** (PHP 8.4) - Port 8003
-- **Symfony 8.0 Demo with PHP 8.5** - Port 8004
+- **Symfony 6.4 Demo** (PHP 8.2) - Port 8001 (default, configurable via `.env`)
+- **Symfony 7.0 Demo** (PHP 8.2) - Port 8001 (default, configurable via `.env`)
+- **Symfony 8.0 Demo** (PHP 8.4) - Port 8001 (default, configurable via `.env`)
+- **Symfony 8.0 Demo with PHP 8.5** - Port 8001 (default, configurable via `.env`)
 
 Each demo is independent and includes:
 - Complete Docker setup with PHP-FPM and Nginx
@@ -143,7 +148,7 @@ Each demo is independent and includes:
 cd demo
 make up-symfony7        # Start Symfony 7.0 demo
 make install-symfony7   # Install dependencies
-# Access at: http://localhost:8002
+# Access at: http://localhost:8001 (default port, configurable via .env)
 ```
 
 Or start any other demo:

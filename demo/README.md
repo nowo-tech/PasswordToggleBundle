@@ -15,10 +15,10 @@ This directory contains four demo projects demonstrating the usage of the Passwo
 
 The bundle includes four demo projects:
 
-1. **Symfony 6.4 Demo** - PHP 8.2 (Port 8001)
-2. **Symfony 7.0 Demo** - PHP 8.2 (Port 8002)
-3. **Symfony 8.0 Demo** - PHP 8.4 (Port 8003)
-4. **Symfony 8.0 Demo with PHP 8.5** - PHP 8.5 (Port 8004)
+1. **Symfony 6.4 Demo** - PHP 8.2 (Port 8001 by default, configurable via `.env`)
+2. **Symfony 7.0 Demo** - PHP 8.2 (Port 8001 by default, configurable via `.env`)
+3. **Symfony 8.0 Demo** - PHP 8.4 (Port 8001 by default, configurable via `.env`)
+4. **Symfony 8.0 Demo with PHP 8.5** - PHP 8.5 (Port 8001 by default, configurable via `.env`)
 
 ## Requirements
 
@@ -64,7 +64,7 @@ docker-compose up -d
 # Install dependencies
 docker-compose exec php composer install
 
-# Access at: http://localhost:8002 (default port, configurable via PORT env variable)
+# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
 ```
 
 Or using the Makefile:
@@ -87,7 +87,7 @@ docker-compose up -d
 # Install dependencies
 docker-compose exec php composer install
 
-# Access at: http://localhost:8003 (default port, configurable via PORT env variable)
+# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
 ```
 
 Or using the Makefile:
@@ -110,7 +110,7 @@ docker-compose up -d
 # Install dependencies
 docker-compose exec php composer install
 
-# Access at: http://localhost:8004 (default port, configurable via PORT env variable)
+# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
 ```
 
 Or using the Makefile:
@@ -224,7 +224,7 @@ Each demo includes:
 
 ```
 demo/
-├── demo-symfony6/          # Symfony 6.4 demo (Port 8001, PHP 8.2)
+├── demo-symfony6/          # Symfony 6.4 demo (Port 8001 by default, PHP 8.2)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
 │   ├── Dockerfile          # PHP 8.2-FPM image with Composer
 │   ├── nginx.conf          # Nginx configuration
@@ -232,23 +232,23 @@ demo/
 │   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
 │   └── ...
-├── demo-symfony7/          # Symfony 7.0 demo (Port 8002, PHP 8.2)
+├── demo-symfony7/          # Symfony 7.0 demo (Port 8001 by default, PHP 8.2)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
 │   ├── Dockerfile          # PHP 8.2-FPM image with Composer
 │   ├── nginx.conf          # Nginx configuration
 │   ├── composer.json       # Dependencies for Symfony 7.0
-│   ├── .env                # Port configuration (default: 8002)
+│   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
 │   └── ...
-├── demo-symfony8/          # Symfony 8.0 demo (Port 8003, PHP 8.4)
+├── demo-symfony8/          # Symfony 8.0 demo (Port 8001 by default, PHP 8.4)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
 │   ├── Dockerfile          # PHP 8.4-FPM image with Composer
 │   ├── nginx.conf          # Nginx configuration
 │   ├── composer.json       # Dependencies for Symfony 8.0
-│   ├── .env                # Port configuration (default: 8003)
+│   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
 │   └── ...
-├── demo-symfony8-php85/    # Symfony 8.0 demo with PHP 8.5 (Port 8004)
+├── demo-symfony8-php85/    # Symfony 8.0 demo with PHP 8.5 (Port 8001 by default)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
 │   ├── Dockerfile          # PHP 8.5-FPM image with Composer
 │   ├── nginx.conf          # Nginx configuration
@@ -325,7 +325,7 @@ docker-compose up -d
 
 The `docker-compose.yml` files use `${PORT:-8001}` syntax, which means:
 - If `PORT` is set in the `.env` file, it will use that value
-- If `PORT` is not set, it will use the default value (8001, 8001, 8001, or 8001 depending on the demo)
+- If `PORT` is not set, it will use the default value (8001 for all demos)
 
 You can also override the port temporarily using an environment variable:
 
@@ -347,6 +347,35 @@ Make sure you're using the correct PHP version for each demo:
 - Symfony 8.0: PHP >= 8.4
 
 The Dockerfiles are configured with the correct PHP versions, so using Docker is recommended.
+
+### Port already in use
+
+If port 8001 is already in use, you can change it by setting the `PORT` environment variable:
+
+```bash
+# Stop the containers first
+cd demo/demo-symfony8
+docker-compose down
+
+# Start with a different port
+PORT=8002 docker-compose up -d
+```
+
+Or edit the `.env` file in the demo directory to set a permanent port.
+
+### Nginx configuration issues
+
+If you encounter "File not found" errors, make sure:
+- The nginx configuration uses the correct path: `/app/public$fastcgi_script_name`
+- The containers are running: `docker-compose ps`
+- The cache is cleared: `docker-compose exec php php bin/console cache:clear`
+
+### Routes not loading
+
+If routes are not loading, verify:
+- The `routes.yaml` file includes the controllers configuration for attribute-based routing
+- The controller uses the `#[Route]` attribute correctly
+- The cache is cleared after configuration changes
 
 ## Testing
 
