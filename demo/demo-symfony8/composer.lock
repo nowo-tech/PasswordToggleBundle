@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75fdbb7603d98815b1d2ba4c30969982",
+    "content-hash": "fe547aca9bea2fda6307848d051408b7",
     "packages": [
         {
             "name": "composer/semver",
@@ -85,16 +85,16 @@
         },
         {
             "name": "nowo-tech/password-toggle-bundle",
-            "version": "v1.1.1",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nowo-tech/PasswordToggleBundle.git",
-                "reference": "67b1950d184a62cd93afe0b6f3457efcf40db8f0"
+                "reference": "302d397f9635b3912d9655fca82f0024bee5f2f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nowo-tech/PasswordToggleBundle/zipball/67b1950d184a62cd93afe0b6f3457efcf40db8f0",
-                "reference": "67b1950d184a62cd93afe0b6f3457efcf40db8f0",
+                "url": "https://api.github.com/repos/nowo-tech/PasswordToggleBundle/zipball/302d397f9635b3912d9655fca82f0024bee5f2f1",
+                "reference": "302d397f9635b3912d9655fca82f0024bee5f2f1",
                 "shasum": ""
             },
             "require": {
@@ -153,7 +153,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-12T21:04:22+00:00"
+            "time": "2025-12-15T17:48:06+00:00"
         },
         {
             "name": "psr/cache",

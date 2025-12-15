@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
 ## [1.2.0] - 2025-12-15
 
 ### Added
@@ -42,6 +44,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Tests for Extension with configuration parameter storage
   - Tests for PasswordType with injected configuration
   - Tests for type validation in OptionsResolver
+- **Demo Projects Test Configuration**: Fixed test environment setup for all demo projects
+  - Created `config/packages/test/framework.yaml` for all demos to enable functional testing
+  - Fixed `phpunit.xml.dist` to correctly set `APP_ENV=test` for all demos
+  - Added `DEFAULT_URI` environment variable to `.env.example` files for Symfony 7.0+ compatibility
+  - All demo test suites now run correctly in test environment
+- **Demo Projects Updated**: Updated all demo projects to use bundle v1.2.0
+  - Updated `composer.json` in all demos to require `^1.2.0`
+  - Updated `composer.lock` files to reflect v1.2.0 dependency
+  - Added `config/packages/nowo_password_toggle.yaml` configuration files to all demos
+  - Demos now demonstrate the new global configuration feature
+  - Updated demo README to document the configuration system
+  - All demos verified to work correctly and respond with HTTP 200
 
 ### Changed
 
@@ -62,6 +76,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added comprehensive configuration documentation
   - Explained Flex recipe automatic installation
   - Updated usage examples to show configuration options
+- **Documentation Structure**: Reorganized documentation files
+  - Moved `CHANGELOG.md` to `docs/CHANGELOG.md` for better organization
+  - Moved `CONTRIBUTING.md` to `docs/CONTRIBUTING.md` for consistency
+  - Added `docs/BRANCHING.md` with branching strategy documentation
+  - Updated all references to documentation paths in README
 
 ## [1.1.1] - 2024-12-12
 

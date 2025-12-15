@@ -289,7 +289,19 @@ The form automatically includes:
 
 ## Customization
 
-You can customize the password field by modifying the options in each demo's `src/Controller/DemoController.php`:
+### Global Configuration
+
+Each demo includes a `config/packages/nowo_password_toggle.yaml` file that demonstrates the bundle's configuration system (available since v1.2.0). This file defines default values for all password fields, which can be overridden per field when using the form type.
+
+The configuration file includes:
+- Default toggle settings
+- Icon and label configuration
+- CSS classes for buttons and containers
+- Form type options
+
+### Per-Field Customization
+
+You can also customize the password field by modifying the options in each demo's `src/Controller/DemoController.php`:
 
 - `toggle`: Enable/disable toggle functionality
 - `visible_icon`: Icon when password is hidden
@@ -298,6 +310,8 @@ You can customize the password field by modifying the options in each demo's `sr
 - `hidden_label`: Label when password is visible
 - `button_classes`: CSS classes for the toggle button
 - `toggle_container_classes`: CSS classes for the container
+
+**Note**: Options specified in the controller override the global configuration from `nowo_password_toggle.yaml`.
 
 ## Port Configuration
 

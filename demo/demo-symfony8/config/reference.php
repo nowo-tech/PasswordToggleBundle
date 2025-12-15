@@ -737,6 +737,19 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     intercept_redirects?: bool, // Default: false
  *     excluded_ajax_paths?: scalar|null, // Default: "^/((index|app(_[\\w]+)?)\\.php/)?_wdt"
  * }
+ * @psalm-type NowoPasswordToggleConfig = array{
+ *     toggle?: bool, // Enable/disable toggle functionality by default // Default: true
+ *     visible_icon?: scalar|null, // Icon when password is hidden (default) // Default: "tabler:eye-off"
+ *     hidden_icon?: scalar|null, // Icon when password is visible (default) // Default: "tabler:eye"
+ *     visible_label?: scalar|null, // Label when password is hidden (default) // Default: "Show"
+ *     hidden_label?: scalar|null, // Label when password is visible (default) // Default: "Hide"
+ *     button_classes?: list<scalar|null>,
+ *     toggle_container_classes?: list<scalar|null>,
+ *     use_toggle_form_theme?: bool, // Use the bundle's form theme for rendering (default) // Default: true
+ *     always_empty?: bool, // Always render empty value (default) // Default: true
+ *     trim?: bool, // Trim whitespace (default) // Default: false
+ *     invalid_message?: scalar|null, // Invalid message (default) // Default: "The password is invalid."
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -744,6 +757,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     framework?: FrameworkConfig,
  *     twig?: TwigConfig,
  *     ux_icons?: UxIconsConfig,
+ *     nowo_password_toggle?: NowoPasswordToggleConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -752,6 +766,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig?: TwigConfig,
  *         ux_icons?: UxIconsConfig,
  *         web_profiler?: WebProfilerConfig,
+ *         nowo_password_toggle?: NowoPasswordToggleConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -760,6 +775,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         framework?: FrameworkConfig,
  *         twig?: TwigConfig,
  *         ux_icons?: UxIconsConfig,
+ *         nowo_password_toggle?: NowoPasswordToggleConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -769,6 +785,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         twig?: TwigConfig,
  *         ux_icons?: UxIconsConfig,
  *         web_profiler?: WebProfilerConfig,
+ *         nowo_password_toggle?: NowoPasswordToggleConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

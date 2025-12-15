@@ -186,6 +186,7 @@ Each demo is independent and includes:
 - Port configuration via `.env` file
 - Symfony Web Profiler for debugging (dev and test environments)
 - Properly configured routing with attribute-based routes
+- Bundle configuration file (`config/packages/nowo_password_toggle.yaml`) demonstrating global configuration (v1.2.0+)
 
 ### Quick Start with Docker
 
