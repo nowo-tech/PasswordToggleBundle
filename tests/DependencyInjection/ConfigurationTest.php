@@ -112,4 +112,3 @@ final class ConfigurationTest extends TestCase
         $this->processor->processConfiguration($this->configuration, $configs);
     }
 }
-
