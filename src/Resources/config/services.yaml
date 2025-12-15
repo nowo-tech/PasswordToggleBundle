@@ -4,7 +4,13 @@ services:
     autoconfigure: true
     public: false
 
+  Nowo\PasswordToggleBundle\Form\Type\PasswordType:
+    arguments:
+      $defaults: '%nowo_password_toggle.defaults%'
+    tags: ['form.type']
+
   Nowo\PasswordToggleBundle\Form\Type\:
     resource: '../../Form/Type/*'
+    exclude: '../../Form/Type/PasswordType.php'
     tags: ['form.type']
 

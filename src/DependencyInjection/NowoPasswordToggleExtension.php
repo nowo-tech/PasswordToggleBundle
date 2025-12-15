@@ -25,6 +25,7 @@ class NowoPasswordToggleExtension extends Extension
      *
      * This method loads the services.yaml file from the bundle's Resources/config directory
      * and registers all bundle services with the dependency injection container.
+     * It also processes the bundle configuration and stores it as container parameters.
      *
      * @param array<string, mixed> $configs   Array of configuration values from config files
      * @param ContainerBuilder     $container The container builder instance
@@ -33,6 +34,12 @@ class NowoPasswordToggleExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        // Store the processed configuration as container parameters
+        $container->setParameter('nowo_password_toggle.defaults', $config);
+
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
     }

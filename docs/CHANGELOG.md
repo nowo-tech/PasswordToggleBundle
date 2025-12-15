@@ -5,7 +5,63 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.2.0] - 2025-12-15
+
+### Added
+
+- **Bundle Configuration System**: Added support for default configuration via YAML file
+  - Created `Configuration` class to define bundle configuration structure
+  - Added support for configuring default values in `config/packages/nowo_password_toggle.yaml`
+  - All form type options can now be configured globally and overridden per field
+  - Configuration is automatically injected into `PasswordType` service
+- **Symfony Flex Recipe**: Created Flex recipe for automatic installation and configuration
+  - Bundle registration is now automatic when using Symfony Flex
+  - Default configuration file is automatically created at `config/packages/nowo_password_toggle.yaml`
+  - Recipe includes manifest.json, configuration file, and post-install message
+  - Recipe structure ready for publishing to symfony/recipes-contrib or private recipe repository
+- **Makefile Improvements**: Enhanced demo Makefile for better usability
+  - Generic commands now accept demo name as direct argument (e.g., `make up symfony8`)
+  - Both formats supported: `make up symfony8` and `make up DEMO=symfony8`
+  - Updated help documentation to show both usage formats
+- **Configuration Validation**: Added comprehensive validation for bundle configuration
+  - Icons and labels cannot be empty strings
+  - Arrays (button_classes, toggle_container_classes) are validated as arrays
+  - Invalid message must be non-empty
+  - Clear error messages for invalid configuration values
+- **Type Validation**: Added type validation in OptionsResolver
+  - All form type options now have strict type validation
+  - Prevents type errors at runtime
+  - Better error messages for invalid option types
+- **Template Improvements**: Enhanced Twig template with better functionality
+  - Support for `toggle=false` to render simple password input without toggle button
+  - Keyboard support (Enter/Space keys) for toggle button
+  - Improved error handling in JavaScript with null checks
+  - Better accessibility with proper ARIA attributes
+- **Test Coverage**: Added comprehensive tests for new functionality
+  - Tests for Configuration class with validation scenarios
+  - Tests for Extension with configuration parameter storage
+  - Tests for PasswordType with injected configuration
+  - Tests for type validation in OptionsResolver
+
+### Changed
+
+- **PasswordType Service**: Modified to accept configuration as constructor dependency
+  - Configuration defaults are now injected via dependency injection
+  - Maintains backward compatibility with hardcoded fallbacks
+  - Configuration can be overridden per form field as before
+  - Added strict type validation for all options
+- **Template Rendering**: Improved template logic for better flexibility
+  - Conditional rendering based on `toggle` option
+  - Fallback to simple password input when toggle is disabled
+  - Enhanced JavaScript with better error handling
+- **Code Quality**: Improved code quality and maintainability
+  - Removed unused imports from Extension class
+  - Added validation to prevent configuration errors
+  - Enhanced error messages for better debugging
+- **Documentation**: Updated README with configuration section
+  - Added comprehensive configuration documentation
+  - Explained Flex recipe automatic installation
+  - Updated usage examples to show configuration options
 
 ## [1.1.1] - 2024-12-12
 

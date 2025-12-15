@@ -25,6 +25,112 @@ final class PasswordTypeTest extends TestCase
         $this->formType = new PasswordType();
     }
 
+    public function testConstructorWithDefaults(): void
+    {
+        $defaults = [
+            'toggle' => false,
+            'visible_icon' => 'custom:eye-off',
+            'hidden_icon' => 'custom:eye',
+            'visible_label' => 'Mostrar',
+            'hidden_label' => 'Ocultar',
+            'button_classes' => ['btn', 'btn-primary'],
+            'toggle_container_classes' => ['custom-container'],
+        ];
+
+        $formType = new PasswordType($defaults);
+        $resolver = new OptionsResolver();
+        $formType->configureOptions($resolver);
+
+        $resolved = $resolver->resolve([]);
+
+        $this->assertFalse($resolved['toggle']);
+        $this->assertSame('custom:eye-off', $resolved['visible_icon']);
+        $this->assertSame('custom:eye', $resolved['hidden_icon']);
+        $this->assertSame('Mostrar', $resolved['visible_label']);
+        $this->assertSame('Ocultar', $resolved['hidden_label']);
+        $this->assertSame(['btn', 'btn-primary'], $resolved['button_classes']);
+        $this->assertSame(['custom-container'], $resolved['toggle_container_classes']);
+    }
+
+    public function testConfigureOptionsUsesInjectedDefaults(): void
+    {
+        $defaults = [
+            'toggle' => true,
+            'visible_icon' => 'custom:icon-off',
+            'hidden_icon' => 'custom:icon',
+            'visible_label' => 'Show Custom',
+            'hidden_label' => 'Hide Custom',
+            'button_classes' => ['custom-btn'],
+            'toggle_container_classes' => ['custom-container'],
+            'use_toggle_form_theme' => false,
+            'always_empty' => false,
+            'trim' => true,
+            'invalid_message' => 'Custom invalid message',
+        ];
+
+        $formType = new PasswordType($defaults);
+        $resolver = new OptionsResolver();
+        $formType->configureOptions($resolver);
+
+        $resolved = $resolver->resolve([]);
+
+        $this->assertTrue($resolved['toggle']);
+        $this->assertSame('custom:icon-off', $resolved['visible_icon']);
+        $this->assertSame('custom:icon', $resolved['hidden_icon']);
+        $this->assertSame('Show Custom', $resolved['visible_label']);
+        $this->assertSame('Hide Custom', $resolved['hidden_label']);
+        $this->assertSame(['custom-btn'], $resolved['button_classes']);
+        $this->assertSame(['custom-container'], $resolved['toggle_container_classes']);
+        $this->assertFalse($resolved['use_toggle_form_theme']);
+        $this->assertFalse($resolved['always_empty']);
+        $this->assertTrue($resolved['trim']);
+        $this->assertSame('Custom invalid message', $resolved['invalid_message']);
+    }
+
+    public function testConfigureOptionsOverridesDefaults(): void
+    {
+        $defaults = [
+            'toggle' => false,
+            'visible_icon' => 'default:icon',
+        ];
+
+        $formType = new PasswordType($defaults);
+        $resolver = new OptionsResolver();
+        $formType->configureOptions($resolver);
+
+        // Override defaults when resolving
+        $resolved = $resolver->resolve([
+            'toggle' => true,
+            'visible_icon' => 'override:icon',
+        ]);
+
+        $this->assertTrue($resolved['toggle']); // Overridden
+        $this->assertSame('override:icon', $resolved['visible_icon']); // Overridden
+    }
+
+    public function testConfigureOptionsValidatesTypes(): void
+    {
+        $resolver = new OptionsResolver();
+        $this->formType->configureOptions($resolver);
+
+        // Test valid types
+        $resolved = $resolver->resolve([
+            'toggle' => true,
+            'button_classes' => ['class1', 'class2'],
+            'visible_icon' => 'icon:test',
+        ]);
+
+        $this->assertTrue($resolved['toggle']);
+        $this->assertIsArray($resolved['button_classes']);
+        $this->assertIsString($resolved['visible_icon']);
+
+        // Test invalid types
+        $this->expectException(\Symfony\Component\OptionsResolver\Exception\InvalidOptionsException::class);
+        $resolver->resolve([
+            'toggle' => 'not-a-boolean',
+        ]);
+    }
+
     public function testGetParent(): void
     {
         $this->assertSame(TextType::class, $this->formType->getParent());

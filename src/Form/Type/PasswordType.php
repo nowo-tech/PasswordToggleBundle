@@ -21,11 +21,31 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * - Configurable CSS classes for styling
  * - Native JavaScript implementation for maximum compatibility
  *
+ * Default values can be configured in config/packages/nowo_password_toggle.yaml
+ * and can be overridden when using this form type in a form builder.
+ *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
  * @copyright 2024 Nowo.tech
  */
 final class PasswordType extends AbstractType
 {
+    /**
+     * Default configuration values from bundle configuration.
+     *
+     * @var array<string, mixed>
+     */
+    private array $defaults;
+
+    /**
+     * Constructor.
+     *
+     * @param array<string, mixed> $defaults Default configuration values from bundle config
+     */
+    public function __construct(array $defaults = [])
+    {
+        $this->defaults = $defaults;
+    }
+
     /**
      * Returns the parent form type.
      *
@@ -42,8 +62,8 @@ final class PasswordType extends AbstractType
     /**
      * Configures the options for this form type.
      *
-     * Sets default values for toggle functionality, icons, labels, and CSS classes.
-     * All options can be overridden when using this form type in a form builder.
+     * Sets default values from bundle configuration, which can be overridden
+     * when using this form type in a form builder.
      *
      * @param OptionsResolver $resolver The options resolver to configure
      *
@@ -52,18 +72,31 @@ final class PasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-          'always_empty' => true,
-          'trim' => false,
-          'invalid_message' => 'The password is invalid.',
-          'button_classes' => ['input-group-text', 'cursor-pointer'],
-          'hidden_icon' => 'tabler:eye',
-          'hidden_label' => 'Hide',
-          'toggle' => true,
-          'toggle_container_classes' => ['form-password-toggle'],
-          'use_toggle_form_theme' => true,
-          'visible_icon' => 'tabler:eye-off',
-          'visible_label' => 'Show',
+          'always_empty' => $this->defaults['always_empty'] ?? true,
+          'trim' => $this->defaults['trim'] ?? false,
+          'invalid_message' => $this->defaults['invalid_message'] ?? 'The password is invalid.',
+          'button_classes' => $this->defaults['button_classes'] ?? ['input-group-text', 'cursor-pointer'],
+          'hidden_icon' => $this->defaults['hidden_icon'] ?? 'tabler:eye',
+          'hidden_label' => $this->defaults['hidden_label'] ?? 'Hide',
+          'toggle' => $this->defaults['toggle'] ?? true,
+          'toggle_container_classes' => $this->defaults['toggle_container_classes'] ?? ['form-password-toggle'],
+          'use_toggle_form_theme' => $this->defaults['use_toggle_form_theme'] ?? true,
+          'visible_icon' => $this->defaults['visible_icon'] ?? 'tabler:eye-off',
+          'visible_label' => $this->defaults['visible_label'] ?? 'Show',
         ]);
+
+        // Validate types
+        $resolver->setAllowedTypes('toggle', 'bool');
+        $resolver->setAllowedTypes('use_toggle_form_theme', 'bool');
+        $resolver->setAllowedTypes('always_empty', 'bool');
+        $resolver->setAllowedTypes('trim', 'bool');
+        $resolver->setAllowedTypes('visible_icon', 'string');
+        $resolver->setAllowedTypes('hidden_icon', 'string');
+        $resolver->setAllowedTypes('visible_label', 'string');
+        $resolver->setAllowedTypes('hidden_label', 'string');
+        $resolver->setAllowedTypes('invalid_message', 'string');
+        $resolver->setAllowedTypes('button_classes', 'array');
+        $resolver->setAllowedTypes('toggle_container_classes', 'array');
     }
 
     /**

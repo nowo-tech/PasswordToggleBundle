@@ -1,0 +1,5 @@
+The default configuration file has been created at config/packages/nowo_password_toggle.yaml
+
+You can customize the default values for all password fields by editing this file.
+These defaults will be used unless overridden when using the PasswordType form type.
+

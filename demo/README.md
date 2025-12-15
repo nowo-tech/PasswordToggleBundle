@@ -411,11 +411,17 @@ Or using the Makefile from the `demo/` directory:
 ```bash
 cd demo
 
-# Run tests for a specific demo
+# Run tests for a specific demo (using specific commands)
 make test-symfony6
 make test-symfony7
 make test-symfony8
 make test-symfony8-php85
+
+# Or using generic commands with demo name
+make test symfony6
+make test symfony7
+make test symfony8
+make test symfony8-php85
 
 # Run all tests
 make test-all

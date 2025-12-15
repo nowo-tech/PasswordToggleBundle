@@ -56,6 +56,8 @@
         "symfony/polyfill-php82": "*"
     },
     "scripts": {
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",

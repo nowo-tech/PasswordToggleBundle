@@ -44,7 +44,8 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $container = new ContainerBuilder();
         $configs = [
           [
-            'some_config' => 'value',
+            'toggle' => false,
+            'visible_icon' => 'custom:icon',
           ],
         ];
 
@@ -53,5 +54,33 @@ final class NowoPasswordToggleExtensionTest extends TestCase
 
         // Verify that the PasswordType service is registered
         $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
+
+        // Verify that configuration is stored as parameter
+        $this->assertTrue($container->hasParameter('nowo_password_toggle.defaults'));
+        $defaults = $container->getParameter('nowo_password_toggle.defaults');
+        $this->assertIsArray($defaults);
+        $this->assertFalse($defaults['toggle']);
+        $this->assertSame('custom:icon', $defaults['visible_icon']);
+    }
+
+    public function testLoadStoresConfigurationAsParameter(): void
+    {
+        $container = new ContainerBuilder();
+        $configs = [
+          [
+            'toggle' => true,
+            'visible_label' => 'Mostrar',
+            'hidden_label' => 'Ocultar',
+          ],
+        ];
+
+        $this->extension->load($configs, $container);
+
+        $this->assertTrue($container->hasParameter('nowo_password_toggle.defaults'));
+        $defaults = $container->getParameter('nowo_password_toggle.defaults');
+
+        $this->assertTrue($defaults['toggle']);
+        $this->assertSame('Mostrar', $defaults['visible_label']);
+        $this->assertSame('Ocultar', $defaults['hidden_label']);
     }
 }

@@ -12,7 +12,11 @@ Symfony bundle providing a password form type with toggle visibility feature.
 - ✅ Compatible with Symfony UX Icon
 - ✅ Fully configurable CSS classes
 - ✅ Works with Live Components
-- ✅ Accessibility support (ARIA labels)
+- ✅ Accessibility support (ARIA labels, keyboard navigation)
+- ✅ Configuration validation with clear error messages
+- ✅ Type validation for all options
+- ✅ Can be disabled per field (renders simple password input)
+- ✅ Symfony Flex recipe for automatic installation
 
 ## Installation
 
@@ -30,6 +34,31 @@ return [
     Nowo\PasswordToggleBundle\NowoPasswordToggleBundle::class => ['all' => true],
 ];
 ```
+
+> **Note**: If you're using Symfony Flex, the bundle will be registered automatically and a default configuration file will be created at `config/packages/nowo_password_toggle.yaml`.
+
+## Configuration
+
+When installed via Symfony Flex, a default configuration file is automatically created at `config/packages/nowo_password_toggle.yaml`. If you're not using Flex or the file wasn't created, you can create it manually.
+
+You can configure default values for all password fields in `config/packages/nowo_password_toggle.yaml`:
+
+```yaml
+nowo_password_toggle:
+    toggle: true
+    visible_icon: 'tabler:eye-off'
+    hidden_icon: 'tabler:eye'
+    visible_label: 'Show'
+    hidden_label: 'Hide'
+    button_classes: ['input-group-text', 'cursor-pointer']
+    toggle_container_classes: ['form-password-toggle']
+    use_toggle_form_theme: true
+    always_empty: true
+    trim: false
+    invalid_message: 'The password is invalid.'
+```
+
+These defaults will be used for all `PasswordType` instances unless overridden when using the form type directly.
 
 ## Usage
 
@@ -57,18 +86,35 @@ $builder->add('password', PasswordType::class, [
 
 ### Available Options
 
+All options can be configured globally in `config/packages/nowo_password_toggle.yaml` or overridden per field when using the form type.
+
+**Note**: All options are validated for correct types. Invalid values will throw exceptions with clear error messages.
+
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `toggle` | `bool` | `true` | Enable/disable toggle functionality |
-| `visible_icon` | `string` | `'tabler:eye-off'` | Icon when password is hidden |
-| `hidden_icon` | `string` | `'tabler:eye'` | Icon when password is visible |
-| `visible_label` | `string` | `'Show'` | Label when password is hidden |
-| `hidden_label` | `string` | `'Hide'` | Label when password is visible |
-| `button_classes` | `array` | `['input-group-text', 'cursor-pointer']` | CSS classes for toggle button |
-| `toggle_container_classes` | `array` | `['form-password-toggle']` | CSS classes for container |
+| `toggle` | `bool` | `true` | Enable/disable toggle functionality. When `false`, renders a simple password input without toggle button |
+| `visible_icon` | `string` | `'tabler:eye-off'` | Icon when password is hidden (must be non-empty) |
+| `hidden_icon` | `string` | `'tabler:eye'` | Icon when password is visible (must be non-empty) |
+| `visible_label` | `string` | `'Show'` | Label when password is hidden (must be non-empty) |
+| `hidden_label` | `string` | `'Hide'` | Label when password is visible (must be non-empty) |
+| `button_classes` | `array` | `['input-group-text', 'cursor-pointer']` | CSS classes for toggle button (must be an array) |
+| `toggle_container_classes` | `array` | `['form-password-toggle']` | CSS classes for container (must be an array) |
+| `use_toggle_form_theme` | `bool` | `true` | Use the bundle's form theme for rendering |
 | `always_empty` | `bool` | `true` | Always render empty value |
 | `trim` | `bool` | `false` | Trim whitespace |
-| `invalid_message` | `string` | `'The password is invalid.'` | Invalid message |
+| `invalid_message` | `string` | `'The password is invalid.'` | Invalid message (must be non-empty) |
+
+### Disabling Toggle
+
+You can disable the toggle functionality for a specific field:
+
+```php
+$builder->add('password', PasswordType::class, [
+    'toggle' => false,  // Renders a simple password input without toggle button
+]);
+```
+
+When `toggle` is `false`, the field renders as a standard password input without the toggle button, making it compatible with any styling or JavaScript framework.
 
 ## Requirements
 
@@ -145,17 +191,25 @@ Each demo is independent and includes:
 
 ```bash
 cd demo
-make up-symfony7        # Start Symfony 7.0 demo
+make up-symfony7        # Start Symfony 7.0 demo (specific command)
+# Or use generic command: make up symfony7
 make install-symfony7   # Install dependencies
+# Or use generic command: make install symfony7
 # Access at: http://localhost:8001 (default port, configurable via .env)
 ```
 
 Or start any other demo:
 
 ```bash
+# Using specific commands
 make up-symfony6        # Symfony 6.4
 make up-symfony8        # Symfony 8.0
 make up-symfony8-php85  # Symfony 8.0 with PHP 8.5
+
+# Or using generic commands with demo name
+make up symfony6        # Symfony 6.4
+make up symfony8        # Symfony 8.0
+make up symfony8-php85  # Symfony 8.0 with PHP 8.5
 ```
 
 See `demo/README.md` for detailed instructions for all demos.
@@ -248,7 +302,9 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 ## Contributing
 
-Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+Please see [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for details on how to contribute to this project.
+
+For information about branching strategy and versioning, see [docs/BRANCHING.md](docs/BRANCHING.md).
 
 ## Author
 
