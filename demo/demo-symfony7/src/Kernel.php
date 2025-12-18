@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
  * the Password Toggle Bundle functionality.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 class Kernel extends BaseKernel
 {

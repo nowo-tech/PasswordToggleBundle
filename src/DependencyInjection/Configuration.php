@@ -14,7 +14,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  * Users can override these defaults in their config/packages/nowo_password_toggle.yaml file.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 class Configuration implements ConfigurationInterface
 {

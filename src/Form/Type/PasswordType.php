@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * and can be overridden when using this form type in a form builder.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 final class PasswordType extends AbstractType
 {

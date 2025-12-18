@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * It is responsible for registering the form type service and any other bundle services.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 class NowoPasswordToggleExtension extends Extension
 {

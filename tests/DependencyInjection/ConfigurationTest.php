@@ -12,7 +12,7 @@ use Symfony\Component\Config\Definition\Processor;
  * Tests for Configuration class.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 final class ConfigurationTest extends TestCase
 {

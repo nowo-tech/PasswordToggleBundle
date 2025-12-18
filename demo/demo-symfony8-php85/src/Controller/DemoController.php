@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
  * with toggle visibility functionality.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 class DemoController extends AbstractController
 {

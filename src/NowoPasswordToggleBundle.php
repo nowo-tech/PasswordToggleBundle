@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * - Full accessibility support (ARIA labels)
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2024 Nowo.tech
+ * @copyright 2025 Nowo.tech
  */
 class NowoPasswordToggleBundle extends Bundle
 {
