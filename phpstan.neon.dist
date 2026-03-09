@@ -8,8 +8,6 @@ parameters:
         - tests
     excludePaths:
         - demo/*
-    memoryLimit: 512M
-    checkMissingIterableValueType: false
 
 includes:
     - vendor/phpstan/phpstan-symfony/extension.neon

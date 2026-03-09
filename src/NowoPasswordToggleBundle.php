@@ -37,10 +37,13 @@ class NowoPasswordToggleBundle extends Bundle
      */
     public function getContainerExtension(): ?ExtensionInterface
     {
-        if ($this->extension === null) {
+        if (!$this->extension instanceof ExtensionInterface) {
             $this->extension = new NowoPasswordToggleExtension();
         }
 
-        return $this->extension;
+        $extension = $this->extension;
+        // Parent Bundle::$extension is ExtensionInterface|false; ensure we never return false (return type is ?ExtensionInterface)
+        /** @phpstan-ignore identical.alwaysFalse */
+        return $extension === false ? null : $extension;
     }
 }

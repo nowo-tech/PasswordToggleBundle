@@ -28,7 +28,7 @@ final class ConfigurationTest extends TestCase
     public function testGetConfigTreeBuilder(): void
     {
         $treeBuilder = $this->configuration->getConfigTreeBuilder();
-        $this->assertNotNull($treeBuilder);
+        $this->assertSame('nowo_password_toggle', $treeBuilder->buildTree()->getName());
     }
 
     public function testDefaultConfiguration(): void

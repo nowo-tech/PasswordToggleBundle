@@ -42,7 +42,8 @@ final class NowoPasswordToggleExtensionTest extends TestCase
     public function testLoadWithConfig(): void
     {
         $container = new ContainerBuilder();
-        $configs   = [
+        /** @var list<array<string, mixed>> $configs */
+        $configs = [
             [
                 'toggle'       => false,
                 'visible_icon' => 'custom:icon',
@@ -59,6 +60,7 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $this->assertTrue($container->hasParameter('nowo_password_toggle.defaults'));
         $defaults = $container->getParameter('nowo_password_toggle.defaults');
         $this->assertIsArray($defaults);
+        /* @var array{toggle: bool, visible_icon: string} $defaults */
         $this->assertFalse($defaults['toggle']);
         $this->assertSame('custom:icon', $defaults['visible_icon']);
     }
@@ -66,7 +68,8 @@ final class NowoPasswordToggleExtensionTest extends TestCase
     public function testLoadStoresConfigurationAsParameter(): void
     {
         $container = new ContainerBuilder();
-        $configs   = [
+        /** @var list<array<string, mixed>> $configs */
+        $configs = [
             [
                 'toggle'        => true,
                 'visible_label' => 'Mostrar',
@@ -78,6 +81,8 @@ final class NowoPasswordToggleExtensionTest extends TestCase
 
         $this->assertTrue($container->hasParameter('nowo_password_toggle.defaults'));
         $defaults = $container->getParameter('nowo_password_toggle.defaults');
+        $this->assertIsArray($defaults);
+        /* @var array{toggle: bool, visible_label: string, hidden_label: string} $defaults */
 
         $this->assertTrue($defaults['toggle']);
         $this->assertSame('Mostrar', $defaults['visible_label']);

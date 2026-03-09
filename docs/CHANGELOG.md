@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-03-09
+
+### Added
+
+- **README**: Demo screenshot showing the password toggle form in the main README for quick visual reference.
+
+### Changed
+
+- **Demo structure**: Renamed demo project directories for simpler paths
+  - `demo/demo-symfony6` → `demo/symfony6`
+  - `demo/demo-symfony7` → `demo/symfony7`
+  - `demo/demo-symfony8` → `demo/symfony8`
+  - `demo/demo-symfony8-php85` → `demo/symfony8-php85`
+  - Makefile and documentation updated to use the new paths (e.g. `make up symfony7`).
+
 ## [1.2.0] - 2025-12-15
 
 ### Added

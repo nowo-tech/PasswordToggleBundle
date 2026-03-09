@@ -24,7 +24,6 @@ final class NowoPasswordToggleBundleTest extends TestCase
 
         $this->assertInstanceOf(ExtensionInterface::class, $extension);
         $this->assertInstanceOf(NowoPasswordToggleExtension::class, $extension);
-        $this->assertNotNull($extension);
     }
 
     public function testGetContainerExtensionReturnsSameInstance(): void

@@ -27,7 +27,7 @@ class NowoPasswordToggleExtension extends Extension
      * and registers all bundle services with the dependency injection container.
      * It also processes the bundle configuration and stores it as container parameters.
      *
-     * @param array<string, mixed> $configs Array of configuration values from config files
+     * @param array<int, array<string, mixed>> $configs Array of configuration arrays from config files
      * @param ContainerBuilder $container The container builder instance
      */
     public function load(array $configs, ContainerBuilder $container): void

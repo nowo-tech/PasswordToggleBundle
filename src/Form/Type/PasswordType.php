@@ -28,6 +28,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
  * @copyright 2026 Nowo.tech
+ *
+ * @extends AbstractType<string>
  */
 final class PasswordType extends AbstractType
 {
@@ -103,7 +105,7 @@ final class PasswordType extends AbstractType
      * and CSS classes to render the password field with toggle functionality.
      *
      * @param FormView $view The form view to build
-     * @param FormInterface $form The form interface instance
+     * @param FormInterface<mixed> $form The form interface instance
      * @param array<string, mixed> $options The form options array
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
