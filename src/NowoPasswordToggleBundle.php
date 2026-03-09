@@ -42,6 +42,7 @@ class NowoPasswordToggleBundle extends Bundle
         }
 
         $extension = $this->extension;
+
         // Parent Bundle::$extension is ExtensionInterface|false; ensure we never return false (return type is ?ExtensionInterface)
         /** @phpstan-ignore identical.alwaysFalse */
         return $extension === false ? null : $extension;

@@ -22,6 +22,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `demo/demo-symfony8-php85` → `demo/symfony8-php85`
   - Makefile and documentation updated to use the new paths (e.g. `make up symfony7`).
 
+### Fixed
+
+- **PHPStan 2.x compatibility**: Updated configuration and code for PHPStan 2
+  - Removed deprecated `memoryLimit` and `checkMissingIterableValueType` from `phpstan.neon.dist` (use CLI `--memory-limit` and analysis level instead).
+  - Added generic type hints for Symfony Form: `@extends AbstractType<string>` and `FormInterface<string>` in `PasswordType`.
+  - Adjusted `NowoPasswordToggleBundle::getContainerExtension()` return type handling for parent `ExtensionInterface|false` property.
+  - Updated `NowoPasswordToggleExtension::load()` parameter type to `array<int, array<string, mixed>>` for config array.
+  - Test type assertions and PHPStan ignores where needed for container parameters and assertions.
+
 ## [1.2.0] - 2025-12-15
 
 ### Added
