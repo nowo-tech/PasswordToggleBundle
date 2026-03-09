@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * It is responsible for registering the form type service and any other bundle services.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 class NowoPasswordToggleExtension extends Extension
 {
@@ -27,15 +27,13 @@ class NowoPasswordToggleExtension extends Extension
      * and registers all bundle services with the dependency injection container.
      * It also processes the bundle configuration and stores it as container parameters.
      *
-     * @param array<string, mixed> $configs   Array of configuration values from config files
-     * @param ContainerBuilder     $container The container builder instance
-     *
-     * @return void
+     * @param array<string, mixed> $configs Array of configuration values from config files
+     * @param ContainerBuilder $container The container builder instance
      */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config        = $this->processConfiguration($configuration, $configs);
 
         // Store the processed configuration as container parameters
         $container->setParameter('nowo_password_toggle.defaults', $config);

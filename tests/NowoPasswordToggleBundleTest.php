@@ -13,13 +13,13 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  * Tests for NowoPasswordToggleBundle.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.com>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 final class NowoPasswordToggleBundleTest extends TestCase
 {
     public function testGetContainerExtensionReturnsInstance(): void
     {
-        $bundle = new NowoPasswordToggleBundle();
+        $bundle    = new NowoPasswordToggleBundle();
         $extension = $bundle->getContainerExtension();
 
         $this->assertInstanceOf(ExtensionInterface::class, $extension);
@@ -29,7 +29,7 @@ final class NowoPasswordToggleBundleTest extends TestCase
 
     public function testGetContainerExtensionReturnsSameInstance(): void
     {
-        $bundle = new NowoPasswordToggleBundle();
+        $bundle     = new NowoPasswordToggleBundle();
         $extension1 = $bundle->getContainerExtension();
         $extension2 = $bundle->getContainerExtension();
 
@@ -38,7 +38,7 @@ final class NowoPasswordToggleBundleTest extends TestCase
 
     public function testGetContainerExtensionAlias(): void
     {
-        $bundle = new NowoPasswordToggleBundle();
+        $bundle    = new NowoPasswordToggleBundle();
         $extension = $bundle->getContainerExtension();
 
         $this->assertInstanceOf(ExtensionInterface::class, $extension);

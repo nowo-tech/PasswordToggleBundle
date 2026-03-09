@@ -11,7 +11,7 @@ This directory contains four demo projects demonstrating the usage of the Passwo
 - Docker setup for easy development
 - Independent Docker containers for each demo
 - Symfony Web Profiler included for debugging (dev and test environments)
-- Properly configured nginx with correct PHP-FPM integration
+- FrankenPHP with HTTP on port 80 and worker mode (single php service, no nginx)
 - Attribute-based routing configuration
 
 ## Demo Projects
@@ -36,7 +36,7 @@ Each demo has its own `docker-compose.yml` and can be run independently. You can
 
 ```bash
 # Navigate to the demo directory
-cd demo/demo-symfony6
+cd demo/symfony6
 
 # Start containers
 docker-compose up -d
@@ -59,7 +59,7 @@ make install-symfony6
 
 ```bash
 # Navigate to the demo directory
-cd demo/demo-symfony7
+cd demo/symfony7
 
 # Start containers
 docker-compose up -d
@@ -82,7 +82,7 @@ make install-symfony7
 
 ```bash
 # Navigate to the demo directory
-cd demo/demo-symfony8
+cd demo/symfony8
 
 # Start containers
 docker-compose up -d
@@ -105,7 +105,7 @@ make install-symfony8
 
 ```bash
 # Navigate to the demo directory
-cd demo/demo-symfony8-php85
+cd demo/symfony8-php85
 
 # Start containers
 docker-compose up -d
@@ -130,7 +130,7 @@ Stop a specific demo:
 
 ```bash
 # Stop Symfony 6.4 demo
-cd demo/demo-symfony6
+cd demo/symfony6
 docker-compose down
 
 # Or using Makefile
@@ -149,7 +149,7 @@ Similar commands for other demos:
 
 1. **Navigate to the demo directory:**
    ```bash
-   cd demo/demo-symfony6
+   cd demo/symfony6
    ```
 
 2. **Install dependencies:**
@@ -166,7 +166,7 @@ Similar commands for other demos:
 
 1. **Navigate to the demo directory:**
    ```bash
-   cd demo/demo-symfony7
+   cd demo/symfony7
    ```
 
 2. **Install dependencies:**
@@ -183,7 +183,7 @@ Similar commands for other demos:
 
 1. **Navigate to the demo directory:**
    ```bash
-   cd demo/demo-symfony8
+   cd demo/symfony8
    ```
 
 2. **Install dependencies:**
@@ -200,7 +200,7 @@ Similar commands for other demos:
 
 1. **Navigate to the demo directory:**
    ```bash
-   cd demo/demo-symfony8-php85
+   cd demo/symfony8-php85
    ```
 
 2. **Install dependencies:**
@@ -219,44 +219,44 @@ Each demo includes:
 
 - **DemoController**: A simple controller with a form that uses the PasswordType
 - **Form Template**: A Bootstrap-styled form template showing the password toggle in action
-- **Docker Setup**: Complete Docker configuration with PHP-FPM and Nginx
-- **Dockerfile**: Custom PHP-FPM image with Composer pre-installed
+- **Docker Setup**: Single FrankenPHP service (HTTP on port 80, worker mode; no nginx)
+- **Dockerfile**: FrankenPHP (Dunglas) image with Composer pre-installed
 - **Test Suite**: Complete PHPUnit test suite to verify bundle integration
 - **Web Profiler**: Symfony Web Profiler bundle for debugging (enabled in dev and test environments)
-- **Proper Configuration**: All demos include correct nginx configuration, routing setup, and required dependencies
+- **Proper Configuration**: All demos include Caddyfile (HTTP :80, worker), routing setup, and required dependencies
 
 ## Demo Structure
 
 ```
 demo/
-├── demo-symfony6/          # Symfony 6.4 demo (Port 8001 by default, PHP 8.2)
+├── symfony6/          # Symfony 6.4 demo (Port 8001 by default, PHP 8.2)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # PHP 8.2-FPM image with Composer
-│   ├── nginx.conf          # Nginx configuration
+│   ├── Dockerfile          # FrankenPHP PHP 8.2 image with Composer
+│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
 │   ├── composer.json       # Dependencies for Symfony 6.4
 │   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
 │   └── ...
-├── demo-symfony7/          # Symfony 7.0 demo (Port 8001 by default, PHP 8.2)
+├── symfony7/          # Symfony 7.0 demo (Port 8001 by default, PHP 8.2)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # PHP 8.2-FPM image with Composer
-│   ├── nginx.conf          # Nginx configuration
+│   ├── Dockerfile          # FrankenPHP PHP 8.2 image with Composer
+│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
 │   ├── composer.json       # Dependencies for Symfony 7.0
 │   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
 │   └── ...
-├── demo-symfony8/          # Symfony 8.0 demo (Port 8001 by default, PHP 8.4)
+├── symfony8/          # Symfony 8.0 demo (Port 8001 by default, PHP 8.4)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # PHP 8.4-FPM image with Composer
-│   ├── nginx.conf          # Nginx configuration
+│   ├── Dockerfile          # FrankenPHP PHP 8.4 image with Composer
+│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
 │   ├── composer.json       # Dependencies for Symfony 8.0
 │   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
 │   └── ...
-├── demo-symfony8-php85/    # Symfony 8.0 demo with PHP 8.5 (Port 8001 by default)
+├── symfony8-php85/    # Symfony 8.0 demo with PHP 8.5 (Port 8001 by default)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # PHP 8.5-FPM image with Composer
-│   ├── nginx.conf          # Nginx configuration
+│   ├── Dockerfile          # FrankenPHP PHP 8.4 image (symfony8-php85 demo)
+│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
 │   ├── composer.json       # Dependencies for Symfony 8.0
 │   ├── .env                # Port configuration (default: 8001)
 │   ├── .env.example        # Example port configuration file
@@ -264,7 +264,7 @@ demo/
 └── Makefile                # Helper commands for all demos
 ```
 
-Each demo is completely independent with its own `docker-compose.yml` and `nginx.conf`.
+Each demo is completely independent with its own `docker-compose.yml` and FrankenPHP Caddyfile (HTTP :80, worker).
 
 ## How It Works
 
@@ -317,10 +317,10 @@ You can also customize the password field by modifying the options in each demo'
 
 Each demo includes a `.env` file with the default port configuration:
 
-- **Symfony 6.4**: Port 8001 (configured in `demo-symfony6/.env`)
-- **Symfony 7.0**: Port 8001 (configured in `demo-symfony7/.env`)
-- **Symfony 8.0**: Port 8001 (configured in `demo-symfony8/.env`)
-- **Symfony 8.0 + PHP 8.5**: Port 8001 (configured in `demo-symfony8-php85/.env`)
+- **Symfony 6.4**: Port 8001 (configured in `symfony6/.env`)
+- **Symfony 7.0**: Port 8001 (configured in `symfony7/.env`)
+- **Symfony 8.0**: Port 8001 (configured in `symfony8/.env`)
+- **Symfony 8.0 + PHP 8.5**: Port 8001 (configured in `symfony8-php85/.env`)
 
 ### Changing the Port
 
@@ -328,7 +328,7 @@ If a port is already in use, you can customize it by editing the `.env` file in 
 
 ```bash
 # Edit the .env file
-cd demo/demo-symfony6
+cd demo/symfony6
 nano .env  # or use your preferred editor
 
 # Change the PORT value
@@ -373,7 +373,7 @@ If port 8001 is already in use, you can change it by setting the `PORT` environm
 
 ```bash
 # Stop the containers first
-cd demo/demo-symfony8
+cd demo/symfony8
 docker-compose down
 
 # Start with a different port
@@ -385,7 +385,7 @@ Or edit the `.env` file in the demo directory to set a permanent port.
 ### Nginx configuration issues
 
 If you encounter "File not found" errors, make sure:
-- The nginx configuration uses the correct path: `/app/public$fastcgi_script_name`
+- FrankenPHP serves the app from `/app/public` (worker mode); access via HTTP on the port set in `.env` (default 8001).
 - The containers are running: `docker-compose ps`
 - The cache is cleared: `docker-compose exec php php bin/console cache:clear`
 
@@ -404,19 +404,19 @@ Each demo includes its own test suite to verify that the Password Toggle Bundle 
 
 ```bash
 # Run tests for Symfony 6.4 demo
-cd demo/demo-symfony6
+cd demo/symfony6
 docker-compose exec php vendor/bin/phpunit
 
 # Run tests for Symfony 7.0 demo
-cd demo/demo-symfony7
+cd demo/symfony7
 docker-compose exec php vendor/bin/phpunit
 
 # Run tests for Symfony 8.0 demo
-cd demo/demo-symfony8
+cd demo/symfony8
 docker-compose exec php vendor/bin/phpunit
 
 # Run tests for Symfony 8.0 + PHP 8.5 demo
-cd demo/demo-symfony8-php85
+cd demo/symfony8-php85
 docker-compose exec php vendor/bin/phpunit
 ```
 

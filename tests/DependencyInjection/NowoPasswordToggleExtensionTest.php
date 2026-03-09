@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  * Tests for NowoPasswordToggleExtension.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.com>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 final class NowoPasswordToggleExtensionTest extends TestCase
 {
@@ -36,24 +36,24 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $this->extension->load([], $container);
 
         // Verify that the PasswordType service is registered
-        $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
+        $this->assertTrue($container->hasDefinition(\Nowo\PasswordToggleBundle\Form\Type\PasswordType::class));
     }
 
     public function testLoadWithConfig(): void
     {
         $container = new ContainerBuilder();
-        $configs = [
-          [
-            'toggle' => false,
-            'visible_icon' => 'custom:icon',
-          ],
+        $configs   = [
+            [
+                'toggle'       => false,
+                'visible_icon' => 'custom:icon',
+            ],
         ];
 
         // Should not throw any exception even with config
         $this->extension->load($configs, $container);
 
         // Verify that the PasswordType service is registered
-        $this->assertTrue($container->hasDefinition('Nowo\\PasswordToggleBundle\\Form\\Type\\PasswordType'));
+        $this->assertTrue($container->hasDefinition(\Nowo\PasswordToggleBundle\Form\Type\PasswordType::class));
 
         // Verify that configuration is stored as parameter
         $this->assertTrue($container->hasParameter('nowo_password_toggle.defaults'));
@@ -66,12 +66,12 @@ final class NowoPasswordToggleExtensionTest extends TestCase
     public function testLoadStoresConfigurationAsParameter(): void
     {
         $container = new ContainerBuilder();
-        $configs = [
-          [
-            'toggle' => true,
-            'visible_label' => 'Mostrar',
-            'hidden_label' => 'Ocultar',
-          ],
+        $configs   = [
+            [
+                'toggle'        => true,
+                'visible_label' => 'Mostrar',
+                'hidden_label'  => 'Ocultar',
+            ],
         ];
 
         $this->extension->load($configs, $container);

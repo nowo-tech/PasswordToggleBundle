@@ -1,0 +1,27 @@
+# Single service "php" (FrankenPHP); no separate nginx (§2.4, pattern TwigInspector)
+name: password-toggle-bundle-demo-symfony-8-php85
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: password-toggle-demo-symfony8-php85-php
+    working_dir: /app
+    ports:
+      - "${PORT:-8001}:80"
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer/cache
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - APP_ENV=${APP_ENV:-dev}
+    networks:
+      - password-toggle-demo-network
+
+volumes:
+  composer-cache:
+    driver: local
+
+networks:
+  password-toggle-demo-network:
+    driver: bridge

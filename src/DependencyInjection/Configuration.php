@@ -7,6 +7,9 @@ namespace Nowo\PasswordToggleBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+use function is_array;
+use function is_string;
+
 /**
  * Configuration definition for Password Toggle Bundle.
  *
@@ -14,7 +17,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  * Users can override these defaults in their config/packages/nowo_password_toggle.yaml file.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 class Configuration implements ConfigurationInterface
 {
@@ -42,7 +45,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Icon when password is hidden (default)')
                     ->cannotBeEmpty()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_string($v) || trim($v) === '')
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || trim($v) === '')
                         ->thenInvalid('visible_icon must be a non-empty string')
                     ->end()
                 ->end()
@@ -51,7 +54,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Icon when password is visible (default)')
                     ->cannotBeEmpty()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_string($v) || trim($v) === '')
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || trim($v) === '')
                         ->thenInvalid('hidden_icon must be a non-empty string')
                     ->end()
                 ->end()
@@ -60,7 +63,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Label when password is hidden (default)')
                     ->cannotBeEmpty()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_string($v) || trim($v) === '')
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || trim($v) === '')
                         ->thenInvalid('visible_label must be a non-empty string')
                     ->end()
                 ->end()
@@ -69,7 +72,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Label when password is visible (default)')
                     ->cannotBeEmpty()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_string($v) || trim($v) === '')
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || trim($v) === '')
                         ->thenInvalid('hidden_label must be a non-empty string')
                     ->end()
                 ->end()
@@ -78,7 +81,7 @@ class Configuration implements ConfigurationInterface
                     ->info('CSS classes for toggle button (default)')
                     ->scalarPrototype()->end()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_array($v))
+                        ->ifTrue(static fn ($v): bool => !is_array($v))
                         ->thenInvalid('button_classes must be an array')
                     ->end()
                 ->end()
@@ -87,7 +90,7 @@ class Configuration implements ConfigurationInterface
                     ->info('CSS classes for container (default)')
                     ->scalarPrototype()->end()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_array($v))
+                        ->ifTrue(static fn ($v): bool => !is_array($v))
                         ->thenInvalid('toggle_container_classes must be an array')
                     ->end()
                 ->end()
@@ -108,7 +111,7 @@ class Configuration implements ConfigurationInterface
                     ->info('Invalid message (default)')
                     ->cannotBeEmpty()
                     ->validate()
-                        ->ifTrue(fn ($v) => !is_string($v) || trim($v) === '')
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || trim($v) === '')
                         ->thenInvalid('invalid_message must be a non-empty string')
                     ->end()
                 ->end()

@@ -12,7 +12,7 @@ use Symfony\Component\Config\Definition\Processor;
  * Tests for Configuration class.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 final class ConfigurationTest extends TestCase
 {
@@ -22,7 +22,7 @@ final class ConfigurationTest extends TestCase
     protected function setUp(): void
     {
         $this->configuration = new Configuration();
-        $this->processor = new Processor();
+        $this->processor     = new Processor();
     }
 
     public function testGetConfigTreeBuilder(): void
@@ -52,12 +52,12 @@ final class ConfigurationTest extends TestCase
     {
         $configs = [
             [
-                'toggle' => false,
-                'visible_icon' => 'custom:eye-off',
-                'hidden_icon' => 'custom:eye',
-                'visible_label' => 'Mostrar',
-                'hidden_label' => 'Ocultar',
-                'button_classes' => ['btn', 'btn-primary'],
+                'toggle'                   => false,
+                'visible_icon'             => 'custom:eye-off',
+                'hidden_icon'              => 'custom:eye',
+                'visible_label'            => 'Mostrar',
+                'hidden_label'             => 'Ocultar',
+                'button_classes'           => ['btn', 'btn-primary'],
                 'toggle_container_classes' => ['custom-container'],
             ],
         ];

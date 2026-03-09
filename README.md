@@ -1,10 +1,28 @@
 # Password Toggle Bundle
 
-[![CI](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/password-toggle-bundle/actions/workflows/ci.yml) [![Latest Stable Version](https://poser.pugx.org/nowo-tech/password-toggle-bundle/v)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://poser.pugx.org/nowo-tech/password-toggle-bundle/license)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![PHP Version Require](https://poser.pugx.org/nowo-tech/password-toggle-bundle/require/php)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/password-toggle-bundle)
+[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6%20%7C%207%20%7C%208-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/PasswordToggleBundle)
 
 > ⭐ **Found this project useful?** Give it a star on GitHub! It helps us maintain and improve the project.
 
 Symfony bundle providing a password form type with toggle visibility feature.
+
+![Password Toggle Bundle Demo](docs/images/demo-screenshot.png)
+
+## Documentation
+
+- [Installation](docs/INSTALLATION.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Usage](docs/USAGE.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Changelog](docs/CHANGELOG.md)
+- [Upgrading](docs/UPGRADING.md)
+- [Release](docs/RELEASE.md)
+- [Security](docs/SECURITY.md)
+- [Engram](docs/ENGRAM.md)
+
+### Additional documentation
+
+- [Branching](docs/BRANCHING.md)
 
 ## Features
 
@@ -183,7 +201,7 @@ The bundle includes four demo projects demonstrating usage with different Symfon
 - **Symfony 8.0 Demo with PHP 8.5** - Port 8001 (default, configurable via `.env`)
 
 Each demo is independent and includes:
-- Complete Docker setup with PHP-FPM and Nginx
+- Complete Docker setup with FrankenPHP (HTTP on port 80, worker mode; see [FrankenPHP worker](https://frankenphp.dev/docs/worker/))
 - Comprehensive test suite
 - Port configuration via `.env` file
 - Symfony Web Profiler for debugging (dev and test environments)

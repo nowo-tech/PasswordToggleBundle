@@ -40,7 +40,14 @@
     "require-dev": {
         "phpunit/phpunit": "^10.0",
         "friendsofphp/php-cs-fixer": "^3.0",
+        "rector/rector": "^2.0",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
         "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
+    },
+    "archive": {
+        "exclude": ["/demo"]
     },
     "autoload": {
         "psr-4": {
@@ -62,20 +69,30 @@
     "prefer-stable": true,
     "scripts": {
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml",
+        "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml --coverage-text",
         "cs-check": "php-cs-fixer fix --dry-run --diff",
         "cs-fix": "php-cs-fixer fix",
+        "rector": "rector process",
+        "rector-dry": "rector process --dry-run",
+        "phpstan": "phpstan analyse --memory-limit=512M",
         "qa": [
             "@cs-check",
             "@test"
-        ]
+        ],
+        "update": "composer update",
+        "validate": "composer validate --strict"
     },
     "scripts-descriptions": {
         "test": "Run PHPUnit tests",
         "test-coverage": "Run PHPUnit tests with code coverage",
         "cs-check": "Check code style with PHP-CS-Fixer",
         "cs-fix": "Fix code style with PHP-CS-Fixer",
-        "qa": "Run all quality assurance checks"
+        "rector": "Apply Rector refactoring",
+        "rector-dry": "Run Rector in dry-run mode",
+        "phpstan": "Run PHPStan static analysis",
+        "qa": "Run all quality assurance checks",
+        "update": "Update composer.lock",
+        "validate": "Validate composer.json"
     }
 }
 

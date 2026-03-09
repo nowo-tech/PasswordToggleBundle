@@ -7,14 +7,15 @@ namespace Nowo\PasswordToggleBundle\Tests\Form\Type;
 use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\{FormInterface, FormView};
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Tests for PasswordType form type.
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.com>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 final class PasswordTypeTest extends TestCase
 {
@@ -28,12 +29,12 @@ final class PasswordTypeTest extends TestCase
     public function testConstructorWithDefaults(): void
     {
         $defaults = [
-            'toggle' => false,
-            'visible_icon' => 'custom:eye-off',
-            'hidden_icon' => 'custom:eye',
-            'visible_label' => 'Mostrar',
-            'hidden_label' => 'Ocultar',
-            'button_classes' => ['btn', 'btn-primary'],
+            'toggle'                   => false,
+            'visible_icon'             => 'custom:eye-off',
+            'hidden_icon'              => 'custom:eye',
+            'visible_label'            => 'Mostrar',
+            'hidden_label'             => 'Ocultar',
+            'button_classes'           => ['btn', 'btn-primary'],
             'toggle_container_classes' => ['custom-container'],
         ];
 
@@ -55,17 +56,17 @@ final class PasswordTypeTest extends TestCase
     public function testConfigureOptionsUsesInjectedDefaults(): void
     {
         $defaults = [
-            'toggle' => true,
-            'visible_icon' => 'custom:icon-off',
-            'hidden_icon' => 'custom:icon',
-            'visible_label' => 'Show Custom',
-            'hidden_label' => 'Hide Custom',
-            'button_classes' => ['custom-btn'],
+            'toggle'                   => true,
+            'visible_icon'             => 'custom:icon-off',
+            'hidden_icon'              => 'custom:icon',
+            'visible_label'            => 'Show Custom',
+            'hidden_label'             => 'Hide Custom',
+            'button_classes'           => ['custom-btn'],
             'toggle_container_classes' => ['custom-container'],
-            'use_toggle_form_theme' => false,
-            'always_empty' => false,
-            'trim' => true,
-            'invalid_message' => 'Custom invalid message',
+            'use_toggle_form_theme'    => false,
+            'always_empty'             => false,
+            'trim'                     => true,
+            'invalid_message'          => 'Custom invalid message',
         ];
 
         $formType = new PasswordType($defaults);
@@ -90,7 +91,7 @@ final class PasswordTypeTest extends TestCase
     public function testConfigureOptionsOverridesDefaults(): void
     {
         $defaults = [
-            'toggle' => false,
+            'toggle'       => false,
             'visible_icon' => 'default:icon',
         ];
 
@@ -100,7 +101,7 @@ final class PasswordTypeTest extends TestCase
 
         // Override defaults when resolving
         $resolved = $resolver->resolve([
-            'toggle' => true,
+            'toggle'       => true,
             'visible_icon' => 'override:icon',
         ]);
 
@@ -115,9 +116,9 @@ final class PasswordTypeTest extends TestCase
 
         // Test valid types
         $resolved = $resolver->resolve([
-            'toggle' => true,
+            'toggle'         => true,
             'button_classes' => ['class1', 'class2'],
-            'visible_icon' => 'icon:test',
+            'visible_icon'   => 'icon:test',
         ]);
 
         $this->assertTrue($resolved['toggle']);
@@ -167,13 +168,13 @@ final class PasswordTypeTest extends TestCase
         $this->formType->configureOptions($resolver);
 
         $customOptions = [
-          'toggle' => false,
-          'visible_icon' => 'custom:eye-off',
-          'hidden_icon' => 'custom:eye',
-          'visible_label' => 'Mostrar',
-          'hidden_label' => 'Ocultar',
-          'button_classes' => ['custom-button'],
-          'toggle_container_classes' => ['custom-container'],
+            'toggle'                   => false,
+            'visible_icon'             => 'custom:eye-off',
+            'hidden_icon'              => 'custom:eye',
+            'visible_label'            => 'Mostrar',
+            'hidden_label'             => 'Ocultar',
+            'button_classes'           => ['custom-button'],
+            'toggle_container_classes' => ['custom-container'],
         ];
 
         $resolved = $resolver->resolve($customOptions);
@@ -193,13 +194,13 @@ final class PasswordTypeTest extends TestCase
         $form = $this->createMock(FormInterface::class);
 
         $options = [
-          'toggle' => true,
-          'toggle_container_classes' => ['form-password-toggle', 'custom'],
-          'button_classes' => ['input-group-text', 'cursor-pointer'],
-          'visible_icon' => 'tabler:eye-off',
-          'hidden_icon' => 'tabler:eye',
-          'visible_label' => 'Show',
-          'hidden_label' => 'Hide',
+            'toggle'                   => true,
+            'toggle_container_classes' => ['form-password-toggle', 'custom'],
+            'button_classes'           => ['input-group-text', 'cursor-pointer'],
+            'visible_icon'             => 'tabler:eye-off',
+            'hidden_icon'              => 'tabler:eye',
+            'visible_label'            => 'Show',
+            'hidden_label'             => 'Hide',
         ];
 
         $this->formType->buildView($view, $form, $options);
@@ -219,13 +220,13 @@ final class PasswordTypeTest extends TestCase
         $form = $this->createMock(FormInterface::class);
 
         $options = [
-          'toggle' => false,
-          'toggle_container_classes' => [],
-          'button_classes' => [],
-          'visible_icon' => 'tabler:eye-off',
-          'hidden_icon' => 'tabler:eye',
-          'visible_label' => 'Show',
-          'hidden_label' => 'Hide',
+            'toggle'                   => false,
+            'toggle_container_classes' => [],
+            'button_classes'           => [],
+            'visible_icon'             => 'tabler:eye-off',
+            'hidden_icon'              => 'tabler:eye',
+            'visible_label'            => 'Show',
+            'hidden_label'             => 'Hide',
         ];
 
         $this->formType->buildView($view, $form, $options);
@@ -241,13 +242,13 @@ final class PasswordTypeTest extends TestCase
         $form = $this->createMock(FormInterface::class);
 
         $options = [
-          'toggle' => true,
-          'toggle_container_classes' => ['class1', 'class2'],
-          'button_classes' => ['btn', 'btn-primary'],
-          'visible_icon' => 'custom:eye-off',
-          'hidden_icon' => 'custom:eye',
-          'visible_label' => 'Mostrar',
-          'hidden_label' => 'Ocultar',
+            'toggle'                   => true,
+            'toggle_container_classes' => ['class1', 'class2'],
+            'button_classes'           => ['btn', 'btn-primary'],
+            'visible_icon'             => 'custom:eye-off',
+            'hidden_icon'              => 'custom:eye',
+            'visible_label'            => 'Mostrar',
+            'hidden_label'             => 'Ocultar',
         ];
 
         $this->formType->buildView($view, $form, $options);

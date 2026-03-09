@@ -24,4 +24,7 @@ coverage.xml
 # Cache
 var/
 
+# Environment (§2.5: do not commit)
 .env
+.env.local
+.env.*.local

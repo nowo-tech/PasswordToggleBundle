@@ -1,0 +1,16 @@
+# Upgrading
+
+This document describes how to upgrade between major versions of Password Toggle Bundle.
+
+## 1.x
+
+### 1.2.0
+
+- Global configuration file `config/packages/nowo_password_toggle.yaml` is supported; demos and new Flex installs use it. No breaking changes if you were using defaults.
+
+### 1.0.0
+
+First stable release.
+
+- **Requirements:** PHP >= 8.1, Symfony ^6.0 || ^7.0 || ^8.0.
+- **Optional:** symfony/ux-icons ^2.0 || ^3.0 for icon support.

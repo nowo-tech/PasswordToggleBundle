@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * - Full accessibility support (ARIA labels)
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
- * @copyright 2025 Nowo.tech
+ * @copyright 2026 Nowo.tech
  */
 class NowoPasswordToggleBundle extends Bundle
 {
@@ -37,7 +37,7 @@ class NowoPasswordToggleBundle extends Bundle
      */
     public function getContainerExtension(): ?ExtensionInterface
     {
-        if (null === $this->extension) {
+        if ($this->extension === null) {
             $this->extension = new NowoPasswordToggleExtension();
         }
 
