@@ -750,6 +750,14 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *     trim?: bool, // Trim whitespace (default) // Default: false
  *     invalid_message?: scalar|null, // Invalid message (default) // Default: "The password is invalid."
  * }
+ * @psalm-type NowoTwigInspectorConfig = array{
+ *     enabled_extensions?: list<scalar|null>,
+ *     excluded_templates?: list<scalar|null>,
+ *     excluded_blocks?: list<scalar|null>,
+ *     enable_metrics?: bool, // Enable collection of template usage metrics in DataCollector // Default: true
+ *     optimize_output_buffering?: bool, // Skip output buffering when inspector is disabled (performance optimization) // Default: true
+ *     cookie_name?: scalar|null, // Name of the cookie used to enable/disable the inspector // Default: "twig_inspector_is_active"
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -767,6 +775,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         ux_icons?: UxIconsConfig,
  *         web_profiler?: WebProfilerConfig,
  *         nowo_password_toggle?: NowoPasswordToggleConfig,
+ *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -786,6 +795,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
  *         ux_icons?: UxIconsConfig,
  *         web_profiler?: WebProfilerConfig,
  *         nowo_password_toggle?: NowoPasswordToggleConfig,
+ *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

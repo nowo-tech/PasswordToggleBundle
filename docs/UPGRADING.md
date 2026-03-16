@@ -4,6 +4,10 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.2
+
+- No breaking changes. Demos now document FrankenPHP-based setup; see [Demo with FrankenPHP](DEMO-FRANKENPHP.md) if you run or adapt the bundled demos.
+
 ### 1.2.1
 
 - **Demo paths**: If you reference demo directories in scripts or CI, update paths from `demo/demo-symfony6` etc. to `demo/symfony6`, `demo/symfony7`, `demo/symfony8`, `demo/symfony8-php85`.

@@ -20,6 +20,9 @@ services:
       - APP_ENV=dev
       - APP_DEBUG=1
       - APP_SECRET=${APP_SECRET:-demo-secret}
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     networks:
       - password-toggle-demo-network
 

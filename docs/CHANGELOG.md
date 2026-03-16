@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-03-16
+
+### Added
+
+- **Demo with FrankenPHP**: New documentation and setup for running demos with FrankenPHP (development and production)
+  - Added [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md) with instructions for FrankenPHP, Caddyfile, and PHP dev ini
+  - README links to the new demo doc for development and production usage
+
+### Changed
+
+- **Demo configurations and development setup**: Updated all demo projects for consistent development experience
+  - Docker and docker-compose aligned across symfony6, symfony7, symfony8, and symfony8-php85 demos
+  - FrankenPHP Caddyfile and PHP dev ini configuration in each demo
+  - Demo `.env.test` and `.env.dev` updates where applicable
+  - Twig dev package configuration for demos
+  - Root Makefile, composer, and .gitignore adjustments
+
 ## [1.2.1] - 2026-03-09
 
 ### Added

@@ -2,6 +2,9 @@
     "nowo-tech/password-toggle-bundle": {
         "version": "v1.1.0"
     },
+    "nowo-tech/twig-inspector-bundle": {
+        "version": "v1.0.3"
+    },
     "phpunit/phpunit": {
         "version": "10.5",
         "recipe": {
