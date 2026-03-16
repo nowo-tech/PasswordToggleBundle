@@ -10,6 +10,7 @@ Symfony bundle providing a password form type with toggle visibility feature.
 
 ## Documentation
 
+- [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md)
 - [Installation](docs/INSTALLATION.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Usage](docs/USAGE.md)

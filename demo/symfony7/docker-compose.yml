@@ -11,10 +11,15 @@ services:
       - "${PORT:-8001}:80"
     volumes:
       - .:/app
+      - ../..:/var/password-toggle-bundle
+      - ./docker/frankenphp/Caddyfile.dev:/etc/frankenphp/Caddyfile.dev
+      - ./docker/php-dev.ini:/usr/local/etc/php/conf.d/99-dev.ini:ro
       - composer-cache:/root/.composer/cache
     environment:
       - COMPOSER_ALLOW_SUPERUSER=1
-      - APP_ENV=${APP_ENV:-dev}
+      - APP_ENV=dev
+      - APP_DEBUG=1
+      - APP_SECRET=${APP_SECRET:-demo-secret}
     networks:
       - password-toggle-demo-network
 

@@ -110,7 +110,7 @@ qa: ensure-up
 release-check: cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
 
 release-check-demos:
-	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-verify 2>/dev/null || true; else true; fi
+	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-check 2>/dev/null || true; else true; fi
 
 # Validate composer and sync lock (no install)
 composer-sync: ensure-up

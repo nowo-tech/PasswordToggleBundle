@@ -47,7 +47,7 @@
         "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
     },
     "archive": {
-        "exclude": ["/demo"]
+        "exclude": ["/demo", "/.cursor"]
     },
     "autoload": {
         "psr-4": {
