@@ -1,0 +1,8 @@
+{
+    "bundles": {
+        "Nowo\\PasswordToggleBundle\\NowoPasswordToggleBundle": ["all"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/"
+    }
+}

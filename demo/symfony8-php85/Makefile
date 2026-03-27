@@ -62,6 +62,6 @@ cache-clear: ensure-up
 	docker-compose exec php php bin/console cache:clear
 
 update-bundle: ensure-up
-	docker-compose exec php composer update nowo-tech/password-toggle-bundle --no-interaction
-	docker-compose exec php php bin/console cache:clear
+	docker-compose exec php composer dump-autoload --optimize
+	docker-compose exec php php bin/console cache:clear --env=dev --no-warmup || true
 	@echo "Bundle updated. Reload the page in the browser."

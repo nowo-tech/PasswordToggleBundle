@@ -10,7 +10,7 @@ get-port = $(shell grep -E '^PORT=' $(1)/.env 2>/dev/null | cut -d '=' -f2 || ec
 # Helper function to get demo version name
 get-version = $(shell echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/')
 
-.PHONY: help clean test-all test-coverage-all verify-all release-check release-verify
+.PHONY: help clean test-all test-coverage-all verify-all update-bundle-all release-check release-verify
 .PHONY: $(foreach demo,$(DEMOS),up-$(demo) down-$(demo) install-$(demo) shell-$(demo) logs-$(demo) test-$(demo) test-coverage-$(demo))
 .PHONY: up down install test shell logs test-coverage
 
@@ -190,6 +190,15 @@ test-coverage-all:
 	@$(foreach demo,$(DEMOS),$(MAKE) test-coverage-$(demo);)
 	@echo "✅ All coverage tests completed!"
 
+# Refresh bundle code in all demos before verification/tests
+update-bundle-all:
+	@echo "🔄 Updating bundle code in all demos..."
+	@for demo in $(DEMOS); do \
+		echo "Updating $$demo..."; \
+		$(MAKE) -C $$demo update-bundle; \
+	done
+	@echo "✅ Bundle code refreshed in all demos."
+
 # Get demo name from first argument or DEMO variable
 DEMO_NAME := $(if $(DEMO),$(DEMO),$(firstword $(filter-out $@,$(MAKECMDGOALS))))
 
@@ -287,8 +296,8 @@ verify-all:
 		echo "✅ All demos verified successfully"; \
 	fi
 
-# release-check: test-coverage-all, then release-verify (bundle has TS; test-ts-all optional in demos)
-release-check: test-coverage-all release-verify
+# release-check: refresh bundle code, test-coverage-all, then release-verify
+release-check: update-bundle-all test-coverage-all release-verify
 	@echo "✅ All demos passed release-check."
 
 # Pre-release: for each demo up → sleep → healthcheck HTTP 200 → down (§5.4.1, invoked by root release-check)

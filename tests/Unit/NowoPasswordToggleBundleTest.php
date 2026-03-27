@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle\Tests;
 
+use Nowo\PasswordToggleBundle\DependencyInjection\Compiler\TwigPathsPass;
 use Nowo\PasswordToggleBundle\DependencyInjection\NowoPasswordToggleExtension;
 use Nowo\PasswordToggleBundle\NowoPasswordToggleBundle;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 /**
@@ -17,6 +19,24 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
  */
 final class NowoPasswordToggleBundleTest extends TestCase
 {
+    public function testBuildRegistersTwigPathsCompilerPass(): void
+    {
+        $bundle    = new NowoPasswordToggleBundle();
+        $container = new ContainerBuilder();
+
+        $bundle->build($container);
+
+        $hasTwigPathsPass = false;
+        foreach ($container->getCompilerPassConfig()->getPasses() as $pass) {
+            if ($pass instanceof TwigPathsPass) {
+                $hasTwigPathsPass = true;
+                break;
+            }
+        }
+
+        $this->assertTrue($hasTwigPathsPass);
+    }
+
     public function testGetContainerExtensionReturnsInstance(): void
     {
         $bundle    = new NowoPasswordToggleBundle();

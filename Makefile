@@ -6,7 +6,7 @@ COMPOSE_FILE := docker-compose.yml
 COMPOSE := docker-compose -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
-.PHONY: help up down build shell install test test-coverage cs-check cs-fix rector rector-dry phpstan qa release-check release-check-demos composer-sync clean update validate assets setup-hooks
+.PHONY: help up down build shell install test test-coverage coverage-php-percent cs-check cs-fix rector rector-dry phpstan qa release-check release-check-demos composer-sync clean update validate assets setup-hooks
 
 # Default target
 help:
@@ -80,7 +80,8 @@ test: ensure-up
 
 # Run tests with coverage (no -T so coverage is shown in console with colors)
 test-coverage: ensure-up
-	$(COMPOSE) exec $(SERVICE_PHP) composer test-coverage
+	$(COMPOSE) exec $(SERVICE_PHP) composer test-coverage | tee coverage-php.txt
+	./.scripts/php-coverage-percent.sh coverage-php.txt
 
 # Check code style
 cs-check: ensure-up
@@ -107,7 +108,7 @@ qa: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer qa
 
 # Pre-release checks (no demos healthcheck if demo/Makefile has no release-verify; optional)
-release-check: cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
+release-check: ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
 
 release-check-demos:
 	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-check 2>/dev/null || true; else true; fi

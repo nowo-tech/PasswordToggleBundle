@@ -5,7 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Table of contents
+
+- [[Unreleased]](#unreleased)
+- [[1.2.2] - 2026-03-16](#122---2026-03-16)
+- [[1.2.1] - 2026-03-09](#121---2026-03-09)
+- [[1.2.0] - 2025-12-15](#120---2025-12-15)
+- [[1.1.1] - 2024-12-12](#111---2024-12-12)
+- [[1.1.0] - 2024-12-12](#110---2024-12-12)
+- [[1.0.0] - 2024-12-11](#100---2024-12-11)
+
 ## [Unreleased]
+
+### Documentation
+
+- **README**: Clarified toggle implementation (inline handlers, no Stimulus) vs “JavaScript-free”; documented that **Symfony UX Icons** is required for the default `ux_icon()` template but is `composer suggest`ed. **Demo projects**: dev demos use **`Caddyfile.dev`** (no worker) via entrypoint when `APP_ENV=dev`, with link to [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
+- **DEMO-FRANKENPHP.md**: `bundles.php` example includes **UXIconsBundle** and **TwigInspectorBundle** like `demo/symfony8`.
+- **INSTALLATION.md**: Clarified **symfony/ux-icons** as required for the default template (bundle lists it as `suggest` only).
 
 ## [1.2.2] - 2026-03-16
 

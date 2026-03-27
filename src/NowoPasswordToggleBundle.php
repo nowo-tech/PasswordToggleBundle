@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle;
 
+use Nowo\PasswordToggleBundle\DependencyInjection\Compiler\TwigPathsPass;
 use Nowo\PasswordToggleBundle\DependencyInjection\NowoPasswordToggleExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -26,6 +28,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class NowoPasswordToggleBundle extends Bundle
 {
+    public function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new TwigPathsPass());
+    }
+
     /**
      * Overridden to allow for the custom extension alias.
      *

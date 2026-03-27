@@ -1,5 +1,14 @@
 # Usage
 
+## Table of contents
+
+- [Basic usage](#basic-usage)
+- [With options](#with-options)
+- [Disabling the toggle](#disabling-the-toggle)
+- [Styling](#styling)
+- [Overriding bundle templates](#overriding-bundle-templates)
+- [See also](#see-also)
+
 ## Basic usage
 
 Use the `PasswordType` from the bundle in your form builders:
@@ -47,6 +56,31 @@ When `toggle` is `false`, the field renders as a standard password input, compat
 - **Option 3:** Style the classes yourself: `.input-group-text.cursor-pointer`, `.form-password-toggle`, etc.
 
 See the main [README](../../README.md#styling) for more styling details.
+
+## Overriding bundle templates
+
+The bundle registers its Twig views so that `@NowoPasswordToggleBundle/...` works, and it adds its view path **after** the application paths. Your overrides in **`templates/bundles/NowoPasswordToggleBundle/`** are therefore checked first.
+
+**Using the bundle's form theme:** add the bundle's widget to your form themes (e.g. in `config/packages/twig.yaml`):
+
+```yaml
+twig:
+  form_themes:
+    - '@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig'
+```
+
+**To override:** create a file under `templates/bundles/NowoPasswordToggleBundle/` with the same relative path as in the bundle; Twig will use your copy instead of the bundle's.
+
+
+**Example:** to override the password toggle widget, create `templates/bundles/NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig`. You can copy the original from `vendor/nowo-tech/password-toggle-bundle/src/Resources/views/Form/toggle_password_widget.html.twig` and adjust as needed.
+
+**Templates you can override:**
+
+| Path (relative to `Resources/views/`) | Purpose |
+|--------------------------------------|---------|
+| `Form/toggle_password_widget.html.twig` | Form widget for the password field with visibility toggle. |
+
+After adding or changing overrides, clear the Twig cache if needed: `php bin/console cache:clear`.
 
 ## See also
 

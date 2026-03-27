@@ -48,17 +48,18 @@ The demo applications are configured for **local development and debugging**:
 - **Symfony Web Profiler** — enabled in `dev` and `test` environments.
 - **Password Toggle Bundle** (`Nowo\PasswordToggleBundle\NowoPasswordToggleBundle`) — the bundle under test; enabled in the demos.
 
-Example `config/bundles.php` (Symfony 8 demo):
+Example `config/bundles.php` (aligned with **demo/symfony8**):
 
 ```php
 <?php
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class       => ['all' => true],
-    Symfony\Bundle\TwigBundle\TwigBundle::class                  => ['all' => true],
+    Symfony\Bundle\TwigBundle\TwigBundle::class                 => ['all' => true],
+    Symfony\UX\Icons\UXIconsBundle::class                       => ['all' => true],
+    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class   => ['dev' => true, 'test' => true],
     Nowo\PasswordToggleBundle\NowoPasswordToggleBundle::class   => ['all' => true],
-    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class     => ['dev' => true, 'test' => true],
-    // ...
+    Nowo\TwigInspectorBundle\NowoTwigInspectorBundle::class     => ['dev' => true, 'test' => true],
 ];
 ```
 

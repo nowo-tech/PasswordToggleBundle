@@ -7,7 +7,7 @@ This guide covers installing Password Toggle Bundle in a Symfony application.
 - **PHP** >= 8.1, < 8.6
 - **Symfony** ^6.0 || ^7.0 || ^8.0
 - **symfony/form**, **symfony/framework-bundle**, **symfony/twig-bundle**
-- **symfony/ux-icons** ^2.0 || ^3.0 (optional, for icon support)
+- **symfony/ux-icons** ^2.0 || ^3.0 — **required for the default Twig widget** (`ux_icon()`). The bundle only `suggest`s it; run `composer require symfony/ux-icons` unless you override the form theme to avoid `ux_icon()`.
 
 ## Install with Composer
 
@@ -36,7 +36,17 @@ return [
 ];
 ```
 
-2. **Create configuration** (optional). Create `config/packages/nowo_password_toggle.yaml` with your preferred defaults. See [CONFIGURATION.md](CONFIGURATION.md) for all options.
+2. **Add the form theme** so the password toggle widget is used. In `config/packages/twig.yaml` add the bundle's widget to `form_themes`:
+
+   ```yaml
+   twig:
+     form_themes:
+       - '@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig'
+   ```
+
+   You can override this template in your app by placing a copy in `templates/bundles/NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig`. See [USAGE.md](USAGE.md#overriding-bundle-templates).
+
+3. **Create configuration** (optional). Create `config/packages/nowo_password_toggle.yaml` with your preferred defaults. See [CONFIGURATION.md](CONFIGURATION.md) for all options.
 
 ## Next steps
 

@@ -20,7 +20,9 @@
         "symfony/web-profiler-bundle": "^8.0"
     },
     "require-dev": {
+        "nowo-tech/twig-inspector-bundle": "v1.0.3",
         "phpunit/phpunit": "^10.0",
+        "symfony/debug-bundle": "^8.0",
         "symfony/browser-kit": "^8.0",
         "symfony/css-selector": "^8.0"
     },
@@ -82,7 +84,7 @@
     "repositories": [
         {
             "type": "path",
-            "url": "../../",
+            "url": "/var/password-toggle-bundle",
             "options": {
                 "symlink": true
             }

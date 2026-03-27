@@ -2,6 +2,16 @@
 
 This project follows a simplified Git Flow workflow.
 
+## Table of contents
+
+- [Branch Types](#branch-types)
+- [Workflow Diagram](#workflow-diagram)
+- [Creating Branches](#creating-branches)
+- [Versioning](#versioning)
+- [Tagging Releases](#tagging-releases)
+- [Branch Protection Rules (GitHub)](#branch-protection-rules-github)
+- [Commit Message Convention](#commit-message-convention)
+
 ## Branch Types
 
 | Branch | Purpose | Base | Merges to |

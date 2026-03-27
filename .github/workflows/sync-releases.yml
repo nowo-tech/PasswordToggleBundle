@@ -1,0 +1,63 @@
+name: Sync Releases
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  sync-releases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync missing/incomplete releases for v* tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          tags="$(git tag -l 'v*')"
+          if [ -z "${tags}" ]; then
+            echo "No v* tags found."
+            exit 0
+          fi
+
+          for tag in ${tags}; do
+            echo "Processing ${tag}..."
+            release_json="$(gh release view "${tag}" --json tagName,body 2>/dev/null || true)"
+            tag_message="$(git tag -l --format='%(contents)' "${tag}" | sed '/^[[:space:]]*$/d' || true)"
+            [ -z "${tag_message}" ] && tag_message="Release ${tag}"
+
+            if [ ! -f docs/CHANGELOG.md ]; then
+              changelog_block=""
+            else
+              version="${tag#v}"
+              changelog_block="$(awk -v ver="${version}" '
+                BEGIN {capture=0}
+                $0 ~ "^## \\[" ver "\\]" {capture=1}
+                capture {print}
+                capture && $0 ~ "^## \\[" && $0 !~ "^## \\[" ver "\\]" {exit}
+              ' docs/CHANGELOG.md | sed '$d' || true)"
+            fi
+
+            body="${tag_message}"
+            if [ -n "${changelog_block}" ]; then
+              body="${body}\n\n${changelog_block}"
+            fi
+
+            if [ -z "${release_json}" ]; then
+              gh release create "${tag}" --title "Release ${tag}" --notes "${body}"
+              continue
+            fi
+
+            current_body="$(printf '%s' "${release_json}" | jq -r '.body // ""')"
+            if [ -z "${current_body}" ] || [ "${current_body}" = "null" ]; then
+              gh release edit "${tag}" --title "Release ${tag}" --notes "${body}"
+            fi
+          done
