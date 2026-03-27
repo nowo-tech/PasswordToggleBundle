@@ -6,6 +6,7 @@ namespace Nowo\PasswordToggleBundle\Tests\DependencyInjection\Compiler;
 
 use Nowo\PasswordToggleBundle\DependencyInjection\Compiler\TwigPathsPass;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 
@@ -31,7 +32,7 @@ final class TwigPathsPassTest extends TestCase
     public function testProcessAddsPathToNativeFilesystemLoaderDefinition(): void
     {
         $container = new ContainerBuilder();
-        $container->setDefinition('twig.loader.native_filesystem', new Definition(\stdClass::class));
+        $container->setDefinition('twig.loader.native_filesystem', new Definition(stdClass::class));
         $pass = new TwigPathsPass();
 
         $pass->process($container);
@@ -48,7 +49,7 @@ final class TwigPathsPassTest extends TestCase
     public function testProcessUsesNativeLoaderAliasWhenPresent(): void
     {
         $container = new ContainerBuilder();
-        $container->setDefinition('custom.loader', new Definition(\stdClass::class));
+        $container->setDefinition('custom.loader', new Definition(stdClass::class));
         $container->setAlias('twig.loader.native', 'custom.loader');
         $pass = new TwigPathsPass();
 
@@ -63,7 +64,7 @@ final class TwigPathsPassTest extends TestCase
     public function testProcessUsesNativeLoaderDefinitionWhenPresent(): void
     {
         $container = new ContainerBuilder();
-        $container->setDefinition('twig.loader.native', new Definition(\stdClass::class));
+        $container->setDefinition('twig.loader.native', new Definition(stdClass::class));
         $pass = new TwigPathsPass();
 
         $pass->process($container);
