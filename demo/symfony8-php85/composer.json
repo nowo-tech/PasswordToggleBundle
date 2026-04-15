@@ -3,9 +3,11 @@
     "description": "Demo project for Password Toggle Bundle - Symfony 8.0 with PHP 8.5",
     "type": "project",
     "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=8.2,<8.6",
-        "nowo-tech/password-toggle-bundle": "^1.2.0",
+        "nowo-tech/password-toggle-bundle": "dev-main as 1.2.99",
         "symfony/console": "^8.0",
         "symfony/dotenv": "^8.0",
         "symfony/flex": "^2.0",

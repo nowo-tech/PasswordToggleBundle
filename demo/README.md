@@ -358,6 +358,8 @@ PORT=8080 docker-compose up -d
 
 Make sure the bundle is properly linked. The demos use a path repository to link to the parent bundle. If you're running this outside the bundle directory, you may need to adjust the repository path in `composer.json`.
 
+If Composer reports that the path repository has higher priority but `dev-main` does not satisfy `^1.2.0`: the demos require the bundle as `dev-main as 1.2.99` (inline alias) plus `minimum-stability: dev` and `prefer-stable: true`, so the mounted source satisfies the same semver range as a tagged release. Without that, Composer prefers the canonical path package and cannot merge it with the Packagist constraint.
+
 ### PHP version compatibility
 
 Make sure you're using the correct PHP version for each demo:
