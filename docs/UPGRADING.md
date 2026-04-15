@@ -4,6 +4,11 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.3
+
+- **Twig overrides**: The bundle now registers its Twig paths so that **application** overrides under `templates/bundles/NowoPasswordToggleBundle/` take precedence over the bundle templates. If you relied on the opposite order (unlikely), adjust your templates or copy the bundle widget into your project.
+- **Demos / Docker**: If you copied demo `composer.json`, use the `dev-main as 1.2.99` constraint (and `minimum-stability` / `prefer-stable`) when using a **path** repository for the bundle, or Composer will not resolve `^1.2.0` against the mounted source. Applications consuming the package from Packagist are unchanged.
+
 ### 1.2.2
 
 - No breaking changes. Demos now document FrankenPHP-based setup; see [Demo with FrankenPHP](DEMO-FRANKENPHP.md) if you run or adapt the bundled demos.

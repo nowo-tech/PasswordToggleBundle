@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.3] - 2026-04-15](#123---2026-04-15)
 - [[1.2.2] - 2026-03-16](#122---2026-03-16)
 - [[1.2.1] - 2026-03-09](#121---2026-03-09)
 - [[1.2.0] - 2025-12-15](#120---2025-12-15)
@@ -17,11 +18,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Documentation
+## [1.2.3] - 2026-04-15
 
-- **README**: Clarified toggle implementation (inline handlers, no Stimulus) vs “JavaScript-free”; documented that **Symfony UX Icons** is required for the default `ux_icon()` template but is `composer suggest`ed. **Demo projects**: dev demos use **`Caddyfile.dev`** (no worker) via entrypoint when `APP_ENV=dev`, with link to [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
-- **DEMO-FRANKENPHP.md**: `bundles.php` example includes **UXIconsBundle** and **TwigInspectorBundle** like `demo/symfony8`.
-- **INSTALLATION.md**: Clarified **symfony/ux-icons** as required for the default template (bundle lists it as `suggest` only).
+### Added
+
+- **Twig template override order**: Compiler pass `TwigPathsPass` registers the bundle Twig namespace on the native loader **after** the application paths, so overrides in `templates/bundles/NowoPasswordToggleBundle/` are used before the bundle defaults.
+- **Tests**: Unit tests under `tests/Unit/` (including `TwigPathsPassTest`); integration placeholder under `tests/Integration/`.
+- **GitHub**: Issue templates (bug, feature, support), pull request template, `CODEOWNERS`, workflows (`sync-releases`, `stale`, `pr-lint`), Dependabot and Copilot instructions updates.
+
+### Fixed
+
+- **Demo Composer path repository**: Demos declare the bundle as `dev-main as 1.2.99` with `minimum-stability: dev` and `prefer-stable: true`, so the canonical **path** repository (`/var/password-toggle-bundle`) satisfies the same semver intent as `^1.2.x` and `composer install` works inside Docker. Documented in [demo/README.md](../demo/README.md) troubleshooting.
+
+### Changed
+
+- **Documentation**: README (toggle / UX Icons / `Caddyfile.dev` in dev), [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md) (bundles example with UX Icons and Twig Inspector), [INSTALLATION.md](INSTALLATION.md) (UX Icons and default template), plus edits to CONTRIBUTING, BRANCHING, USAGE, SECURITY, ENGRAM.
+- **Development**: Cursor rules, `.cursorignore`, Makefile and demo Makefiles, demo `.env.example` / docker-compose alignment, Flex recipe manifest path, PHPUnit config and coverage script.
 
 ## [1.2.2] - 2026-03-16
 
