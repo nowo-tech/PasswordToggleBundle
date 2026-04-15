@@ -25,8 +25,9 @@ up:
 	@sleep 5
 	@echo "Installing dependencies..."
 	@docker-compose exec -T -e COMPOSER_MEMORY_LIMIT=-1 php composer install --no-interaction
-	@echo "App ready (see .env for PORT)."
-
+	@PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | tr -d '\r'); \
+	[ -z "$$PORT" ] && PORT=$$(grep "^PORT=" .env.example 2>/dev/null | cut -d= -f2 | tr -d '\r'); \
+	echo "Demo started at: http://localhost:$$PORT"
 down:
 	docker-compose down
 
