@@ -34,7 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class PasswordType extends AbstractType
 {
-    private IconSupportChecker $iconSupportChecker;
+    private readonly IconSupportChecker $iconSupportChecker;
 
     /**
      * Constructor.

@@ -11,8 +11,10 @@
 ```bash
 git add -A
 git status   # review
-git commit -m "Release 1.2.5: fix ux:icons:lock for UX Icons 3.x"
+git commit -m "Release 1.2.5: fix UX Icons 3.x lock command and runtime detection"
+git tag -d v1.2.5 2>/dev/null || true   # only if retagging locally before push
 git tag -a v1.2.5 -m "Release 1.2.5"
 git push origin main
 git push origin v1.2.5
+# If v1.2.5 was already pushed and you retagged: git push origin v1.2.5 --force
 ```

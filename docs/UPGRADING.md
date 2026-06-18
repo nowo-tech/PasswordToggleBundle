@@ -7,6 +7,7 @@ This document describes how to upgrade between major versions of Password Toggle
 ### 1.2.5
 
 - **UX Icons 3.x:** replace `php bin/console ux:icons:lock tabler:eye tabler:eye-off` with `php bin/console ux:icons:lock` in scripts and CI. The command scans Twig templates; optional `--force` overwrites local SVGs. Demos and Flex recipe post-install are updated in this release.
+- **False `[icons missing]` in dev:** if you upgraded to 1.2.4 and still see the dev hint despite `symfony/ux-icons` and `symfony/http-client` being installed, upgrade to **1.2.5** (fixes runtime class detection for UX Icons 3.x). Then run `php bin/console cache:clear` and `php bin/console ux:icons:lock`.
 
 ### 1.2.4
 

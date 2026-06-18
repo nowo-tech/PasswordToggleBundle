@@ -11,19 +11,34 @@ use function sprintf;
  */
 final class IconSupportChecker
 {
-    private const UX_ICONS_RUNTIME_CLASS = 'Symfony\UX\Icons\Twig\UXIconsRuntime';
+    private const UX_ICONS_RUNTIME_CLASSES = [
+        \Symfony\UX\Icons\Twig\UXIconRuntime::class,
+        'Symfony\UX\Icons\Twig\UXIconsRuntime',
+    ];
 
-    private const HTTP_CLIENT_INTERFACE = 'Symfony\Contracts\HttpClient\HttpClientInterface';
+    private const HTTP_CLIENT_INTERFACE = \Symfony\Contracts\HttpClient\HttpClientInterface::class;
+
+    private const UX_ICONS_RENDERER_INTERFACE = \Symfony\UX\Icons\IconRendererInterface::class;
 
     public function __construct(
-        private ?bool $uxIconsAvailable = null,
-        private ?bool $httpClientAvailable = null,
+        private readonly ?bool $uxIconsAvailable = null,
+        private readonly ?bool $httpClientAvailable = null,
     ) {
     }
 
     public function isUxIconsAvailable(): bool
     {
-        return $this->uxIconsAvailable ?? class_exists(self::UX_ICONS_RUNTIME_CLASS);
+        if ($this->uxIconsAvailable !== null) {
+            return $this->uxIconsAvailable;
+        }
+
+        foreach (self::UX_ICONS_RUNTIME_CLASSES as $class) {
+            if (class_exists($class)) {
+                return true;
+            }
+        }
+
+        return interface_exists(self::UX_ICONS_RENDERER_INTERFACE);
     }
 
     public function isHttpClientAvailable(): bool

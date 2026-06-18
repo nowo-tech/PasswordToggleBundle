@@ -49,7 +49,11 @@ final class IconSupportCheckerTest extends TestCase
 
     public function testDetectsInstalledPackagesFromEnvironment(): void
     {
-        if (!class_exists('Symfony\UX\Icons\Twig\UXIconsRuntime')) {
+        $hasUxIcons = class_exists(\Symfony\UX\Icons\Twig\UXIconRuntime::class)
+            || class_exists('Symfony\UX\Icons\Twig\UXIconsRuntime')
+            || interface_exists(\Symfony\UX\Icons\IconRendererInterface::class);
+
+        if (!$hasUxIcons) {
             $this->markTestSkipped('symfony/ux-icons is not installed.');
         }
 
