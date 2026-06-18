@@ -11,7 +11,7 @@ This guide covers installing Password Toggle Bundle in a Symfony application.
 
 ```bash
 composer require symfony/ux-icons symfony/http-client
-php bin/console ux:icons:lock tabler:eye tabler:eye-off
+php bin/console ux:icons:lock
 ```
 
 ## Install with Composer
@@ -29,8 +29,10 @@ Use a constraint such as `^1.0` to stay on the current major version.
 If you use Symfony Flex, the bundle is registered automatically, configuration is created at `config/packages/nowo_password_toggle.yaml`, **symfony/ux-icons** and **symfony/http-client** are added, and tabler icons are copied under `assets/icons/tabler/`. Run after install:
 
 ```bash
-php bin/console ux:icons:lock tabler:eye tabler:eye-off
+php bin/console ux:icons:lock
 ```
+
+With **UX Icons 3.x**, the command scans Twig templates (no icon names as arguments). Use `--force` to overwrite existing local SVGs.
 
 ### Manual registration
 
@@ -73,7 +75,7 @@ return [
    Copy tabler SVGs under `assets/icons/tabler/` (see the Flex recipe in `.symfony/recipes/.../1.2.3/assets/icons/tabler/`) or lock icons after install:
 
    ```bash
-   php bin/console ux:icons:lock tabler:eye tabler:eye-off
+   php bin/console ux:icons:lock
    ```
 
 4. **Create configuration** (optional). Create `config/packages/nowo_password_toggle.yaml` with your preferred defaults. See [CONFIGURATION.md](CONFIGURATION.md) for all options.
@@ -88,7 +90,7 @@ If `symfony/ux-icons` or `symfony/http-client` is not installed:
   - **dev**: toggle works; a small `[icons missing]` hint is shown instead of icons.
   - **prod**: toggle works without icons (no uncaught exception from `ux_icon()`).
 
-To restore icons, install both packages and run `php bin/console ux:icons:lock tabler:eye tabler:eye-off`, or override the form theme to avoid `ux_icon()`.
+To restore icons, install both packages and run `php bin/console ux:icons:lock`, or override the form theme to avoid `ux_icon()`.
 
 ## Next steps
 

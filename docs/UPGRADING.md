@@ -4,12 +4,16 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.5
+
+- **UX Icons 3.x:** replace `php bin/console ux:icons:lock tabler:eye tabler:eye-off` with `php bin/console ux:icons:lock` in scripts and CI. The command scans Twig templates; optional `--force` overwrites local SVGs. Demos and Flex recipe post-install are updated in this release.
+
 ### 1.2.4
 
 - **No breaking API changes** for `PasswordType` or `nowo_password_toggle` config.
 - **Recommended:** ensure `symfony/ux-icons` and `symfony/http-client` are installed if you use the default widget. Symfony Flex recipe **1.2.3+** adds both automatically on new installs.
 - **Without those packages:** compile/cache warmup still works; you get a log warning once per process and icons are skipped (see [INSTALLATION.md](INSTALLATION.md#missing-icon-packages-runtime-behaviour)).
-- **Manual upgrade:** `composer require symfony/ux-icons symfony/http-client` then `php bin/console ux:icons:lock tabler:eye tabler:eye-off`.
+- **Manual upgrade:** `composer require symfony/ux-icons symfony/http-client` then `php bin/console ux:icons:lock`.
 
 ### 1.2.3
 

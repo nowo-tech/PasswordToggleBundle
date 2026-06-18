@@ -58,8 +58,10 @@ The bundled widget `toggle_password_widget.html.twig` renders icons with `ux_ico
 Symfony Flex (recipe **1.2.3+**) adds both packages, copies starter SVGs to `assets/icons/tabler/`, and creates `config/packages/ux_icons.yaml`. After install, lock icons for production:
 
 ```bash
-php bin/console ux:icons:lock tabler:eye tabler:eye-off
+php bin/console ux:icons:lock
 ```
+
+With **UX Icons 3.x**, this command scans Twig templates for `ux_icon()` usage (no icon names as CLI arguments). The recipe also ships local tabler SVGs as a fallback before the first lock.
 
 **Without Flex**, install manually — see [Installation](INSTALLATION.md).
 

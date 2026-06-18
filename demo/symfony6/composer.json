@@ -65,7 +65,7 @@
         "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml",
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "ux:icons:lock tabler:eye tabler:eye-off": "symfony-cmd"
+            "ux:icons:lock": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

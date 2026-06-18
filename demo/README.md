@@ -365,7 +365,7 @@ If Composer reports that the path repository has higher priority but `dev-main` 
 Demos require **symfony/ux-icons** and **symfony/http-client** (matching the demo Symfony major). After `composer install`, lock the default tabler icons:
 
 ```bash
-docker-compose exec php php bin/console ux:icons:lock tabler:eye tabler:eye-off
+docker-compose exec php php bin/console ux:icons:lock
 ```
 
 Composer `auto-scripts` in each demo run this on `post-install-cmd` / `post-update-cmd`. If icons are still missing, ensure `assets/icons/tabler/eye.svg` and `eye-off.svg` exist (copy from `.symfony/recipes/nowo-tech/password-toggle-bundle/1.2.3/assets/icons/tabler/` in the bundle repo) and check `config/packages/ux_icons.yaml`.

@@ -63,7 +63,7 @@ final class IconSupportChecker
         }
 
         return sprintf(
-            'Password Toggle Bundle default icons require %s. Run: composer require %s && php bin/console ux:icons:lock tabler:eye tabler:eye-off',
+            'Password Toggle Bundle default icons require %s. Run: composer require %s && php bin/console ux:icons:lock',
             implode(' and ', $missing),
             implode(' ', $missing),
         );

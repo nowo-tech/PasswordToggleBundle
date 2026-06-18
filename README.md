@@ -147,7 +147,7 @@ When `toggle` is `false`, the field renders as a standard password input without
 
 ```bash
 composer require symfony/ux-icons symfony/http-client
-php bin/console ux:icons:lock tabler:eye tabler:eye-off
+php bin/console ux:icons:lock
 ```
 
 If those packages are missing, the toggle still works but icons are omitted; see [docs/INSTALLATION.md](docs/INSTALLATION.md#missing-icon-packages-runtime-behaviour).

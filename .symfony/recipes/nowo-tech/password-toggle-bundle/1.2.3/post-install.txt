@@ -6,8 +6,10 @@ Password Toggle Bundle has been installed.
 
 Next steps:
 
-  1. Lock icons for production / offline use:
-     php bin/console ux:icons:lock tabler:eye tabler:eye-off
+  1. Lock icons used in Twig templates for production / offline use:
+     php bin/console ux:icons:lock
+
+     (UX Icons 3.x scans templates; no icon names as arguments. Use --force to overwrite locals.)
 
   2. Add the form theme in config/packages/twig.yaml if not already present:
      form_themes:
@@ -16,6 +18,6 @@ Next steps:
 Without Symfony Flex, install dependencies manually:
 
   composer require symfony/ux-icons symfony/http-client
-  php bin/console ux:icons:lock tabler:eye tabler:eye-off
+  php bin/console ux:icons:lock
 
 The default widget uses ux_icon(); without these packages icons are omitted (toggle still works).

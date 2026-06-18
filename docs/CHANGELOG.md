@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.5] - 2026-06-18](#125---2026-06-18)
 - [[1.2.4] - 2026-06-18](#124---2026-06-18)
 - [[1.2.3] - 2026-04-15](#123---2026-04-15)
 - [[1.2.2] - 2026-03-16](#122---2026-03-16)
@@ -18,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [1.2.5] - 2026-06-18
+
+### Fixed
+
+- **UX Icons 3.x `ux:icons:lock`**: command accepts no icon arguments (scans Twig templates). Updated docs, demos (`auto-scripts`), recipe `post-install.txt`, `IconSupportChecker` warning message, and dev template hint. Use `php bin/console ux:icons:lock` (optional `--force`).
 
 ## [1.2.4] - 2026-06-18
 
