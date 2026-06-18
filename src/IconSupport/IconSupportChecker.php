@@ -18,11 +18,11 @@ final class IconSupportChecker
 
     private const HTTP_CLIENT_INTERFACE = \Symfony\Contracts\HttpClient\HttpClientInterface::class;
 
-    private const UX_ICONS_RENDERER_INTERFACE = \Symfony\UX\Icons\IconRendererInterface::class;
-
     public function __construct(
         private readonly ?bool $uxIconsAvailable = null,
         private readonly ?bool $httpClientAvailable = null,
+        /** @var \Closure(string): bool|null Test seam; Symfony must not inject this argument. */
+        private readonly ?\Closure $classExistsChecker = null,
     ) {
     }
 
@@ -33,12 +33,21 @@ final class IconSupportChecker
         }
 
         foreach (self::UX_ICONS_RUNTIME_CLASSES as $class) {
-            if (class_exists($class)) {
+            if ($this->runtimeClassExists($class)) {
                 return true;
             }
         }
 
-        return interface_exists(self::UX_ICONS_RENDERER_INTERFACE);
+        return false;
+    }
+
+    private function runtimeClassExists(string $class): bool
+    {
+        if ($this->classExistsChecker !== null) {
+            return ($this->classExistsChecker)($class);
+        }
+
+        return class_exists($class);
     }
 
     public function isHttpClientAvailable(): bool

@@ -47,11 +47,31 @@ final class IconSupportCheckerTest extends TestCase
         $this->assertStringContainsString('symfony/ux-icons symfony/http-client', (string) $checker->getActionableWarningMessage());
     }
 
+    public function testUxIconsNotDetectedWhenNoRuntimeClass(): void
+    {
+        $checker = new IconSupportChecker(
+            classExistsChecker: static fn (string $class): bool => false,
+        );
+
+        $this->assertFalse($checker->isUxIconsAvailable());
+        $this->assertSame(['symfony/ux-icons'], $checker->getMissingPackages());
+    }
+
+    public function testDetectsLegacyUxIconsRuntimeClass(): void
+    {
+        $checker = new IconSupportChecker(
+            classExistsChecker: static function (string $class): bool {
+                return 'Symfony\UX\Icons\Twig\UXIconsRuntime' === $class;
+            },
+        );
+
+        $this->assertTrue($checker->isUxIconsAvailable());
+    }
+
     public function testDetectsInstalledPackagesFromEnvironment(): void
     {
         $hasUxIcons = class_exists(\Symfony\UX\Icons\Twig\UXIconRuntime::class)
-            || class_exists('Symfony\UX\Icons\Twig\UXIconsRuntime')
-            || interface_exists(\Symfony\UX\Icons\IconRendererInterface::class);
+            || class_exists('Symfony\UX\Icons\Twig\UXIconsRuntime');
 
         if (!$hasUxIcons) {
             $this->markTestSkipped('symfony/ux-icons is not installed.');
