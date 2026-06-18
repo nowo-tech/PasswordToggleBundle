@@ -5,6 +5,7 @@
 - [Basic usage](#basic-usage)
 - [With options](#with-options)
 - [Disabling the toggle](#disabling-the-toggle)
+- [Default icons (UX Icons)](#default-icons-ux-icons)
 - [Styling](#styling)
 - [Overriding bundle templates](#overriding-bundle-templates)
 - [See also](#see-also)
@@ -46,6 +47,25 @@ $builder->add('password', PasswordType::class, [
 ```
 
 When `toggle` is `false`, the field renders as a standard password input, compatible with any styling or JavaScript framework.
+
+## Default icons (UX Icons)
+
+The bundled widget `toggle_password_widget.html.twig` renders icons with `ux_icon()` (`tabler:eye-off` / `tabler:eye` by default). You need:
+
+- **symfony/ux-icons** ^2.0 || ^3.0
+- **symfony/http-client** (same Symfony major as your app)
+
+Symfony Flex (recipe **1.2.3+**) adds both packages, copies starter SVGs to `assets/icons/tabler/`, and creates `config/packages/ux_icons.yaml`. After install, lock icons for production:
+
+```bash
+php bin/console ux:icons:lock tabler:eye tabler:eye-off
+```
+
+**Without Flex**, install manually — see [Installation](INSTALLATION.md).
+
+**If packages are missing:** the toggle still works; icons are omitted. In **dev** you may see `[icons missing]`; a one-time log warning points to `composer require symfony/ux-icons symfony/http-client`. No compile-time exception.
+
+**Custom icons without UX Icons:** override `templates/bundles/NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig` and replace `ux_icon()` with your markup (SVG, `<i>`, etc.).
 
 ## Styling
 

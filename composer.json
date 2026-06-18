@@ -35,7 +35,8 @@
         "symfony/twig-bundle": "^6.0 || ^7.0 || ^8.0"
     },
     "suggest": {
-        "symfony/ux-icons": "^2.0 || ^3.0"
+        "symfony/ux-icons": "Required for the default toggle widget icons (ux_icon). Install together with symfony/http-client unless you override the form theme.",
+        "symfony/http-client": "Required by symfony/ux-icons to fetch Iconify icons unless icons are locked locally (php bin/console ux:icons:lock)."
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0",
@@ -44,7 +45,13 @@
         "phpstan/phpstan": "^2.0",
         "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
+        "symfony/yaml": "^6.0 || ^7.0 || ^8.0",
+        "symfony/http-kernel": "^6.4 || ^7.0 || ^8.0",
+        "symfony/console": "^6.4 || ^7.0 || ^8.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
+        "symfony/ux-icons": "^2.0 || ^3.0",
+        "symfony/http-client": "^6.4 || ^7.0 || ^8.0",
+        "psr/log": "^3.0"
     },
     "archive": {
         "exclude": ["/demo", "/.cursor"]

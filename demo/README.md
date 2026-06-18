@@ -360,6 +360,16 @@ Make sure the bundle is properly linked. The demos use a path repository to link
 
 If Composer reports that the path repository has higher priority but `dev-main` does not satisfy `^1.2.0`: the demos require the bundle as `dev-main as 1.2.99` (inline alias) plus `minimum-stability: dev` and `prefer-stable: true`, so the mounted source satisfies the same semver range as a tagged release. Without that, Composer prefers the canonical path package and cannot merge it with the Packagist constraint.
 
+### Toggle icons not showing
+
+Demos require **symfony/ux-icons** and **symfony/http-client** (matching the demo Symfony major). After `composer install`, lock the default tabler icons:
+
+```bash
+docker-compose exec php php bin/console ux:icons:lock tabler:eye tabler:eye-off
+```
+
+Composer `auto-scripts` in each demo run this on `post-install-cmd` / `post-update-cmd`. If icons are still missing, ensure `assets/icons/tabler/eye.svg` and `eye-off.svg` exist (copy from `.symfony/recipes/nowo-tech/password-toggle-bundle/1.2.3/assets/icons/tabler/` in the bundle repo) and check `config/packages/ux_icons.yaml`.
+
 ### PHP version compatibility
 
 Make sure you're using the correct PHP version for each demo:

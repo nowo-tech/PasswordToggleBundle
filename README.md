@@ -1,6 +1,6 @@
 # Password Toggle Bundle
 
-[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6%20%7C%207%20%7C%208-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/PasswordToggleBundle) [![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen)](#tests-and-coverage)
+[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6.0%2B%20%7C%207.4%2B%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com)
 
 > ⭐ **Found this useful?** Give it a star on GitHub! It helps us maintain and improve the project.
 
@@ -19,6 +19,7 @@ Symfony bundle providing a password form type with toggle visibility feature.
 - [Release](docs/RELEASE.md)
 - [Security](docs/SECURITY.md)
 - [Engram](docs/ENGRAM.md)
+- [Spec-driven development](docs/SPEC-DRIVEN-DEVELOPMENT.md)
 
 ### Additional documentation
 
@@ -31,14 +32,14 @@ Symfony bundle providing a password form type with toggle visibility feature.
 - ✅ Password form type with toggle visibility
 - ✅ Customizable icons and labels
 - ✅ **No Stimulus / no extra asset bundle** — toggle uses **inline** `onclick` / `onkeydown` (see `toggle_password_widget.html.twig`) for compatibility with Live Components
-- ✅ Icons via **`symfony/ux-icons`** (`ux_icon()` in the default template; install the package — it is `composer suggest`ed, not a hard dependency of the bundle)
+- ✅ Icons via **`symfony/ux-icons`** + **`symfony/http-client`** (Flex recipe installs both; graceful fallback + log warning if missing)
 - ✅ Fully configurable CSS classes
 - ✅ Works with Live Components
 - ✅ Accessibility support (ARIA labels, keyboard navigation)
 - ✅ Configuration validation with clear error messages
 - ✅ Type validation for all options
 - ✅ Can be disabled per field (renders simple password input)
-- ✅ Symfony Flex recipe for automatic installation
+- ✅ Symfony Flex recipe for automatic installation (ux-icons + http-client + icon assets from recipe **1.2.3+**)
 
 ## Installation
 
@@ -142,7 +143,14 @@ When `toggle` is `false`, the field renders as a standard password input without
 
 - PHP >= 8.1, < 8.6
 - Symfony >= 6.0 || >= 7.0 || >= 8.0
-- **Symfony UX Icons** `^2.0 || ^3.0` — **needed for the default Twig template** (`ux_icon()`). The bundle lists it under `composer suggest`; add `composer require symfony/ux-icons` (and configure AssetMapper or your icon setup as in Symfony docs).
+- **Symfony UX Icons** `^2.0 || ^3.0` and **symfony/http-client** (same Symfony major) — **required for the default Twig template** (`ux_icon()`). Listed as `composer suggest` on the bundle; Symfony Flex adds both via the recipe. Without Flex:
+
+```bash
+composer require symfony/ux-icons symfony/http-client
+php bin/console ux:icons:lock tabler:eye tabler:eye-off
+```
+
+If those packages are missing, the toggle still works but icons are omitted; see [docs/INSTALLATION.md](docs/INSTALLATION.md#missing-icon-packages-runtime-behaviour).
 - Bootstrap 5 (recommended for styling, but not required)
 
 ## Styling

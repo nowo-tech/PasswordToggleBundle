@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.4] - 2026-06-18](#124---2026-06-18)
 - [[1.2.3] - 2026-04-15](#123---2026-04-15)
 - [[1.2.2] - 2026-03-16](#122---2026-03-16)
 - [[1.2.1] - 2026-03-09](#121---2026-03-09)
@@ -17,6 +18,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [1.2.4] - 2026-06-18
+
+### Added
+
+- **UX Icons requirement handling**: `IconSupportChecker` and `IconSupportWarningSubscriber` detect missing `symfony/ux-icons` / `symfony/http-client`, log an actionable warning (Monolog channel `nowo_password_toggle`), and expose `icons_available` to the default Twig widget for graceful degradation (dev hint, prod without icons, toggle still works).
+- **Flex recipe 1.2.3 / 1.2.4**: `require` for ux-icons and http-client, `config/packages/ux_icons.yaml`, tabler SVG assets, updated `post-install.txt`.
+
+### Changed
+
+- **Demos**: all demos require `symfony/http-client`; `ux:icons:lock tabler:eye tabler:eye-off` added to Composer `auto-scripts`.
+- **Documentation**: [INSTALLATION.md](INSTALLATION.md) (manual install, runtime fallback), [USAGE.md](USAGE.md) (default icons section), [demo/README.md](../demo/README.md) (icon dependencies for demos).
 
 ## [1.2.3] - 2026-04-15
 

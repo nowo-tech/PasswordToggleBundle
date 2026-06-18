@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle\Form\Type;
 
+use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
@@ -33,6 +34,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class PasswordType extends AbstractType
 {
+    private IconSupportChecker $iconSupportChecker;
+
     /**
      * Constructor.
      *
@@ -42,8 +45,10 @@ final class PasswordType extends AbstractType
         /**
          * Default configuration values from bundle configuration.
          */
-        private array $defaults = []
+        private array $defaults = [],
+        ?IconSupportChecker $iconSupportChecker = null,
     ) {
+        $this->iconSupportChecker = $iconSupportChecker ?? new IconSupportChecker();
     }
 
     /**
@@ -117,6 +122,7 @@ final class PasswordType extends AbstractType
         $view->vars['hidden_icon']              = $options['hidden_icon'];
         $view->vars['visible_label']            = $options['visible_label'];
         $view->vars['hidden_label']             = $options['hidden_label'];
+        $view->vars['icons_available']          = $this->iconSupportChecker->isIconRenderingSupported();
     }
 
     /**

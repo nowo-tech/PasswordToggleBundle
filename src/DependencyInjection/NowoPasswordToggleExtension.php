@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle\DependencyInjection;
 
+use Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber;
+use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Dependency injection extension for the PasswordToggle bundle.
@@ -18,7 +22,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
  * @copyright 2026 Nowo.tech
  */
-class NowoPasswordToggleExtension extends Extension
+class NowoPasswordToggleExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * Loads the services configuration and processes the bundle configuration.
@@ -35,11 +39,30 @@ class NowoPasswordToggleExtension extends Extension
         $configuration = new Configuration();
         $config        = $this->processConfiguration($configuration, $configs);
 
+        $checker = new IconSupportChecker();
+
         // Store the processed configuration as container parameters
         $container->setParameter('nowo_password_toggle.defaults', $config);
+        $container->setParameter('nowo_password_toggle.icon_support.available', $checker->isIconRenderingSupported());
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+
+        if ($container->hasDefinition(IconSupportWarningSubscriber::class) && $container->hasExtension('monolog')) {
+            $container->getDefinition(IconSupportWarningSubscriber::class)
+                ->setArgument('$logger', new Reference('monolog.logger.nowo_password_toggle'));
+        }
+    }
+
+    public function prepend(ContainerBuilder $container): void
+    {
+        if (!$container->hasExtension('monolog')) {
+            return;
+        }
+
+        $container->prependExtensionConfig('monolog', [
+            'channels' => ['nowo_password_toggle'],
+        ]);
     }
 
     /**

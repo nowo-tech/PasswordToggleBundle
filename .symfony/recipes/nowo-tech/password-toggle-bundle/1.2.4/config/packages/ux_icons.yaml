@@ -1,0 +1,4 @@
+ux_icons:
+    iconify:
+        enabled: true
+    ignore_not_found: '%kernel.debug%'

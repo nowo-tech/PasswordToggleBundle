@@ -66,3 +66,8 @@ update-bundle: ensure-up
 	docker-compose exec php composer dump-autoload --optimize
 	docker-compose exec php php bin/console cache:clear --env=dev --no-warmup || true
 	@echo "Bundle updated. Reload the page in the browser."
+
+
+# REQ-MAKE-008: update-deps (REQ-MAKE-008)
+BUNDLE_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/../..)
+include $(BUNDLE_ROOT)/../.scripts/Makefile.demo-update-deps.mk

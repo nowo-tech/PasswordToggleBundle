@@ -1,0 +1,13 @@
+{
+    "bundles": {
+        "Nowo\\PasswordToggleBundle\\NowoPasswordToggleBundle": ["all"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/",
+        "assets/": "%PROJECT_DIR%/assets/"
+    },
+    "require": {
+        "symfony/ux-icons": "^2.0 || ^3.0",
+        "symfony/http-client": "^6.0 || ^7.0 || ^8.0"
+    }
+}

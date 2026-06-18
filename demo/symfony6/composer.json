@@ -15,6 +15,7 @@
         "symfony/runtime": "^6.0",
         "symfony/twig-bundle": "^6.0",
         "symfony/ux-icons": "^2.0 || ^3.0",
+        "symfony/http-client": "^6.0",
         "symfony/form": "^6.0",
         "symfony/validator": "^6.0",
         "symfony/asset-mapper": "^6.0",
@@ -63,7 +64,8 @@
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml",
         "auto-scripts": {
-            "cache:clear": "symfony-cmd"
+            "cache:clear": "symfony-cmd",
+            "ux:icons:lock tabler:eye tabler:eye-off": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"

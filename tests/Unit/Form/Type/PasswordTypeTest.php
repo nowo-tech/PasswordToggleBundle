@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Nowo\PasswordToggleBundle\Tests\Form\Type;
 
 use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
+use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
@@ -23,7 +24,7 @@ final class PasswordTypeTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->formType = new PasswordType();
+        $this->formType = new PasswordType([], new IconSupportChecker(uxIconsAvailable: true, httpClientAvailable: true));
     }
 
     public function testConstructorWithDefaults(): void
@@ -212,6 +213,28 @@ final class PasswordTypeTest extends TestCase
         $this->assertSame('tabler:eye', $view->vars['hidden_icon']);
         $this->assertSame('Show', $view->vars['visible_label']);
         $this->assertSame('Hide', $view->vars['hidden_label']);
+        $this->assertTrue($view->vars['icons_available']);
+    }
+
+    public function testBuildViewSetsIconsAvailableFalseWhenDependenciesMissing(): void
+    {
+        $formType = new PasswordType([], new IconSupportChecker(uxIconsAvailable: false, httpClientAvailable: false));
+        $view     = new FormView();
+        $form     = $this->createMock(FormInterface::class);
+
+        $options = [
+            'toggle'                   => true,
+            'toggle_container_classes' => [],
+            'button_classes'           => [],
+            'visible_icon'             => 'tabler:eye-off',
+            'hidden_icon'              => 'tabler:eye',
+            'visible_label'            => 'Show',
+            'hidden_label'             => 'Hide',
+        ];
+
+        $formType->buildView($view, $form, $options);
+
+        $this->assertFalse($view->vars['icons_available']);
     }
 
     public function testBuildViewWithToggleDisabled(): void

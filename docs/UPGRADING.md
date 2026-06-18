@@ -4,6 +4,13 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.4
+
+- **No breaking API changes** for `PasswordType` or `nowo_password_toggle` config.
+- **Recommended:** ensure `symfony/ux-icons` and `symfony/http-client` are installed if you use the default widget. Symfony Flex recipe **1.2.3+** adds both automatically on new installs.
+- **Without those packages:** compile/cache warmup still works; you get a log warning once per process and icons are skipped (see [INSTALLATION.md](INSTALLATION.md#missing-icon-packages-runtime-behaviour)).
+- **Manual upgrade:** `composer require symfony/ux-icons symfony/http-client` then `php bin/console ux:icons:lock tabler:eye tabler:eye-off`.
+
 ### 1.2.3
 
 - **Twig overrides**: The bundle now registers its Twig paths so that **application** overrides under `templates/bundles/NowoPasswordToggleBundle/` take precedence over the bundle templates. If you relied on the opposite order (unlikely), adjust your templates or copy the bundle widget into your project.

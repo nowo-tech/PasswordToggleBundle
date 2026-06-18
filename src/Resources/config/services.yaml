@@ -4,6 +4,12 @@ services:
     autoconfigure: true
     public: false
 
+  Nowo\PasswordToggleBundle\IconSupport\:
+    resource: '../../IconSupport/*'
+
+  Nowo\PasswordToggleBundle\EventSubscriber\:
+    resource: '../../EventSubscriber/*'
+
   Nowo\PasswordToggleBundle\Form\Type\PasswordType:
     arguments:
       $defaults: '%nowo_password_toggle.defaults%'
@@ -13,4 +19,3 @@ services:
     resource: '../../Form/Type/*'
     exclude: '../../Form/Type/PasswordType.php'
     tags: ['form.type']
-

@@ -8,6 +8,30 @@ When the bundle is installed via Composer, this recipe will:
 
 1. **Register the bundle** automatically in `config/bundles.php`
 2. **Create the default configuration file** at `config/packages/nowo_password_toggle.yaml`
+3. **Require** `symfony/ux-icons` and `symfony/http-client` (default widget icons)
+4. **Copy** `config/packages/ux_icons.yaml` and tabler SVG icons under `assets/icons/tabler/`
+
+## Recipe Structure
+
+```
+1.2.3/
+├── manifest.json
+├── config/packages/nowo_password_toggle.yaml
+├── config/packages/ux_icons.yaml
+├── assets/icons/tabler/eye.svg
+├── assets/icons/tabler/eye-off.svg
+└── post-install.txt
+```
+
+## Versioning
+
+Create a new recipe directory for each major/minor version:
+- `1.1.1/` - Legacy (bundle + config only)
+- `1.2.3/` - UX Icons, HTTP Client, locked icon assets
+- `1.2.4/` - Same as 1.2.3 (recipe alias for bundle 1.2.4+)
+- `2.0.0/` - Next major version
+
+Each version can have different configuration defaults or installation steps.
 
 ## Publishing the Recipe
 
@@ -44,24 +68,4 @@ For private bundles, set up your own recipe repository:
     ]
 }
 ```
-
-## Recipe Structure
-
-```
-1.1.1/
-├── manifest.json                    # Recipe definition
-├── config/
-│   └── packages/
-│       └── nowo_password_toggle.yaml  # Default configuration
-└── post-install.txt                # Message shown after installation
-```
-
-## Versioning
-
-Create a new recipe directory for each major/minor version:
-- `1.1.1/` - Current version
-- `1.2.0/` - Next minor version
-- `2.0.0/` - Next major version
-
-Each version can have different configuration defaults or installation steps.
 

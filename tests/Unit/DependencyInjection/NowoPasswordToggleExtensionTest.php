@@ -5,8 +5,25 @@ declare(strict_types=1);
 namespace Nowo\PasswordToggleBundle\Tests\DependencyInjection;
 
 use Nowo\PasswordToggleBundle\DependencyInjection\NowoPasswordToggleExtension;
+use Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber;
+use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Reference;
+
+final class MonologExtensionStub extends Extension
+{
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+    }
+
+    public function getAlias(): string
+    {
+        return 'monolog';
+    }
+}
 
 /**
  * Tests for NowoPasswordToggleExtension.
@@ -37,6 +54,9 @@ final class NowoPasswordToggleExtensionTest extends TestCase
 
         // Verify that the PasswordType service is registered
         $this->assertTrue($container->hasDefinition(\Nowo\PasswordToggleBundle\Form\Type\PasswordType::class));
+        $this->assertTrue($container->hasDefinition(IconSupportChecker::class));
+        $this->assertTrue($container->hasDefinition(IconSupportWarningSubscriber::class));
+        $this->assertTrue($container->hasParameter('nowo_password_toggle.icon_support.available'));
     }
 
     public function testLoadWithConfig(): void
@@ -87,5 +107,42 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $this->assertTrue($defaults['toggle']);
         $this->assertSame('Mostrar', $defaults['visible_label']);
         $this->assertSame('Ocultar', $defaults['hidden_label']);
+    }
+
+    public function testPrependRegistersMonologChannelWhenMonologPresent(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new MonologExtensionStub());
+
+        $this->extension->prepend($container);
+
+        $this->assertSame(
+            [['channels' => ['nowo_password_toggle']]],
+            $container->getExtensionConfig('monolog'),
+        );
+    }
+
+    public function testPrependIsNoOpWithoutMonolog(): void
+    {
+        $container = new ContainerBuilder();
+
+        $this->extension->prepend($container);
+
+        $this->assertFalse($container->hasExtension('monolog'));
+    }
+
+    public function testLoadWiresMonologLoggerWhenMonologExtensionPresent(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new MonologExtensionStub());
+        $container->register('monolog.logger.nowo_password_toggle', NullLogger::class);
+
+        $this->extension->load([], $container);
+
+        $definition = $container->getDefinition(IconSupportWarningSubscriber::class);
+        $this->assertEquals(
+            new Reference('monolog.logger.nowo_password_toggle'),
+            $definition->getArgument('$logger'),
+        );
     }
 }

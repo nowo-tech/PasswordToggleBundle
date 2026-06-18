@@ -1,0 +1,21 @@
+Password Toggle Bundle has been installed.
+
+  * Configuration: config/packages/nowo_password_toggle.yaml
+  * UX Icons: config/packages/ux_icons.yaml
+  * Tabler icons copied to assets/icons/tabler/ (eye.svg, eye-off.svg)
+
+Next steps:
+
+  1. Lock icons for production / offline use:
+     php bin/console ux:icons:lock tabler:eye tabler:eye-off
+
+  2. Add the form theme in config/packages/twig.yaml if not already present:
+     form_themes:
+       - '@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig'
+
+Without Symfony Flex, install dependencies manually:
+
+  composer require symfony/ux-icons symfony/http-client
+  php bin/console ux:icons:lock tabler:eye tabler:eye-off
+
+The default widget uses ux_icon(); without these packages icons are omitted (toggle still works).
