@@ -4,6 +4,10 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.8
+
+- **Custom form theme overrides:** if you copied `toggle_password_widget.html.twig` from an older bundle version, align icon show/hide with **1.2.8** (inline `style.display` instead of `d-none`) or re-copy from `@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig`. No PHP or YAML config changes.
+
 ### 1.2.7
 
 - **Icons still missing after 1.2.6:** upgrade to **1.2.7** if `[icons missing]` appears in dev while `icons_available` should be true (packages installed, cache cleared). The default widget incorrectly used `ux_icon is defined`, which Twig never satisfies for functions. No config changes; run `php bin/console cache:clear` after updating.

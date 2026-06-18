@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.8] - 2026-06-18](#128---2026-06-18)
 - [[1.2.7] - 2026-06-18](#127---2026-06-18)
 - [[1.2.6] - 2026-06-18](#126---2026-06-18)
 - [[1.2.5] - 2026-06-18](#125---2026-06-18)
@@ -21,6 +22,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [1.2.8] - 2026-06-18
+
+### Changed
+
+- **Default widget icon visibility**: show/hide toggle icons via inline `style.display` on the SVG instead of the Bootstrap `d-none` class. The initially hidden icon is rendered with `style: 'display: none'`; the inline `onclick` handler toggles `element.style.display`. No dependency on Bootstrap utility classes for icon visibility.
 
 ## [1.2.7] - 2026-06-18
 
