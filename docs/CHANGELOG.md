@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.7] - 2026-06-18](#127---2026-06-18)
 - [[1.2.6] - 2026-06-18](#126---2026-06-18)
 - [[1.2.5] - 2026-06-18](#125---2026-06-18)
 - [[1.2.4] - 2026-06-18](#124---2026-06-18)
@@ -20,6 +21,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [1.2.7] - 2026-06-18
+
+### Fixed
+
+- **Default widget icon rendering**: the template no longer checks `ux_icon is defined`. In Twig, `defined` applies to variables, not functions, so that condition was always false and icons were never rendered (dev showed `[icons missing]` even when `icons_available` was true and `symfony/ux-icons` was installed). Icons are now rendered when `icons_available` is true.
 
 ## [1.2.6] - 2026-06-18
 

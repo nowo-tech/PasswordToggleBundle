@@ -17,7 +17,7 @@ final class TogglePasswordWidgetTemplateTest extends TestCase
 
         $this->assertIsString($content);
         $this->assertStringContainsString('icons_available', $content);
-        $this->assertStringContainsString('ux_icon is defined', $content);
+        $this->assertStringNotContainsString('ux_icon is defined', $content);
         $this->assertStringContainsString('password-toggle-icon-missing', $content);
     }
 }

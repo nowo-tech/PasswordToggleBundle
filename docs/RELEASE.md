@@ -3,16 +3,16 @@
 1. Update [CHANGELOG.md](CHANGELOG.md): move entries from `[Unreleased]` to a new `[X.Y.Z] - YYYY-MM-DD` section. (This project does not store version in `composer.json`; Packagist uses the git tag.)
 2. Update [UPGRADING.md](UPGRADING.md) if the release has upgrade notes.
 3. Run pre-release checks: `make release-check` (cs-fix, cs-check, rector-dry, phpstan, test-coverage, and optionally demo healthchecks).
-4. Commit all changes, create an annotated tag (e.g. `v1.2.6`), and push branch and tag. The release workflow will create the GitHub Release with the changelog.
+4. Commit all changes, create an annotated tag (e.g. `v1.2.7`), and push branch and tag. The release workflow will create the GitHub Release with the changelog.
 5. Publish the package to Packagist if applicable (usually automatic when the tag is pushed).
 
-## Example for v1.2.6
+## Example for v1.2.7
 
 ```bash
 git add -A
 git status   # review
-git commit -m "Release 1.2.6: fix UX Icons 3.x runtime detection"
-git tag -a v1.2.6 -m "Release 1.2.6"
+git commit -m "Release 1.2.7: fix default widget icon rendering in Twig"
+git tag -a v1.2.7 -m "Release 1.2.7"
 git push origin main
-git push origin v1.2.6
+git push origin v1.2.7
 ```

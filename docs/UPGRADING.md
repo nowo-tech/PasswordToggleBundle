@@ -4,6 +4,10 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.7
+
+- **Icons still missing after 1.2.6:** upgrade to **1.2.7** if `[icons missing]` appears in dev while `icons_available` should be true (packages installed, cache cleared). The default widget incorrectly used `ux_icon is defined`, which Twig never satisfies for functions. No config changes; run `php bin/console cache:clear` after updating.
+
 ### 1.2.6
 
 - **False `[icons missing]` in dev:** upgrade from **1.2.5** if the toggle works but dev still shows `[icons missing]` while `symfony/ux-icons` and `symfony/http-client` are installed. This release fixes `IconSupportChecker` for UX Icons 3.x (`UXIconRuntime`). Then run `php bin/console cache:clear` (icons are usually already locked via `ux:icons:lock`).
