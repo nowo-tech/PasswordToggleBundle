@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.6] - 2026-06-18](#126---2026-06-18)
 - [[1.2.5] - 2026-06-18](#125---2026-06-18)
 - [[1.2.4] - 2026-06-18](#124---2026-06-18)
 - [[1.2.3] - 2026-04-15](#123---2026-04-15)
@@ -20,12 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2026-06-18
+
+### Fixed
+
+- **UX Icons 3.x detection**: `IconSupportChecker` detects `Symfony\UX\Icons\Twig\UXIconRuntime` (with fallbacks for legacy `UXIconsRuntime` and `IconRendererInterface`). Without this fix, `icons_available` stayed false with UX Icons 3.x installed and the default widget showed `[icons missing]` in dev even after `composer require symfony/ux-icons symfony/http-client` and `ux:icons:lock`.
+
 ## [1.2.5] - 2026-06-18
 
 ### Fixed
 
 - **UX Icons 3.x `ux:icons:lock`**: command accepts no icon arguments (scans Twig templates). Updated docs, demos (`auto-scripts`), recipe `post-install.txt`, `IconSupportChecker` warning message, and dev template hint. Use `php bin/console ux:icons:lock` (optional `--force`).
-- **UX Icons 3.x detection**: `IconSupportChecker` now detects `Symfony\UX\Icons\Twig\UXIconRuntime` (with fallbacks for `UXIconsRuntime` and `IconRendererInterface`). The previous check used a non-existent `UXIconsRuntime` class, so `icons_available` was always false and the default widget showed `[icons missing]` in dev even when `symfony/ux-icons` was installed.
 
 ## [1.2.4] - 2026-06-18
 
