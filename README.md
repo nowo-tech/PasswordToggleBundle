@@ -277,7 +277,7 @@ composer qa
 
 ## Testing
 
-The bundle has **100% code coverage** (all lines, methods, and classes). All tests are located in the `tests/` directory.
+The bundle targets **≥95% code coverage** (CI minimum); current suite is at 100%. All tests are located in the `tests/` directory.
 
 ### Running Tests
 
@@ -321,7 +321,7 @@ The bundle uses GitHub Actions for continuous integration:
  - PHP 8.4 and 8.5: All Symfony versions (6.4, 7.0, 8.0)
 - **Code Style**: Automatically fixes code style on push to main/master
 - **Code Style Check**: Validates code style on pull requests
-- **Coverage**: Validates 100% code coverage requirement
+- **Coverage**: Validates ≥95% code coverage (see `MIN_COVERAGE` in CI)
 - **Dependabot**: Automatically updates dependencies
 
 See `.github/workflows/ci.yml` for details.

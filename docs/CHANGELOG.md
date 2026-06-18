@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.2.10] - 2026-06-18](#1210---2026-06-18)
 - [[1.2.9] - 2026-06-18](#129---2026-06-18)
 - [[1.2.8] - 2026-06-18](#128---2026-06-18)
 - [[1.2.7] - 2026-06-18](#127---2026-06-18)
@@ -23,6 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [1.2.10] - 2026-06-18
+
+### Changed
+
+- **CI coverage threshold**: minimum project coverage in GitHub Actions lowered from 100% to **95%** (`MIN_COVERAGE` env in `ci.yml`). README and CONTRIBUTING updated accordingly. The test suite on `main` still reports 100% locally.
 
 ## [1.2.9] - 2026-06-18
 

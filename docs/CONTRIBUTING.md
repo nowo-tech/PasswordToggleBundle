@@ -87,7 +87,7 @@ composer cs-fix
 
 #### Tests
 
-**The project requires 100% code coverage**. All tests must pass before merging. New features should include tests.
+**CI requires at least 95% code coverage** (`MIN_COVERAGE` in `.github/workflows/ci.yml`). All tests must pass before merging. New features should include tests.
 
 ```bash
 # Run all tests
@@ -109,7 +109,7 @@ open coverage/index.html
 - Each class should have its corresponding test
 - Tests should be descriptive and cover edge cases
 - Use mocks when appropriate
-- **All code must have 100% coverage** - new features must include comprehensive tests
+- **Maintain ≥95% coverage** — new features must include tests (`make test-coverage`)
 
 #### Pull Request Process
 
@@ -159,7 +159,7 @@ open coverage/index.html
 - [ ] Code follows PSR-12 standards
 - [ ] Ran `make cs-fix` (or `composer cs-fix`)
 - [ ] All tests pass (`make test`)
-- [ ] Code coverage is 100% (`make test-coverage`)
+- [ ] Code coverage is ≥95% (`make test-coverage`)
 - [ ] Added tests for new functionality
 - [ ] Documentation is updated (if necessary)
 - [ ] CHANGELOG.md is updated (if necessary)

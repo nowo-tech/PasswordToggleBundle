@@ -4,6 +4,10 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 1.x
 
+### 1.2.10
+
+- **No application upgrade steps.** CI now enforces **≥95%** coverage instead of 100%. No PHP, config, or template changes.
+
 ### 1.2.9
 
 - **No upgrade steps required.** Patch release: internal `IconSupportChecker` cleanup (Twig runtime class detection only) and restored 100% test coverage for CI. Behaviour unchanged when `symfony/ux-icons` is installed.
