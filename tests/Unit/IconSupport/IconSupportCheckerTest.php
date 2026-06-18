@@ -60,9 +60,7 @@ final class IconSupportCheckerTest extends TestCase
     public function testDetectsLegacyUxIconsRuntimeClass(): void
     {
         $checker = new IconSupportChecker(
-            classExistsChecker: static function (string $class): bool {
-                return 'Symfony\UX\Icons\Twig\UXIconsRuntime' === $class;
-            },
+            classExistsChecker: static fn (string $class): bool => $class === 'Symfony\UX\Icons\Twig\UXIconsRuntime',
         );
 
         $this->assertTrue($checker->isUxIconsAvailable());

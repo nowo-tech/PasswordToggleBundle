@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle\IconSupport;
 
+use Closure;
+
 use function sprintf;
 
 /**
@@ -21,8 +23,8 @@ final class IconSupportChecker
     public function __construct(
         private readonly ?bool $uxIconsAvailable = null,
         private readonly ?bool $httpClientAvailable = null,
-        /** @var \Closure(string): bool|null Test seam; Symfony must not inject this argument. */
-        private readonly ?\Closure $classExistsChecker = null,
+        /** @var Closure(string): bool|null Test seam; Symfony must not inject this argument. */
+        private readonly ?Closure $classExistsChecker = null,
     ) {
     }
 
@@ -43,7 +45,7 @@ final class IconSupportChecker
 
     private function runtimeClassExists(string $class): bool
     {
-        if ($this->classExistsChecker !== null) {
+        if ($this->classExistsChecker instanceof Closure) {
             return ($this->classExistsChecker)($class);
         }
 
