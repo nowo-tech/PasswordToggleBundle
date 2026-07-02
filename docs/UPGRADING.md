@@ -2,6 +2,17 @@
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
+## 2.0.0
+
+Breaking release for projects still on PHP 8.1 or Symfony 6.x.
+
+- **PHP:** upgrade to **>= 8.2** before updating.
+- **Symfony:** upgrade to **^7.0** or **^8.0** before updating.
+- **Composer:** `composer require nowo-tech/password-toggle-bundle:^2.0`.
+- **Stay on 1.x:** if you cannot upgrade yet, keep `nowo-tech/password-toggle-bundle:^1.2` (last line with Symfony 6 / PHP 8.1 support is **1.2.10**).
+- **Demos / CI:** the Symfony 6.4 demo is no longer part of `demo/Makefile` `DEMOS`; use `symfony7`, `symfony8`, or `symfony8-php85`.
+- **No API changes** to `PasswordType` or `nowo_password_toggle` configuration; only platform requirements changed.
+
 ## 1.x
 
 ### 1.2.10

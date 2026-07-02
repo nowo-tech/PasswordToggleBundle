@@ -1,8 +1,8 @@
 # Makefile for Password Toggle Bundle Demo
 # Each demo has its own docker-compose.yml and can be run independently
 
-# Define available demos (folder names = demo names, standard: symfony6, symfony7, symfony8, symfony8-php85)
-DEMOS := symfony6 symfony7 symfony8 symfony8-php85
+# Define available demos (folder names = demo names, standard: symfony7, symfony8, symfony8-php85)
+DEMOS := symfony7 symfony8 symfony8-php85
 
 # Helper function to get port from .env file (defaults to 8001)
 get-port = $(shell grep -E '^PORT=' $(1)/.env 2>/dev/null | cut -d '=' -f2 || echo "8001")
@@ -40,11 +40,11 @@ help:
 	@echo "  release-verify     For each demo up → healthcheck HTTP 200 → down"
 	@echo ""
 	@echo "Generic commands (use with <demo-name> or DEMO=<name>):"
-	@echo "  up <demo>         Start a specific demo (e.g., make up symfony6 or make up DEMO=symfony6)"
-	@echo "  down <demo>        Stop a specific demo (e.g., make down symfony6 or make down DEMO=symfony6)"
-	@echo "  install <demo>     Install dependencies (e.g., make install symfony6 or make install DEMO=symfony6)"
-	@echo "  test <demo>        Run tests (e.g., make test symfony6 or make test DEMO=symfony6)"
-	@echo "  test-coverage <demo>  Run tests with coverage (e.g., make test-coverage symfony6 or make test-coverage DEMO=symfony6)"
+	@echo "  up <demo>         Start a specific demo (e.g., make up symfony7 or make up DEMO=symfony7)"
+	@echo "  down <demo>        Stop a specific demo (e.g., make down symfony7 or make down DEMO=symfony7)"
+	@echo "  install <demo>     Install dependencies (e.g., make install symfony7 or make install DEMO=symfony7)"
+	@echo "  test <demo>        Run tests (e.g., make test symfony7 or make test DEMO=symfony7)"
+	@echo "  test-coverage <demo>  Run tests with coverage (e.g., make test-coverage symfony7 or make test-coverage DEMO=symfony7)"
 	@echo "  shell <demo>       Open shell in a specific demo container"
 	@echo "  logs <demo>        Show logs of a specific demo"
 	@echo ""

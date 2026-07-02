@@ -1,10 +1,10 @@
 # Password Toggle Bundle - Demo
 
-This directory contains four demo projects demonstrating the usage of the Password Toggle Bundle with different Symfony and PHP versions.
+This directory contains three demo projects demonstrating the usage of the Password Toggle Bundle with different Symfony and PHP versions.
 
 ## Features
 
-- Four separate demo projects for different Symfony/PHP combinations
+- Three separate demo projects for different Symfony/PHP combinations
 - Simple login form with password toggle functionality
 - Bootstrap 5 styling
 - Tabler icons for the toggle button
@@ -16,44 +16,20 @@ This directory contains four demo projects demonstrating the usage of the Passwo
 
 ## Demo Projects
 
-The bundle includes four demo projects:
+The bundle includes three demo projects:
 
-1. **Symfony 6.4 Demo** - PHP 8.2 (Port 8001 by default, configurable via `.env`)
-2. **Symfony 7.0 Demo** - PHP 8.2 (Port 8001 by default, configurable via `.env`)
-3. **Symfony 8.0 Demo** - PHP 8.4 (Port 8001 by default, configurable via `.env`)
-4. **Symfony 8.0 Demo with PHP 8.5** - PHP 8.5 (Port 8001 by default, configurable via `.env`)
+1. **Symfony 7.0 Demo** - PHP 8.2 (Port 8001 by default, configurable via `.env`)
+2. **Symfony 8.0 Demo** - PHP 8.4 (Port 8001 by default, configurable via `.env`)
+3. **Symfony 8.0 Demo with PHP 8.5** - PHP 8.5 (Port 8001 by default, configurable via `.env`)
 
 ## Requirements
 
 - Docker and Docker Compose
-- Or PHP 8.1+ to 8.5 (8.2+ for Symfony 7.0+, 8.4+ for Symfony 8.0) and Composer (for local development)
+- Or PHP 8.2+ to 8.5 (8.4+ for Symfony 8.0) and Composer (for local development)
 
 ## Quick Start with Docker
 
 Each demo has its own `docker-compose.yml` and can be run independently. You can start any demo you want:
-
-### Symfony 6.4 Demo (PHP 8.2)
-
-```bash
-# Navigate to the demo directory
-cd demo/symfony6
-
-# Start containers
-docker-compose up -d
-
-# Install dependencies
-docker-compose exec php composer install
-
-# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
-```
-
-Or using the Makefile from the `demo/` directory:
-
-```bash
-cd demo
-make up-symfony6
-make install-symfony6
-```
 
 ### Symfony 7.0 Demo (PHP 8.2)
 
@@ -129,13 +105,13 @@ make install-symfony8-php85
 Stop a specific demo:
 
 ```bash
-# Stop Symfony 6.4 demo
-cd demo/symfony6
+# Stop Symfony 7.0 demo
+cd demo/symfony7
 docker-compose down
 
 # Or using Makefile
 cd demo
-make down-symfony6
+make down-symfony7
 ```
 
 Similar commands for other demos:
@@ -144,23 +120,6 @@ Similar commands for other demos:
 - Symfony 8.0 + PHP 8.5: `make down-symfony8-php85`
 
 ## Local Development (without Docker)
-
-### Symfony 6.4 Demo
-
-1. **Navigate to the demo directory:**
-   ```bash
-   cd demo/symfony6
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   composer install
-   ```
-
-3. **Start the Symfony server:**
-   ```bash
-   symfony server:start
-   ```
 
 ### Symfony 7.0 Demo
 
@@ -229,14 +188,6 @@ Each demo includes:
 
 ```
 demo/
-├── symfony6/          # Symfony 6.4 demo (Port 8001 by default, PHP 8.2)
-│   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # FrankenPHP PHP 8.2 image with Composer
-│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
-│   ├── composer.json       # Dependencies for Symfony 6.4
-│   ├── .env                # Port configuration (default: 8001)
-│   ├── .env.example        # Example port configuration file
-│   └── ...
 ├── symfony7/          # Symfony 7.0 demo (Port 8001 by default, PHP 8.2)
 │   ├── docker-compose.yml  # Independent docker-compose for this demo
 │   ├── Dockerfile          # FrankenPHP PHP 8.2 image with Composer
@@ -317,7 +268,6 @@ You can also customize the password field by modifying the options in each demo'
 
 Each demo includes a `.env` file with the default port configuration:
 
-- **Symfony 6.4**: Port 8001 (configured in `symfony6/.env`)
 - **Symfony 7.0**: Port 8001 (configured in `symfony7/.env`)
 - **Symfony 8.0**: Port 8001 (configured in `symfony8/.env`)
 - **Symfony 8.0 + PHP 8.5**: Port 8001 (configured in `symfony8-php85/.env`)
@@ -328,7 +278,7 @@ If a port is already in use, you can customize it by editing the `.env` file in 
 
 ```bash
 # Edit the .env file
-cd demo/symfony6
+cd demo/symfony7
 nano .env  # or use your preferred editor
 
 # Change the PORT value
@@ -358,7 +308,7 @@ PORT=8080 docker-compose up -d
 
 Make sure the bundle is properly linked. The demos use a path repository to link to the parent bundle. If you're running this outside the bundle directory, you may need to adjust the repository path in `composer.json`.
 
-If Composer reports that the path repository has higher priority but `dev-main` does not satisfy `^1.2.0`: the demos require the bundle as `dev-main as 1.2.99` (inline alias) plus `minimum-stability: dev` and `prefer-stable: true`, so the mounted source satisfies the same semver range as a tagged release. Without that, Composer prefers the canonical path package and cannot merge it with the Packagist constraint.
+If Composer reports that the path repository has higher priority but `dev-main` does not satisfy your constraint: the demos require the bundle as `dev-main as 2.0.99` (inline alias) plus `minimum-stability: dev` and `prefer-stable: true`, so the mounted source satisfies the same semver range as a tagged release. Without that, Composer prefers the canonical path package and cannot merge it with the Packagist constraint.
 
 ### Toggle icons not showing
 
@@ -373,7 +323,6 @@ Composer `auto-scripts` in each demo run this on `post-install-cmd` / `post-upda
 ### PHP version compatibility
 
 Make sure you're using the correct PHP version for each demo:
-- Symfony 6.4: PHP >= 8.1
 - Symfony 7.0: PHP >= 8.2
 - Symfony 8.0: PHP >= 8.4
 
@@ -415,10 +364,6 @@ Each demo includes its own test suite to verify that the Password Toggle Bundle 
 ### Run Tests
 
 ```bash
-# Run tests for Symfony 6.4 demo
-cd demo/symfony6
-docker-compose exec php vendor/bin/phpunit
-
 # Run tests for Symfony 7.0 demo
 cd demo/symfony7
 docker-compose exec php vendor/bin/phpunit
@@ -438,13 +383,11 @@ Or using the Makefile from the `demo/` directory:
 cd demo
 
 # Run tests for a specific demo (using specific commands)
-make test-symfony6
 make test-symfony7
 make test-symfony8
 make test-symfony8-php85
 
 # Or using generic commands with demo name
-make test symfony6
 make test symfony7
 make test symfony8
 make test symfony8-php85

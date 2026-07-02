@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.0.0] - 2026-07-02](#200---2026-07-02)
 - [[1.2.10] - 2026-06-18](#1210---2026-06-18)
 - [[1.2.9] - 2026-06-18](#129---2026-06-18)
 - [[1.2.8] - 2026-06-18](#128---2026-06-18)
@@ -24,6 +25,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.0.0] - 2026-07-02
+
+### Breaking Changes
+
+- **PHP**: minimum version is now **>= 8.2** (was >= 8.1). Projects on PHP 8.1 must upgrade PHP before updating the bundle.
+- **Symfony**: minimum version is now **^7.0 || ^8.0** (Symfony 6.x is no longer supported). Stay on `^1.2` if you cannot upgrade Symfony yet.
+
+### Changed
+
+- **CI**: test matrix updated to PHP 8.2–8.5 and Symfony 7.0 / 7.4 / 8.0 / 8.1.
+- **Demos**: `symfony6` removed from the demo aggregator (`demo/Makefile`); active demos are `symfony7`, `symfony8`, and `symfony8-php85`.
+- **Documentation**: README, INSTALLATION, CONTRIBUTING, DEMO-FRANKENPHP, and demo README aligned with the new requirements.
+- **Rector**: PHP set target updated from 8.1 to 8.2; `IconSupportChecker` marked `readonly` (PHP 8.2).
+
+### Fixed
+
+- **Demo `update-deps`**: each demo Makefile now defines `COMPOSE` and `SERVICE_PHP` before including the shared `Makefile.demo-update-deps.mk` (fixes `run: not found` when running `make update-deps`).
 
 ## [1.2.10] - 2026-06-18
 

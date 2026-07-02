@@ -6,13 +6,13 @@
 4. Commit all changes, create an annotated tag (e.g. `v1.2.10`), and push branch and tag. The release workflow will create the GitHub Release with the changelog.
 5. Publish the package to Packagist if applicable (usually automatic when the tag is pushed).
 
-## Example for v1.2.10
+## Example for v2.0.0
 
 ```bash
 git add -A
 git status   # review
-git commit -m "Release 1.2.10: CI coverage threshold 95%"
-git tag -a v1.2.10 -m "Release 1.2.10"
+git commit -m "Release 2.0.0: PHP 8.2+ and Symfony 7+ minimum requirements"
+git tag -a v2.0.0 -m "Release 2.0.0: PHP 8.2+ and Symfony 7+ minimum requirements"
 git push origin main
-git push origin v1.2.10
+git push origin v2.0.0
 ```
