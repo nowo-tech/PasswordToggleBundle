@@ -8,7 +8,7 @@ DEMOS := symfony7 symfony8 symfony8-php85
 get-port = $(shell grep -E '^PORT=' $(1)/.env 2>/dev/null | cut -d '=' -f2 || echo "8001")
 
 # Helper function to get demo version name
-get-version = $(shell echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/')
+get-version = $(shell echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/')
 
 .PHONY: help clean test-all test-coverage-all verify-all update-bundle-all release-check release-verify
 .PHONY: $(foreach demo,$(DEMOS),up-$(demo) down-$(demo) install-$(demo) shell-$(demo) logs-$(demo) test-$(demo) test-coverage-$(demo))
@@ -21,7 +21,7 @@ help:
 	@echo "Usage: make <target>"
 	@echo ""
 	@for demo in $(DEMOS); do \
-		version=$$(echo $$demo | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+		version=$$(echo $$demo | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 		echo "$$version Demo (Port 8001):"; \
 		echo "  up-$$demo        Start $$version demo containers"; \
 		echo "  down-$$demo      Stop $$version demo containers"; \
@@ -55,7 +55,7 @@ help:
 	@echo ""
 	@echo "Access URLs:"
 	@for demo in $(DEMOS); do \
-		version=$$(echo $$demo | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+		version=$$(echo $$demo | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 		if [ -f $$demo/.env ]; then \
 			port=$$(grep -E '^PORT=' $$demo/.env 2>/dev/null | cut -d '=' -f2 | head -1 || echo "8001"); \
 		elif [ -f $$demo/.env.example ]; then \
@@ -69,7 +69,7 @@ help:
 # Generate up targets for each demo
 define up-target-template
 up-$(1):
-	@VERSION=$$$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+	@VERSION=$$$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 	echo "🚀 Starting $$$$VERSION demo..."; \
 	cd $(1) && \
 	if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || true; fi && \
@@ -105,7 +105,7 @@ endef
 # Generate down targets for each demo
 define down-target-template
 down-$(1):
-	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 	echo "🛑 Stopping $$VERSION demo..."; \
 	cd $(1) && docker-compose down; \
 	echo "✅ $$VERSION demo stopped!"
@@ -114,7 +114,7 @@ endef
 # Generate install targets for each demo
 define install-target-template
 install-$(1):
-	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 	echo "📦 Installing $$VERSION dependencies..."; \
 	cd $(1) && docker-compose exec php composer install || \
 		(PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
@@ -142,7 +142,7 @@ endef
 # Generate test targets for each demo
 define test-target-template
 test-$(1):
-	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 	echo "🧪 Running $$VERSION tests..."; \
 	cd $(1) && docker-compose exec php composer test || \
 		(PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
@@ -157,7 +157,7 @@ endef
 # Generate test-coverage targets for each demo
 define test-coverage-target-template
 test-coverage-$(1):
-	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/6/6.4/' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
+	@VERSION=$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 	echo "🧪 Running $$VERSION tests with coverage..."; \
 	cd $(1) && docker-compose exec php composer test-coverage || \
 		(PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
