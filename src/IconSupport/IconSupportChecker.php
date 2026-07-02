@@ -11,7 +11,7 @@ use function sprintf;
 /**
  * Detects whether Symfony UX Icons and HTTP Client are available for the default widget.
  */
-final class IconSupportChecker
+final readonly class IconSupportChecker
 {
     private const UX_ICONS_RUNTIME_CLASSES = [
         \Symfony\UX\Icons\Twig\UXIconRuntime::class,
@@ -21,10 +21,10 @@ final class IconSupportChecker
     private const HTTP_CLIENT_INTERFACE = \Symfony\Contracts\HttpClient\HttpClientInterface::class;
 
     public function __construct(
-        private readonly ?bool $uxIconsAvailable = null,
-        private readonly ?bool $httpClientAvailable = null,
+        private ?bool $uxIconsAvailable = null,
+        private ?bool $httpClientAvailable = null,
         /** @var Closure(string): bool|null Test seam; Symfony must not inject this argument. */
-        private readonly ?Closure $classExistsChecker = null,
+        private ?Closure $classExistsChecker = null,
     ) {
     }
 

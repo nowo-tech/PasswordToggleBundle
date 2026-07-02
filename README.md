@@ -1,6 +1,6 @@
 # Password Toggle Bundle
 
-[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6.0%2B%20%7C%207.4%2B%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com)
+[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7.0%2B%20%7C%208.0%2B-000000?logo=symfony)](https://symfony.com)
 
 > ⭐ **Found this useful?** Give it a star on GitHub! It helps us maintain and improve the project.
 
@@ -141,8 +141,8 @@ When `toggle` is `false`, the field renders as a standard password input without
 
 ## Requirements
 
-- PHP >= 8.1, < 8.6
-- Symfony >= 6.0 || >= 7.0 || >= 8.0
+- PHP >= 8.2, < 8.6
+- Symfony >= 7.0 || >= 8.0
 - **Symfony UX Icons** `^2.0 || ^3.0` and **symfony/http-client** (same Symfony major) — **required for the default Twig template** (`ux_icon()`). Listed as `composer suggest` on the bundle; Symfony Flex adds both via the recipe. Without Flex:
 
 ```bash
@@ -203,9 +203,8 @@ Example custom styles:
 
 ## Demo Projects
 
-The bundle includes four demo projects demonstrating usage with different Symfony and PHP versions:
+The bundle includes three demo projects demonstrating usage with different Symfony and PHP versions:
 
-- **Symfony 6.4 Demo** (PHP 8.2) - Port 8001 (default, configurable via `.env`)
 - **Symfony 7.0 Demo** (PHP 8.2) - Port 8001 (default, configurable via `.env`)
 - **Symfony 8.0 Demo** (PHP 8.4) - Port 8001 (default, configurable via `.env`)
 - **Symfony 8.0 Demo with PHP 8.5** - Port 8001 (default, configurable via `.env`)
@@ -233,12 +232,10 @@ Or start any other demo:
 
 ```bash
 # Using specific commands
-make up-symfony6    # Symfony 6.4
 make up-symfony8    # Symfony 8.0
 make up-symfony8-php85 # Symfony 8.0 with PHP 8.5
 
 # Or using generic commands with demo name
-make up symfony6    # Symfony 6.4
 make up symfony8    # Symfony 8.0
 make up symfony8-php85 # Symfony 8.0 with PHP 8.5
 ```
@@ -315,10 +312,9 @@ composer cs-fix
 
 The bundle uses GitHub Actions for continuous integration:
 
-- **Tests**: Runs on PHP 8.1, 8.2, 8.3, 8.4, and 8.5 with Symfony 6.4, 7.0, and 8.0
- - PHP 8.1: Symfony 6.4 only (Symfony 7.0+ requires PHP 8.2+, Symfony 8.0 requires PHP 8.4+)
- - PHP 8.2 and 8.3: Symfony 6.4 and 7.0 (Symfony 8.0 requires PHP 8.4+)
- - PHP 8.4 and 8.5: All Symfony versions (6.4, 7.0, 8.0)
+- **Tests**: Runs on PHP 8.2, 8.3, 8.4, and 8.5 with Symfony 7.0, 7.4, 8.0, and 8.1
+ - PHP 8.2 and 8.3: Symfony 7.0 and 7.4 (Symfony 8.0+ requires PHP 8.4+)
+ - PHP 8.4 and 8.5: All supported Symfony versions (7.0, 7.4, 8.0, 8.1)
 - **Code Style**: Automatically fixes code style on push to main/master
 - **Code Style Check**: Validates code style on pull requests
 - **Coverage**: Validates ≥95% code coverage (see `MIN_COVERAGE` in CI)
