@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **Symfony 6.4 demo**: deleted `demo/symfony6/` (minimum requirements are PHP 8.2 and Symfony 7+).
+
 ## [2.0.0] - 2026-07-02
 
 ### Breaking Changes
@@ -36,7 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **CI**: test matrix updated to PHP 8.2–8.5 and Symfony 7.0 / 7.4 / 8.0 / 8.1.
-- **Demos**: `symfony6` removed from the demo aggregator (`demo/Makefile`); active demos are `symfony7`, `symfony8`, and `symfony8-php85`.
+- **Demos**: Symfony 6.4 demo removed; active demos are `symfony7`, `symfony8`, and `symfony8-php85` (`demo/symfony6/` deleted in a follow-up after 2.0.0).
 - **Documentation**: README, INSTALLATION, CONTRIBUTING, DEMO-FRANKENPHP, and demo README aligned with the new requirements.
 - **Rector**: PHP set target updated from 8.1 to 8.2; `IconSupportChecker` marked `readonly` (PHP 8.2).
 
