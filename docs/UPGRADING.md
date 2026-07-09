@@ -2,6 +2,11 @@
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
+## 2.0.2
+
+- **No application upgrade steps.** Repository and maintainer tooling only (Spec Kit, baseline specs, dev dependency bumps, demo Docker `intl` extension).
+- **Maintainers:** see [`SPEC-KIT.md`](SPEC-KIT.md) and [`SPEC-DRIVEN-DEVELOPMENT.md`](SPEC-DRIVEN-DEVELOPMENT.md).
+
 ## 2.0.1
 
 - **No application upgrade steps.** Repository-only change: `demo/symfony6/` was deleted.

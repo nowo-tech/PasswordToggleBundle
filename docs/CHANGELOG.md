@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.0.2] - 2026-07-09](#202---2026-07-09)
 - [[2.0.1] - 2026-07-09](#201---2026-07-09)
 - [[2.0.0] - 2026-07-02](#200---2026-07-02)
 - [[1.2.10] - 2026-06-18](#1210---2026-06-18)
@@ -26,6 +27,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.0.2] - 2026-07-09
+
+### Added
+
+- **GitHub Spec Kit**: repository scaffolding (`.specify/`, Cursor `speckit-*` skills in `.cursor/skills/`) for spec-driven maintenance.
+- **Baseline specs**: `specs/001-baseline/` (`spec.md`, `code-inventory.md`) documenting 100% of production code under `src/`.
+- **Documentation**: [`docs/SPEC-KIT.md`](SPEC-KIT.md) (install, structure, Cursor workflow); README link under **Documentation**.
+
+### Changed
+
+- **Spec-driven development**: [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](SPEC-DRIVEN-DEVELOPMENT.md) aligned with the three-layer model (Spec Kit baseline, product behavior, traceability).
+- **Dev dependencies** (`composer.lock`): PHPUnit 10.5.64, PHPStan 2.2.5, PHP-CS-Fixer 3.95.12, Twig 3.28.0, and related transitive updates.
+- **Demo Dockerfiles** (`symfony7`, `symfony8`, `symfony8-php85`): install PHP `intl` extension alongside `zip`.
 
 ## [2.0.1] - 2026-07-09
 
