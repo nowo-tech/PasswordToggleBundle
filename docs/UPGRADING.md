@@ -2,6 +2,11 @@
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
+## 2.0.3
+
+- **Optional (AssetMapper / named assets):** prefer `asset('css/toggle_password.css', 'nowo_password_toggle')` in Twig instead of `asset('bundles/nowopasswordtoggle/css/toggle_password.css')`. Run `php bin/console assets:install` once so the CSS is published under `public/bundles/nowopasswordtoggle/`. The legacy path still works for classic asset setups.
+- **No PHP or YAML config changes.**
+
 ## 2.0.2
 
 - **No application upgrade steps.** Repository and maintainer tooling only (Spec Kit, baseline specs, dev dependency bumps, demo Docker `intl` extension).

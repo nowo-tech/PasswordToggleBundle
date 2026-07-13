@@ -56,6 +56,18 @@ class NowoPasswordToggleExtension extends Extension implements PrependExtensionI
 
     public function prepend(ContainerBuilder $container): void
     {
+        if ($container->hasExtension('framework')) {
+            $container->prependExtensionConfig('framework', [
+                'assets' => [
+                    'packages' => [
+                        'nowo_password_toggle' => [
+                            'base_path' => '/bundles/nowopasswordtoggle',
+                        ],
+                    ],
+                ],
+            ]);
+        }
+
         if (!$container->hasExtension('monolog')) {
             return;
         }

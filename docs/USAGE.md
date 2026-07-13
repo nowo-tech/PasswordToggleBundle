@@ -72,7 +72,7 @@ With **UX Icons 3.x**, this command scans Twig templates for `ux_icon()` usage (
 ## Styling
 
 - **Option 1:** Include the bundle CSS:  
-  `<link rel="stylesheet" href="{{ asset('bundles/nowopasswordtoggle/css/toggle_password.css') }}">`
+  `<link rel="stylesheet" href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}">`
 - **Option 2:** Import the SCSS in your build (Webpack Encore, Vite, etc.):  
   `@import '@nowo-tech/password-toggle-bundle/src/Resources/public/css/toggle_password.scss';`
 - **Option 3:** Style the classes yourself: `.input-group-text.cursor-pointer`, `.form-password-toggle`, etc.

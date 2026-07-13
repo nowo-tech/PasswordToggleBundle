@@ -161,7 +161,7 @@ The bundle includes CSS/SCSS styles for the toggle button. You can use them by:
 ### Option 1: Include the CSS file
 
 ```html
-<link rel="stylesheet" href="{{ asset('bundles/nowopasswordtoggle/css/toggle_password.css') }}">
+<link rel="stylesheet" href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}">
 ```
 
 ### Option 2: Use the SCSS file

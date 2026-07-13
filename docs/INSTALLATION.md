@@ -80,6 +80,20 @@ return [
 
 4. **Create configuration** (optional). Create `config/packages/nowo_password_toggle.yaml` with your preferred defaults. See [CONFIGURATION.md](CONFIGURATION.md) for all options.
 
+5. **Publish optional CSS** (if you use the legacy stylesheet instead of your own styles):
+
+   ```bash
+   php bin/console assets:install
+   ```
+
+   ```twig
+   <link rel="stylesheet" href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}">
+   ```
+
+   ### AssetMapper
+
+   If your app uses [Symfony AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html), the bundle registers the `nowo_password_toggle` asset package. Run `assets:install` once so `css/toggle_password.css` is published to `public/bundles/nowopasswordtoggle/`.
+
 ## Missing icon packages (runtime behaviour)
 
 If `symfony/ux-icons` or `symfony/http-client` is not installed:

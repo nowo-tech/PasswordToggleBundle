@@ -131,6 +131,19 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $this->assertFalse($container->hasExtension('monolog'));
     }
 
+    public function testPrependConfiguresAssets(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new \Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension());
+
+        $this->extension->prepend($container);
+
+        $this->assertSame(
+            '/bundles/nowopasswordtoggle',
+            $container->getExtensionConfig('framework')[0]['assets']['packages']['nowo_password_toggle']['base_path'],
+        );
+    }
+
     public function testLoadWiresMonologLoggerWhenMonologExtensionPresent(): void
     {
         $container = new ContainerBuilder();

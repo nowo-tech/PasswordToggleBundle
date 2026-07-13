@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.0.3] - 2026-07-13](#203---2026-07-13)
 - [[2.0.2] - 2026-07-09](#202---2026-07-09)
 - [[2.0.1] - 2026-07-09](#201---2026-07-09)
 - [[2.0.0] - 2026-07-02](#200---2026-07-02)
@@ -27,6 +28,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.0.3] - 2026-07-13
+
+### Added
+
+- **Symfony assets package**: `NowoPasswordToggleExtension` prepends `framework.assets.packages.nowo_password_toggle` (`base_path`: `/bundles/nowopasswordtoggle`) so Twig can reference bundle CSS with `asset('css/toggle_password.css', 'nowo_password_toggle')` (AssetMapper-friendly).
+
+### Changed
+
+- **Documentation**: README, [`INSTALLATION.md`](INSTALLATION.md), and [`USAGE.md`](USAGE.md) recommend the named asset package instead of the legacy `bundles/nowopasswordtoggle/...` path; INSTALLATION adds optional CSS publish steps and an AssetMapper note.
 
 ## [2.0.2] - 2026-07-09
 
