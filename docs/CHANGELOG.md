@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.0.4] - 2026-07-16](#204---2026-07-16)
 - [[2.0.3] - 2026-07-13](#203---2026-07-13)
 - [[2.0.2] - 2026-07-09](#202---2026-07-09)
 - [[2.0.1] - 2026-07-09](#201---2026-07-09)
@@ -28,6 +29,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.0.4] - 2026-07-16
+
+### Added
+
+- **REQ-GIT-001 tooling**: `.scripts/check-no-cursor-coauthor.sh`, `.scripts/strip-cursor-coauthor-from-history.sh`, `.githooks/commit-msg`, Cursor rule `.cursor/rules/01-git-commits.mdc`, and Makefile targets `check-no-cursor-coauthor` / `strip-cursor-coauthor-from-history` / updated `setup-hooks`.
+- **CI job `git-hygiene`**: full-history check that commit messages do not contain Cursor co-author trailers (see [`GITHUB_CI.md`](GITHUB_CI.md)).
+- **Code of Conduct**: [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md) (Contributor Covenant); linked from README.
+- **Documentation**: [`docs/GITHUB_CI.md`](GITHUB_CI.md) (REQ-GIT-001 operator/CI reference); CONTRIBUTING and RELEASE updated for hooks and pre-push verification.
+
+### Changed
+
+- **Dev dependencies** (`composer.lock`): PHP-CS-Fixer 3.95.15, Rector 2.5.7, and related transitive updates; demo lockfiles refreshed.
+- **`.gitignore`**: ignore Cursor local sandbox file `.cursor/sandbox.json` (REQ-IDE-005).
+- **Git history (REQ-GIT-001)**: removed Cursor co-author trailers from past commits on `main`; release tags `v2.0.0`–`v2.0.3` retargeted to the rewritten commits.
 
 ## [2.0.3] - 2026-07-13
 

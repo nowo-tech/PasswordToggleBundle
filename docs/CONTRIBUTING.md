@@ -74,6 +74,14 @@ The project follows these standards:
 **Before committing**:
 
 ```bash
+# Install git hooks (strips accidental Cursor co-author trailers from messages)
+make setup-hooks
+
+# Verify git history has no Cursor co-author trailers (also runs in release-check)
+make check-no-cursor-coauthor
+```
+
+```bash
 # Check code style
 make cs-check
 # or
@@ -211,4 +219,4 @@ If you have questions about contributing, you can:
 ## Acknowledgments
 
 Thank you for contributing to Password Toggle Bundle. Your help makes this project better for everyone.
-
+If CI fails because trailers are already on the remote, see [GITHUB_CI.md](GITHUB_CI.md) (REQ-GIT-001) and run `make strip-cursor-coauthor-from-history` before `git push --force-with-lease`.

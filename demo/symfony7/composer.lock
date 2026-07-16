@@ -89,7 +89,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/password-toggle-bundle",
-                "reference": "7a36df1bca92e10bc7c0c897df6bcb5880f7f180"
+                "reference": "67ac875d633cdcbddcb6da39a5e3c3d3a9987c8f"
             },
             "require": {
                 "php": ">=8.2 <8.6",
