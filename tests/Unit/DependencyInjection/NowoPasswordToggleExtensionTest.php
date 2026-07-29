@@ -6,9 +6,11 @@ namespace Nowo\PasswordToggleBundle\Tests\DependencyInjection;
 
 use Nowo\PasswordToggleBundle\DependencyInjection\NowoPasswordToggleExtension;
 use Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber;
+use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
+use Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
@@ -53,7 +55,7 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $this->extension->load([], $container);
 
         // Verify that the PasswordType service is registered
-        $this->assertTrue($container->hasDefinition(\Nowo\PasswordToggleBundle\Form\Type\PasswordType::class));
+        $this->assertTrue($container->hasDefinition(PasswordType::class));
         $this->assertTrue($container->hasDefinition(IconSupportChecker::class));
         $this->assertTrue($container->hasDefinition(IconSupportWarningSubscriber::class));
         $this->assertTrue($container->hasParameter('nowo_password_toggle.icon_support.available'));
@@ -74,7 +76,7 @@ final class NowoPasswordToggleExtensionTest extends TestCase
         $this->extension->load($configs, $container);
 
         // Verify that the PasswordType service is registered
-        $this->assertTrue($container->hasDefinition(\Nowo\PasswordToggleBundle\Form\Type\PasswordType::class));
+        $this->assertTrue($container->hasDefinition(PasswordType::class));
 
         // Verify that configuration is stored as parameter
         $this->assertTrue($container->hasParameter('nowo_password_toggle.defaults'));
@@ -134,7 +136,7 @@ final class NowoPasswordToggleExtensionTest extends TestCase
     public function testPrependConfiguresAssets(): void
     {
         $container = new ContainerBuilder();
-        $container->registerExtension(new \Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension());
+        $container->registerExtension(new FrameworkExtension());
 
         $this->extension->prepend($container);
 

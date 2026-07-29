@@ -26,3 +26,7 @@
 
 # Cursor local sandbox (machine-specific; REQ-IDE-005)
 .cursor/sandbox.json
+
+# Demo coverage artifacts
+demo/*/coverage/
+demo/*/coverage.xml

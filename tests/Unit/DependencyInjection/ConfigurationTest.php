@@ -6,6 +6,8 @@ namespace Nowo\PasswordToggleBundle\Tests\DependencyInjection;
 
 use Nowo\PasswordToggleBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
+use Symfony\Component\Config\Definition\Exception\InvalidTypeException;
 use Symfony\Component\Config\Definition\Processor;
 
 /**
@@ -75,7 +77,7 @@ final class ConfigurationTest extends TestCase
 
     public function testConfigurationValidationRejectsEmptyIcon(): void
     {
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $configs = [
             [
@@ -88,7 +90,7 @@ final class ConfigurationTest extends TestCase
 
     public function testConfigurationValidationRejectsEmptyLabel(): void
     {
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
 
         $configs = [
             [
@@ -101,7 +103,7 @@ final class ConfigurationTest extends TestCase
 
     public function testConfigurationValidationRejectsNonArrayButtonClasses(): void
     {
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidTypeException::class);
+        $this->expectException(InvalidTypeException::class);
 
         $configs = [
             [

@@ -6,6 +6,7 @@ namespace Nowo\PasswordToggleBundle\Tests\Unit\IconSupport;
 
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use PHPUnit\Framework\TestCase;
+use Symfony\UX\Icons\Twig\UXIconRuntime;
 
 final class IconSupportCheckerTest extends TestCase
 {
@@ -68,7 +69,7 @@ final class IconSupportCheckerTest extends TestCase
 
     public function testDetectsInstalledPackagesFromEnvironment(): void
     {
-        $hasUxIcons = class_exists(\Symfony\UX\Icons\Twig\UXIconRuntime::class)
+        $hasUxIcons = class_exists(UXIconRuntime::class)
             || class_exists('Symfony\UX\Icons\Twig\UXIconsRuntime');
 
         if (!$hasUxIcons) {

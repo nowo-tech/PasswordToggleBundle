@@ -19,11 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class IconSupportWarningSubscriberTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        IconSupportWarningSubscriber::resetWarningState();
-    }
-
     public function testLogsWarningOnceWhenDependenciesMissing(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
@@ -65,7 +60,7 @@ final class IconSupportWarningSubscriberTest extends TestCase
         $subscriber->onKernelRequest(new RequestEvent($kernel, Request::create('/'), HttpKernelInterface::SUB_REQUEST));
     }
 
-    public function testResetWarningStateAllowsSecondWarning(): void
+    public function testResetAllowsSecondWarning(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->exactly(2))->method('warning');
@@ -78,7 +73,7 @@ final class IconSupportWarningSubscriberTest extends TestCase
         $kernel = $this->createMock(HttpKernelInterface::class);
         $event  = new RequestEvent($kernel, Request::create('/'), HttpKernelInterface::MAIN_REQUEST);
         $subscriber->onKernelRequest($event);
-        IconSupportWarningSubscriber::resetWarningState();
+        $subscriber->reset();
         $subscriber->onKernelRequest($event);
     }
 

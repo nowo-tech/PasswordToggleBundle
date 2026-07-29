@@ -20,56 +20,60 @@ help:
 
 up:
 	@if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || true; fi
-	docker-compose up -d
+	@$(call run-compose,up -d)
 	@echo "Waiting for container to be ready..."
 	@sleep 5
 	@echo "Installing dependencies..."
-	@docker-compose exec -T -e COMPOSER_MEMORY_LIMIT=-1 php composer install --no-interaction
+	@$(call run-compose,exec -T -e COMPOSER_MEMORY_LIMIT=-1 php composer install --no-interaction)
 	@PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | tr -d '\r'); \
 	[ -z "$$PORT" ] && PORT=$$(grep "^PORT=" .env.example 2>/dev/null | cut -d= -f2 | tr -d '\r'); \
 	echo "Demo started at: http://localhost:$$PORT"
 down:
-	docker-compose down
+	@$(call run-compose,down)
 
 restart: ensure-up
-	docker-compose restart
+	@$(call run-compose,restart)
 
 build:
-	docker-compose build --no-cache
+	@$(call run-compose,build --no-cache)
 
 ensure-up:
-	@if ! docker-compose exec -T php true 2>/dev/null; then \
+	@if ! $(COMPOSE) exec -T php true 2>/dev/null; then \
 		echo "Starting container..."; \
-		docker-compose up -d; \
+		$(COMPOSE) up -d; \
 		sleep 3; \
 	fi
 
 install: ensure-up
-	docker-compose exec -T -e COMPOSER_MEMORY_LIMIT=-1 php composer install --no-interaction
+	@$(call run-compose,exec -T -e COMPOSER_MEMORY_LIMIT=-1 php composer install --no-interaction)
 
 shell: ensure-up
-	docker-compose exec php sh
+	@$(call run-compose,exec php sh)
 
 logs:
-	docker-compose logs -f
+	@$(call run-compose,logs -f)
 
 test: ensure-up
-	docker-compose exec -e APP_ENV=test php composer test
+	@$(call run-compose,exec -e APP_ENV=test php composer test)
 
 test-coverage: ensure-up
-	docker-compose exec php composer test-coverage
+	@$(call run-compose,exec -e APP_ENV=test php composer test-coverage)
 
 cache-clear: ensure-up
-	docker-compose exec php php bin/console cache:clear
+	@$(call run-compose,exec php php bin/console cache:clear)
 
 update-bundle: ensure-up
-	docker-compose exec php composer dump-autoload --optimize
-	docker-compose exec php php bin/console cache:clear --env=dev --no-warmup || true
+	@$(call run-compose,exec -T php composer dump-autoload --optimize)
+	@$(call run-compose,exec php php bin/console cache:clear --env=dev --no-warmup) || true
 	@echo "Bundle updated. Reload the page in the browser."
 
 
 # REQ-MAKE-008: update-deps (REQ-MAKE-008)
-COMPOSE := docker-compose
+# Prefer Compose V2 plugin (GitHub Actions / modern Docker Desktop); fall back to docker-compose V1 (REQ-MAKE-010).
+COMPOSE := $(shell docker compose version >/dev/null 2>&1 && echo "docker compose" || echo "docker-compose")
+# WSL Docker Desktop: bare execve of `docker` can return EACCES; always run Compose via shell.
+run-compose = $(SHELL) -c '$(COMPOSE) $(1)'
 SERVICE_PHP := php
 BUNDLE_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/../..)
-include $(BUNDLE_ROOT)/../.scripts/Makefile.demo-update-deps.mk
+# Optional: monorepo helper absent on standalone GitHub Actions checkout (REQ-MAKE-009).
+-include $(BUNDLE_ROOT)/../.scripts/Makefile.demo-update-deps.mk

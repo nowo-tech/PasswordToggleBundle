@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Nowo\PasswordToggleBundle\IconSupport;
 
 use Closure;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\UX\Icons\Twig\UXIconRuntime;
 
 use function sprintf;
 
@@ -14,11 +16,11 @@ use function sprintf;
 final readonly class IconSupportChecker
 {
     private const UX_ICONS_RUNTIME_CLASSES = [
-        \Symfony\UX\Icons\Twig\UXIconRuntime::class,
+        UXIconRuntime::class,
         'Symfony\UX\Icons\Twig\UXIconsRuntime',
     ];
 
-    private const HTTP_CLIENT_INTERFACE = \Symfony\Contracts\HttpClient\HttpClientInterface::class;
+    private const HTTP_CLIENT_INTERFACE = HttpClientInterface::class;
 
     public function __construct(
         private ?bool $uxIconsAvailable = null,

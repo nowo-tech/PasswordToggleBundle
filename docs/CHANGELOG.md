@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.0.5] - 2026-07-29](#205---2026-07-29)
 - [[2.0.4] - 2026-07-16](#204---2026-07-16)
 - [[2.0.3] - 2026-07-13](#203---2026-07-13)
 - [[2.0.2] - 2026-07-09](#202---2026-07-09)
@@ -29,6 +30,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.0.5] - 2026-07-29
+
+### Added
+
+- **FrankenPHP Friendly**: README banner and image (`docs/images/frankenphp-friendly.png`); demos document `FRANKENPHP_MODE=classic|worker` (default worker) via shared `docker/entrypoint.sh` (REQ-DOCS-017 / REQ-DEMO-010).
+- **`make demo-smoke` / `make down-dev`**: smoke boot of the primary demo (HTTP 200) and orphan-aware compose down (REQ-TEST-011 / REQ-MAKE-007).
+- **PHPUnit**: `SYMFONY_DEPRECATIONS_HELPER=max[direct]=0` so direct Symfony deprecations fail the suite (REQ-SF-005).
+- **Packagist / GitHub metadata**: homepage already set; keywords `php` and `symfony-bundle` (REQ-DOCS-018 / REQ-PKG-004).
+- **Dev tooling**: `nowo-tech/phpstan-frankenphp` (classic + worker rule sets) in `phpstan.neon.dist`.
+
+### Fixed
+
+- **Assets package prepend**: register `framework.assets.packages.nowo_password_toggle` only when `symfony/asset` is installed (avoids FrameworkBundle hard-fail without the Asset component). Demos now require `symfony/asset`.
+- **Demo tests**: `APP_ENV=test` on Compose `exec` for `test` / `test-coverage`; demo images install **pcov** for coverage runs.
+
+### Changed
+
+- **`release-check-demos`**: no longer swallows demo failures (`|| true` removed) (REQ-MAKE-003 / REQ-MAKE-002).
+- **Compose**: prefer `docker compose` V2 with fallback to `docker-compose` (REQ-MAKE-010); demo Makefiles invoke Compose via shell (`run-compose`) to avoid WSL `execve` EACCES on the Docker CLI; optional `-include` of monorepo Makefile helpers so standalone CI checkouts do not fail (REQ-MAKE-009).
+- **Demo `symfony8-php85`**: base image bumped to FrankenPHP **PHP 8.5**; `.env.example` files gain per-variable comments (REQ-DEMO-010 / REQ-DEMO-003).
+- **FrankenPHP docs**: [`DEMO-FRANKENPHP.md`](DEMO-FRANKENPHP.md) switches classic vs worker via `FRANKENPHP_MODE` instead of only `APP_ENV`.
+- **API hardening**: `NowoPasswordToggleBundle`, `NowoPasswordToggleExtension`, and `Configuration` marked `final` (REQ-PHP-001).
+- **`IconSupportWarningSubscriber`**: implements `ResetInterface` with instance state (safe under FrankenPHP worker); replaces static `resetWarningState()` with `reset()`.
+- **Dev dependencies** (`composer.lock`): PHP-CS-Fixer 3.95.17, Rector 2.5.8, PHPStan 2.2.6, `symfony/asset`, and related updates.
 
 ## [2.0.4] - 2026-07-16
 

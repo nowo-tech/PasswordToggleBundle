@@ -26,7 +26,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
  * @copyright 2026 Nowo.tech
  */
-class NowoPasswordToggleBundle extends Bundle
+final class NowoPasswordToggleBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {
@@ -39,10 +39,8 @@ class NowoPasswordToggleBundle extends Bundle
      * Creates and returns the container extension instance if not already created.
      * The extension is cached after the first call to ensure the same instance is returned
      * on subsequent calls.
-     *
-     * @return ExtensionInterface|null The container extension instance, or null if not available
      */
-    public function getContainerExtension(): ?ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface
     {
         if (!$this->extension instanceof ExtensionInterface) {
             $this->extension = new NowoPasswordToggleExtension();
@@ -50,8 +48,13 @@ class NowoPasswordToggleBundle extends Bundle
 
         $extension = $this->extension;
 
-        // Parent Bundle::$extension is ExtensionInterface|false; ensure we never return false (return type is ?ExtensionInterface)
+        // Parent Bundle::$extension is ExtensionInterface|false; ensure we never return false
         /* @phpstan-ignore identical.alwaysFalse */
-        return $extension === false ? null : $extension;
+        if ($extension === false) {
+            $this->extension = new NowoPasswordToggleExtension();
+            $extension       = $this->extension;
+        }
+
+        return $extension;
     }
 }

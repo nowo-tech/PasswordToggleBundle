@@ -6,6 +6,7 @@ namespace Nowo\PasswordToggleBundle\DependencyInjection;
 
 use Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber;
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
+use Symfony\Component\Asset\Package;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -22,7 +23,7 @@ use Symfony\Component\DependencyInjection\Reference;
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
  * @copyright 2026 Nowo.tech
  */
-class NowoPasswordToggleExtension extends Extension implements PrependExtensionInterface
+final class NowoPasswordToggleExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * Loads the services configuration and processes the bundle configuration.
@@ -56,7 +57,8 @@ class NowoPasswordToggleExtension extends Extension implements PrependExtensionI
 
     public function prepend(ContainerBuilder $container): void
     {
-        if ($container->hasExtension('framework')) {
+        // Only when symfony/asset is installed — FrameworkBundle rejects assets config otherwise.
+        if ($container->hasExtension('framework') && class_exists(Package::class)) {
             $container->prependExtensionConfig('framework', [
                 'assets' => [
                     'packages' => [

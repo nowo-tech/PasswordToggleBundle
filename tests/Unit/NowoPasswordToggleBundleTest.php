@@ -9,7 +9,6 @@ use Nowo\PasswordToggleBundle\DependencyInjection\NowoPasswordToggleExtension;
 use Nowo\PasswordToggleBundle\NowoPasswordToggleBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 /**
  * Tests for NowoPasswordToggleBundle.
@@ -42,7 +41,6 @@ final class NowoPasswordToggleBundleTest extends TestCase
         $bundle    = new NowoPasswordToggleBundle();
         $extension = $bundle->getContainerExtension();
 
-        $this->assertInstanceOf(ExtensionInterface::class, $extension);
         $this->assertInstanceOf(NowoPasswordToggleExtension::class, $extension);
     }
 
@@ -60,7 +58,6 @@ final class NowoPasswordToggleBundleTest extends TestCase
         $bundle    = new NowoPasswordToggleBundle();
         $extension = $bundle->getContainerExtension();
 
-        $this->assertInstanceOf(ExtensionInterface::class, $extension);
         $this->assertSame('nowo_password_toggle', $extension->getAlias());
     }
 
@@ -70,7 +67,6 @@ final class NowoPasswordToggleBundleTest extends TestCase
 
         // First call should create the extension
         $extension1 = $bundle->getContainerExtension();
-        $this->assertNotNull($extension1);
 
         // Second call should return the same instance (already initialized)
         $extension2 = $bundle->getContainerExtension();

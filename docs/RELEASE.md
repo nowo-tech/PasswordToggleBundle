@@ -8,15 +8,14 @@
 
 After creating the release commit and tag, run `make check-no-cursor-coauthor` again **before** `git push` (REQ-GIT-001). The release commit itself is not covered by an earlier `release-check` run.
 
-## Example for v2.0.4
+## Example for v2.0.5
 
 ```bash
-git add docs/CHANGELOG.md docs/UPGRADING.md docs/RELEASE.md docs/CONTRIBUTING.md docs/GITHUB_CI.md README.md CODE_OF_CONDUCT.md Makefile .gitignore .github/workflows/ci.yml .githooks/ .scripts/check-no-cursor-coauthor.sh .scripts/strip-cursor-coauthor-from-history.sh .cursor/rules/01-git-commits.mdc composer.lock demo/symfony7/composer.lock demo/symfony8/composer.lock demo/symfony8-php85/composer.lock
+git add -A
 git status   # review
-git commit -m "Release 2.0.4: REQ-GIT-001 CI hygiene, Code of Conduct, and docs"
-git tag -a v2.0.4 -m "Release 2.0.4: REQ-GIT-001 CI hygiene, Code of Conduct, and docs"
+git commit -m "Release 2.0.5: FrankenPHP worker hardening, final DI types, demo smoke"
+git tag -a v2.0.5 -m "Release 2.0.5: FrankenPHP worker hardening, final DI types, demo smoke"
 make check-no-cursor-coauthor
-# History was rewritten to strip Cursor trailers — use force-with-lease once:
-git push --force-with-lease origin main
-git push origin v2.0.4
+git push origin main
+git push origin v2.0.5
 ```

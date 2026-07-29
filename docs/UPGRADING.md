@@ -2,6 +2,15 @@
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
+## 2.0.5
+
+- **No Twig / `PasswordType` config changes** for normal use.
+- **Optional CSS via named assets:** install `symfony/asset` if you use `asset('css/toggle_password.css', 'nowo_password_toggle')`. Without it the named package is not registered (no hard failure).
+- **Do not extend** `NowoPasswordToggleBundle`, `NowoPasswordToggleExtension`, or `Configuration` — they are now `final`. Prefer composition or decorating services instead.
+- **Tests that called** `IconSupportWarningSubscriber::resetWarningState()`: use instance `$subscriber->reset()` (implements `ResetInterface`; autoconfigured for `kernel.reset` under FrankenPHP worker).
+- **Demos:** prefer `FRANKENPHP_MODE=classic|worker` (see [`DEMO-FRANKENPHP.md`](DEMO-FRANKENPHP.md)); `symfony8-php85` runs on FrankenPHP PHP 8.5; demos require `symfony/asset`.
+- **Maintainers:** `make release-check-demos` / `demo release-check` now fail the build if demos fail; use `make demo-smoke` for a quick HTTP check.
+
 ## 2.0.4
 
 - **No application upgrade steps.** Repository and maintainer tooling only (REQ-GIT-001 git hygiene, Code of Conduct, CI docs, dev dependency bumps).

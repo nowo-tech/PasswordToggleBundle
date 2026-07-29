@@ -11,13 +11,16 @@ use Symfony\Component\Console\Event\ConsoleCommandEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Contracts\Service\ResetInterface;
 
 /**
  * Logs a one-time warning when icon dependencies are missing (does not block cache warmup).
+ *
+ * Instance state + ResetInterface keeps the one-shot guard safe under FrankenPHP worker.
  */
-final class IconSupportWarningSubscriber implements EventSubscriberInterface
+final class IconSupportWarningSubscriber implements EventSubscriberInterface, ResetInterface
 {
-    private static bool $warned = false;
+    private bool $warned = false;
 
     public function __construct(
         private readonly IconSupportChecker $iconSupportChecker,
@@ -48,16 +51,16 @@ final class IconSupportWarningSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * Resets the one-time guard (for tests only).
+     * Resets the one-time guard (tests / kernel.reset).
      */
-    public static function resetWarningState(): void
+    public function reset(): void
     {
-        self::$warned = false;
+        $this->warned = false;
     }
 
     private function warnIfNeeded(): void
     {
-        if (self::$warned) {
+        if ($this->warned) {
             return;
         }
 
@@ -67,7 +70,7 @@ final class IconSupportWarningSubscriber implements EventSubscriberInterface
             return;
         }
 
-        self::$warned = true;
+        $this->warned = true;
         $this->logger->warning($message, ['channel' => 'nowo_password_toggle']);
     }
 }
