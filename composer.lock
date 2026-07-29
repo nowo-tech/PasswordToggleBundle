@@ -3785,16 +3785,16 @@
         },
         {
             "name": "nowo-tech/phpstan-frankenphp",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nowo-tech/PhpStanFrankenPhp.git",
-                "reference": "c27fbbec6f3430763ddf9854f5ec6b0ebb15f1fd"
+                "reference": "8edcc44f9059541a31d87766cac12bd4002e7932"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nowo-tech/PhpStanFrankenPhp/zipball/c27fbbec6f3430763ddf9854f5ec6b0ebb15f1fd",
-                "reference": "c27fbbec6f3430763ddf9854f5ec6b0ebb15f1fd",
+                "url": "https://api.github.com/repos/nowo-tech/PhpStanFrankenPhp/zipball/8edcc44f9059541a31d87766cac12bd4002e7932",
+                "reference": "8edcc44f9059541a31d87766cac12bd4002e7932",
                 "shasum": ""
             },
             "require": {
@@ -3843,7 +3843,7 @@
                     "homepage": "https://nowo.tech"
                 }
             ],
-            "description": "PHPStan rules to migrate PHP apps from PHP-FPM to FrankenPHP classic mode, then worker mode. Rules are split by migration level with documented justification and application order.",
+            "description": "PHPStan rules that help you migrate from PHP-FPM to FrankenPHP classic, then to worker mode. Rules are split by level with demos for every case.",
             "homepage": "https://github.com/nowo-tech/PhpStanFrankenPhp",
             "keywords": [
                 "PHPStan",
@@ -3867,7 +3867,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-22T15:59:27+00:00"
+            "time": "2026-07-29T14:51:52+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3989,11 +3989,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.6",
+            "version": "2.2.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a6e9b5a9420f6109c091e87d82683bd1a80b87ed",
-                "reference": "a6e9b5a9420f6109c091e87d82683bd1a80b87ed",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/692db47b9dddb0487934e5236e77d48594aef921",
+                "reference": "692db47b9dddb0487934e5236e77d48594aef921",
                 "shasum": ""
             },
             "require": {
@@ -4049,7 +4049,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-07-26T21:22:49+00:00"
+            "time": "2026-07-29T17:39:32+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
