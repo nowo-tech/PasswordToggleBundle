@@ -1,9 +1,5 @@
 # Password Toggle Bundle
 
-![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
-
-FrankenPHP worker mode: supported (PHPStan FrankenPHP rules + Symfony demos with `FRANKENPHP_MODE=worker`).
-
 [![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7.0%2B%20%7C%208.0%2B-000000?logo=symfony)](https://symfony.com)
 
 > ⭐ **Found this useful?** Give it a star on GitHub! It helps us maintain and improve the project.
@@ -12,27 +8,9 @@ Symfony bundle providing a password form type with toggle visibility feature.
 
 ![Password Toggle Bundle Demo](docs/images/demo-screenshot.png)
 
-## Documentation
+![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
 
-- [GitHub Actions CI requirements](docs/GITHUB_CI.md)
-- [Installation](docs/INSTALLATION.md)
-- [Configuration](docs/CONFIGURATION.md)
-- [Usage](docs/USAGE.md)
-- [Contributing](docs/CONTRIBUTING.md)
-- [Code of Conduct](CODE_OF_CONDUCT.md)
-- [Changelog](docs/CHANGELOG.md)
-- [Upgrading](docs/UPGRADING.md)
-- [Release](docs/RELEASE.md)
-- [Security](docs/SECURITY.md)
-- [Engram](docs/ENGRAM.md)
-- [Spec-driven development](docs/SPEC-DRIVEN-DEVELOPMENT.md)
-- [GitHub Spec Kit](docs/SPEC-KIT.md)
-
-### Additional documentation
-
-- [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md)
-- [Overriding bundle templates](docs/USAGE.md#overriding-bundle-templates)
-- [Branching](docs/BRANCHING.md)
+This bundle is **FrankenPHP worker mode friendly**.
 
 ## Features
 
@@ -67,6 +45,20 @@ return [
 
 > **Note**: If you're using Symfony Flex, the bundle will be registered automatically and a default configuration file will be created at `config/packages/nowo_password_toggle.yaml`.
 
+## Requirements
+
+- PHP >= 8.2, < 8.6
+- Symfony >= 7.0 || >= 8.0
+- **Symfony UX Icons** `^2.0 || ^3.0` and **symfony/http-client** (same Symfony major) — **required for the default Twig template** (`ux_icon()`). Listed as `composer suggest` on the bundle; Symfony Flex adds both via the recipe. Without Flex:
+
+```bash
+composer require symfony/ux-icons symfony/http-client
+php bin/console ux:icons:lock
+```
+
+If those packages are missing, the toggle still works but icons are omitted; see [docs/INSTALLATION.md](docs/INSTALLATION.md#missing-icon-packages-runtime-behaviour).
+- Bootstrap 5 (recommended for styling, but not required)
+
 ## Configuration
 
 When installed via Symfony Flex, a default configuration file is automatically created at `config/packages/nowo_password_toggle.yaml`. If you're not using Flex or the file wasn't created, you can create it manually.
@@ -91,7 +83,6 @@ nowo_password_toggle:
 These defaults will be used for all `PasswordType` instances unless overridden when using the form type directly.
 
 ## Usage
-
 ### Basic Usage
 
 ```php
@@ -145,20 +136,6 @@ $builder->add('password', PasswordType::class, [
 ```
 
 When `toggle` is `false`, the field renders as a standard password input without the toggle button, making it compatible with any styling or JavaScript framework.
-
-## Requirements
-
-- PHP >= 8.2, < 8.6
-- Symfony >= 7.0 || >= 8.0
-- **Symfony UX Icons** `^2.0 || ^3.0` and **symfony/http-client** (same Symfony major) — **required for the default Twig template** (`ux_icon()`). Listed as `composer suggest` on the bundle; Symfony Flex adds both via the recipe. Without Flex:
-
-```bash
-composer require symfony/ux-icons symfony/http-client
-php bin/console ux:icons:lock
-```
-
-If those packages are missing, the toggle still works but icons are omitted; see [docs/INSTALLATION.md](docs/INSTALLATION.md#missing-icon-packages-runtime-behaviour).
-- Bootstrap 5 (recommended for styling, but not required)
 
 ## Styling
 
@@ -250,7 +227,6 @@ make up symfony8-php85 # Symfony 8.0 with PHP 8.5
 See `demo/README.md` for detailed instructions for all demos.
 
 ## Development
-
 ### Using Docker (Recommended)
 
 ```bash
@@ -279,30 +255,6 @@ composer test-coverage
 composer qa
 ```
 
-## Testing
-
-The bundle targets **≥95% code coverage** (CI minimum); current suite is at 100%. All tests are located in the `tests/` directory.
-
-### Running Tests
-
-```bash
-# Run all tests
-composer test
-
-# Run tests with coverage report
-composer test-coverage
-
-# View coverage report
-open coverage/index.html
-```
-
-### Test Structure
-
-- `tests/Unit/` - Unit tests (bundle class, dependency injection, form type)
-- `tests/Integration/` - Integration tests (reserved for integration scenarios)
-
-All classes and methods are fully tested with 100% code coverage.
-
 ## Code Quality
 
 The bundle uses PHP-CS-Fixer to enforce code style (PSR-12).
@@ -328,6 +280,52 @@ The bundle uses GitHub Actions for continuous integration:
 - **Dependabot**: Automatically updates dependencies
 
 See `.github/workflows/ci.yml` for details.
+
+## Documentation
+
+- [GitHub Actions CI requirements](docs/GITHUB_CI.md)
+- [Installation](docs/INSTALLATION.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Usage](docs/USAGE.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
+- [Changelog](docs/CHANGELOG.md)
+- [Upgrading](docs/UPGRADING.md)
+- [Release](docs/RELEASE.md)
+- [Security](docs/SECURITY.md)
+- [Engram](docs/ENGRAM.md)
+- [Spec-driven development](docs/SPEC-DRIVEN-DEVELOPMENT.md)
+- [GitHub Spec Kit](docs/SPEC-KIT.md)
+
+### Additional documentation
+
+- [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md)
+- [Overriding bundle templates](docs/USAGE.md#overriding-bundle-templates)
+- [Branching](docs/BRANCHING.md)
+
+## Testing
+
+The bundle targets **≥95% code coverage** (CI minimum); current suite is at 100%. All tests are located in the `tests/` directory.
+
+### Running Tests
+
+```bash
+# Run all tests
+composer test
+
+# Run tests with coverage report
+composer test-coverage
+
+# View coverage report
+open coverage/index.html
+```
+
+### Test Structure
+
+- `tests/Unit/` - Unit tests (bundle class, dependency injection, form type)
+- `tests/Integration/` - Integration tests (reserved for integration scenarios)
+
+All classes and methods are fully tested with 100% code coverage.
 
 ## Tests and coverage
 
