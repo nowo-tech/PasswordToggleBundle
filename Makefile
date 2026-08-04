@@ -8,7 +8,7 @@ COMPOSE_BIN := $(shell docker compose version >/dev/null 2>&1 && echo "docker co
 COMPOSE     := $(COMPOSE_BIN) -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
-.PHONY: help up down down-dev build shell install test test-coverage coverage-php-percent cs-check cs-fix rector rector-dry phpstan qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history
+.PHONY: help up down down-dev build shell install test test-coverage coverage-php-percent cs-check cs-fix rector rector-dry phpstan qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra
 
 # Default target
 help:
@@ -115,7 +115,11 @@ qa: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer qa
 
 # Pre-release checks (no demos healthcheck if demo/Makefile has no release-verify; optional)
-release-check: check-no-cursor-coauthor ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
+
+check-twig-extra:
+	@chmod +x .scripts/check-twig-extra.sh
+	@./.scripts/check-twig-extra.sh
+release-check: check-no-cursor-coauthor check-twig-extra ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
 
 release-check-demos:
 	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-check; else echo "No demo/Makefile — skip release-check-demos"; fi
@@ -168,3 +172,6 @@ BUNDLE_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 strip-cursor-coauthor-from-history:
 	@chmod +x .scripts/strip-cursor-coauthor-from-history.sh
 	@./.scripts/strip-cursor-coauthor-from-history.sh main
+
+twig-lint: ensure-up
+	@$(COMPOSE) exec -T $(SERVICE_PHP) composer twig:lint || $(COMPOSE) exec -T $(SERVICE_PHP) ./vendor/bin/twig-cs-fixer lint --config=.twig-cs-fixer.php

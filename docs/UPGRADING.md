@@ -99,3 +99,29 @@ First stable release.
 
 - **Requirements:** PHP >= 8.1, Symfony ^6.0 || ^7.0 || ^8.0.
 - **Optional:** symfony/ux-icons ^2.0 || ^3.0 for icon support.
+
+## Unreleased
+
+## To 2.1.0
+
+From **2.0.5** — Adds required Twig Extra (REQ-TWIG-004) and Twig-CS-Fixer. Register TwigExtraBundle if Flex did not.
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+php bin/console cache:clear
+```
+
+### Twig Extra Bundle (REQ-TWIG-004)
+
+Hosts that render this bundle's Twig templates must install:
+
+```bash
+composer require twig/extra-bundle twig/string-extra
+```
+
+and enable `Twig\Extra\TwigExtraBundle\TwigExtraBundle`. Flex recipes usually register it automatically.
+
+### Twig-CS-Fixer (maintainers)
+
+Package maintainers: `composer twig:lint` / `composer twig:fix` use `.twig-cs-fixer.php` over `src/` (and `templates/` when present).
+

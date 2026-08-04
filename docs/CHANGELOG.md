@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.1.0] - 2026-08-04](#210---2026-08-04)
 - [[2.0.5] - 2026-07-29](#205---2026-07-29)
 - [[2.0.4] - 2026-07-16](#204---2026-07-16)
 - [[2.0.3] - 2026-07-13](#203---2026-07-13)
@@ -30,6 +31,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.1.0] - 2026-08-04
+
+### Added
+- **REQ-TWIG-004:** require `twig/extra-bundle` + `twig/string-extra`; `make check-twig-extra` in `release-check`; demos register `TwigExtraBundle`.
+- **Twig-CS-Fixer:** `vincentlanglet/twig-cs-fixer`, `.twig-cs-fixer.php`, `composer twig:lint` / `twig:fix`.
+
+[2.1.0]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.1.0
 
 ## [2.0.5] - 2026-07-29
 

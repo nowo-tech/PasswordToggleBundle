@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b7307a2693ef2d92411064402f16e12",
+    "content-hash": "c61eb5357be4ad80b5c287a3fcc51721",
     "packages": [
         {
             "name": "composer/semver",
@@ -89,13 +89,15 @@
             "dist": {
                 "type": "path",
                 "url": "/var/password-toggle-bundle",
-                "reference": "dedf3f361282f08d993d7293b0f207352586586a"
+                "reference": "0edd257e57f5c3c4e82eabda603341800337f2db"
             },
             "require": {
                 "php": ">=8.2 <8.6",
                 "symfony/form": "^7.0 || ^8.0",
                 "symfony/framework-bundle": "^7.0 || ^8.0",
-                "symfony/twig-bundle": "^7.0 || ^8.0"
+                "symfony/twig-bundle": "^7.0 || ^8.0",
+                "twig/extra-bundle": "^3.12",
+                "twig/string-extra": "^3.12"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
@@ -112,7 +114,8 @@
                 "symfony/http-client": "^7.0 || ^8.0",
                 "symfony/http-kernel": "^7.0 || ^8.0",
                 "symfony/ux-icons": "^2.0 || ^3.0",
-                "symfony/yaml": "^7.0 || ^8.0"
+                "symfony/yaml": "^7.0 || ^8.0",
+                "vincentlanglet/twig-cs-fixer": "^3.0"
             },
             "suggest": {
                 "symfony/asset": "Required to use the named asset package nowo_password_toggle (asset('css/toggle_password.css', 'nowo_password_toggle')).",
@@ -167,6 +170,15 @@
                 ],
                 "validate": [
                     "composer validate --strict"
+                ],
+                "twig:lint": [
+                    "twig-cs-fixer lint --config=.twig-cs-fixer.php"
+                ],
+                "twig:fix": [
+                    "twig-cs-fixer fix --config=.twig-cs-fixer.php"
+                ],
+                "twig:fix:check": [
+                    "twig-cs-fixer lint --config=.twig-cs-fixer.php --fix"
                 ]
             },
             "license": [
@@ -4252,6 +4264,147 @@
                 }
             ],
             "time": "2026-07-21T15:13:06+00:00"
+        },
+        {
+            "name": "twig/extra-bundle",
+            "version": "v3.24.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/twig-extra-bundle.git",
+                "reference": "6a621fcb1f28aa9ea7b34a99047ae0cdf5b834c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/twig-extra-bundle/zipball/6a621fcb1f28aa9ea7b34a99047ae0cdf5b834c9",
+                "reference": "6a621fcb1f28aa9ea7b34a99047ae0cdf5b834c9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1.0",
+                "symfony/framework-bundle": "^5.4|^6.4|^7.0|^8.0",
+                "symfony/twig-bundle": "^5.4|^6.4|^7.0|^8.0",
+                "twig/twig": "^3.2|^4.0"
+            },
+            "require-dev": {
+                "league/commonmark": "^2.7",
+                "symfony/phpunit-bridge": "^6.4|^7.0",
+                "twig/cache-extra": "^3.0",
+                "twig/cssinliner-extra": "^3.0",
+                "twig/html-extra": "^3.0",
+                "twig/inky-extra": "^3.0",
+                "twig/intl-extra": "^3.0",
+                "twig/markdown-extra": "^3.0",
+                "twig/string-extra": "^3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\TwigExtraBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Symfony bundle for extra Twig extensions",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "bundle",
+                "extra",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.24.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-02-07T08:07:38+00:00"
+        },
+        {
+            "name": "twig/string-extra",
+            "version": "v3.24.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/string-extra.git",
+                "reference": "6ec8f2e8ca9b2193221a02cb599dc92c36384368"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/string-extra/zipball/6ec8f2e8ca9b2193221a02cb599dc92c36384368",
+                "reference": "6ec8f2e8ca9b2193221a02cb599dc92c36384368",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1.0",
+                "symfony/string": "^5.4|^6.4|^7.0|^8.0",
+                "symfony/translation-contracts": "^1.1|^2|^3",
+                "twig/twig": "^3.13|^4.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^6.4|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\String\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for Symfony String",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "html",
+                "string",
+                "twig",
+                "unicode"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/string-extra/tree/v3.24.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-12-02T14:45:16+00:00"
         },
         {
             "name": "twig/twig",
