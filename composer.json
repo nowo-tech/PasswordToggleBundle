@@ -59,7 +59,7 @@
         "symfony/http-kernel": "^7.0 || ^8.0",
         "symfony/ux-icons": "^2.0 || ^3.0",
         "symfony/yaml": "^7.0 || ^8.0",
-        "vincentlanglet/twig-cs-fixer": "^3.0"
+        "vincentlanglet/twig-cs-fixer": "^4.0"
     },
     "archive": {
         "exclude": [
