@@ -161,6 +161,8 @@ The bundle uses these CSS classes that you can style:
 - `.input-group.input-group-merge` - Container
 - `.input-group-text.cursor-pointer` - Toggle button
 - `.icon-base` - Icon classes
+- `.icon-hidden` / `.icon-visible` - Eye icons (`.icon-visible` is hidden by default in `toggle_password.css`)
+- `.is-password-visible` - Added to the toggle button when the password is shown (CSP-safe; do not use inline `style.display`)
 
 Example custom styles:
 

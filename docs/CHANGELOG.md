@@ -32,6 +32,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **CSP-safe icon visibility:** hide/show eye icons via `is-password-visible` + `toggle_password.css` instead of inline `style="display: none"` / `element.style.display`. When `style-src` includes a nonce, browsers ignore `'unsafe-inline'`, so both icons were visible under strict CSP (e.g. Beacon). Demos aligned to the same class toggle (no Bootstrap `d-none`).
+
 ## [2.1.0] - 2026-08-04
 
 ### Added
