@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.1.1] - 2026-08-12](#211---2026-08-12)
 - [[2.1.0] - 2026-08-04](#210---2026-08-04)
 - [[2.0.5] - 2026-07-29](#205---2026-07-29)
 - [[2.0.4] - 2026-07-16](#204---2026-07-16)
@@ -32,9 +33,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-08-12
+
 ### Fixed
 
 - **CSP-safe icon visibility:** hide/show eye icons via `is-password-visible` + `toggle_password.css` instead of inline `style="display: none"` / `element.style.display`. When `style-src` includes a nonce, browsers ignore `'unsafe-inline'`, so both icons were visible under strict CSP (e.g. Beacon). Demos aligned to the same class toggle (no Bootstrap `d-none`).
+
+[2.1.1]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.1.1
 
 ## [2.1.0] - 2026-08-04
 
