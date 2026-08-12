@@ -58,6 +58,19 @@
             height: 1.25rem;
             transition: opacity 0.2s ease-in-out;
         }
+        /* One eye at a time (CSP-safe; mirrors toggle_password.css) */
+        .form-password-toggle .icon-visible,
+        .input-group-text.cursor-pointer .icon-visible {
+            display: none;
+        }
+        .form-password-toggle .is-password-visible .icon-hidden,
+        .input-group-text.cursor-pointer.is-password-visible .icon-hidden {
+            display: none;
+        }
+        .form-password-toggle .is-password-visible .icon-visible,
+        .input-group-text.cursor-pointer.is-password-visible .icon-visible {
+            display: block;
+        }
         .alert {
             margin-top: 20px;
         }

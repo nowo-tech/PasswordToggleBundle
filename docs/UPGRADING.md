@@ -2,6 +2,12 @@
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
+## Unreleased (CSP-safe icon visibility)
+
+- **Load the bundle CSS** (`asset('css/toggle_password.css', 'nowo_password_toggle')` or import the SCSS). Icon show/hide now depends on `.icon-visible` / `.is-password-visible` rules in that stylesheet.
+- **Custom form theme overrides:** if you copied `toggle_password_widget.html.twig`, stop using inline `style.display` / `style: 'display: none'` / Bootstrap `d-none`. Toggle `is-password-visible` on the button (see the bundle widget) and keep both icons in the markup without inline hide styles.
+- **Hosts with strict `script-src` (no `'unsafe-inline'`):** the default widget still uses inline `onclick` for Live Component compatibility; override the form theme with a Stimulus (or other non-inline) controller if needed — same as before.
+
 ## 2.0.5
 
 - **No Twig / `PasswordType` config changes** for normal use.
