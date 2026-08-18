@@ -1,11 +1,11 @@
 # Makefile for Password Toggle Bundle Demo
 # Each demo has its own docker-compose.yml and can be run independently
 
-# Define available demos (folder names = demo names, standard: symfony7, symfony8, symfony8-php85)
+# Define available demos (folder names = demo names, standard: symfony8, symfony8-php85)
 # Prefer Compose V2 plugin (GitHub Actions / modern Docker Desktop); fall back to docker-compose V1 (REQ-MAKE-010).
 COMPOSE ?= $(shell docker compose version >/dev/null 2>&1 && echo "docker compose" || echo "docker-compose")
 
-DEMOS := symfony7 symfony8 symfony8-php85
+DEMOS := symfony8 symfony8-php85
 
 # Helper function to get port from .env file (defaults to 8001)
 get-port = $(shell grep -E '^PORT=' $(1)/.env 2>/dev/null | cut -d '=' -f2 || echo "8001")
@@ -44,18 +44,18 @@ help:
 	@echo "  demo-smoke         REQ-TEST-011: up symfony8 → HTTP 200 → down"
 	@echo ""
 	@echo "Generic commands (use with <demo-name> or DEMO=<name>):"
-	@echo "  up <demo>         Start a specific demo (e.g., make up symfony7 or make up DEMO=symfony7)"
-	@echo "  down <demo>        Stop a specific demo (e.g., make down symfony7 or make down DEMO=symfony7)"
-	@echo "  install <demo>     Install dependencies (e.g., make install symfony7 or make install DEMO=symfony7)"
-	@echo "  test <demo>        Run tests (e.g., make test symfony7 or make test DEMO=symfony7)"
-	@echo "  test-coverage <demo>  Run tests with coverage (e.g., make test-coverage symfony7 or make test-coverage DEMO=symfony7)"
+	@echo "  up <demo>         Start a specific demo (e.g., make up symfony8 or make up DEMO=symfony8)"
+	@echo "  down <demo>        Stop a specific demo (e.g., make down symfony8 or make down DEMO=symfony8)"
+	@echo "  install <demo>     Install dependencies (e.g., make install symfony8 or make install DEMO=symfony8)"
+	@echo "  test <demo>        Run tests (e.g., make test symfony8 or make test DEMO=symfony8)"
+	@echo "  test-coverage <demo>  Run tests with coverage (e.g., make test-coverage symfony8 or make test-coverage DEMO=symfony8)"
 	@echo "  shell <demo>       Open shell in a specific demo container"
 	@echo "  logs <demo>        Show logs of a specific demo"
 	@echo ""
 	@echo "Other commands:"
 	@echo "  clean              Remove vendor and cache from all demos"
 	@echo ""
-	@echo "Each demo has its own Makefile (e.g. make -C symfony7 help or cd symfony7 && make help)."
+	@echo "Each demo has its own Makefile (e.g. make -C symfony8 help or cd symfony8 && make help)."
 	@echo ""
 	@echo "Access URLs:"
 	@for demo in $(DEMOS); do \
@@ -336,7 +336,6 @@ clean:
 	@echo "🧹 Cleaning vendor and cache from all demos..."
 	@$(foreach demo,$(DEMOS),rm -rf $(demo)/vendor $(demo)/var $(demo)/.phpunit.cache;)
 	@echo "✅ Cleaned!"
-
 
 # REQ-MAKE-008: update-deps-all (REQ-MAKE-008)
 BUNDLE_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/..)

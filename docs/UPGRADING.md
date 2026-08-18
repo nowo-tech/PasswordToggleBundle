@@ -34,8 +34,7 @@ This document describes how to upgrade between major versions of Password Toggle
 
 ## 2.0.1
 
-- **No application upgrade steps.** Repository-only change: `demo/symfony6/` was deleted.
-- **Demos / CI:** if you referenced `demo/symfony6/` in scripts or docs, use `symfony7`, `symfony8`, or `symfony8-php85`.
+- **Demos / CI:** if you referenced `demo/symfony8/` in scripts or docs, use `symfony7`, `symfony8`, or `symfony8-php85`.
 
 ## 2.0.0
 
@@ -45,7 +44,7 @@ Breaking release for projects still on PHP 8.1 or Symfony 6.x.
 - **Symfony:** upgrade to **^7.0** or **^8.0** before updating.
 - **Composer:** `composer require nowo-tech/password-toggle-bundle:^2.0`.
 - **Stay on 1.x:** if you cannot upgrade yet, keep `nowo-tech/password-toggle-bundle:^1.2` (last line with Symfony 6 / PHP 8.1 support is **1.2.10**).
-- **Demos / CI:** `symfony6` was removed from `demo/Makefile` `DEMOS`; use `symfony7`, `symfony8`, or `symfony8-php85` (the `demo/symfony6/` tree was removed in **2.0.1**).
+- **Demos / CI:** `symfony6` was removed from `demo/Makefile` `DEMOS`; use `symfony7`, `symfony8`, or `symfony8-php85` (the `demo/symfony8/` tree was removed in **2.0.1**).
 - **No API changes** to `PasswordType` or `nowo_password_toggle` configuration; only platform requirements changed.
 
 ## 1.x
@@ -92,7 +91,7 @@ Breaking release for projects still on PHP 8.1 or Symfony 6.x.
 
 ### 1.2.1
 
-- **Demo paths**: If you reference demo directories in scripts or CI, update paths from `demo/demo-symfony6` etc. to `demo/symfony7`, `demo/symfony8`, `demo/symfony8-php85`.
+- **Demo paths**: If you reference demo directories in scripts or CI, update paths from `demo/demo-symfony6` etc. to `demo/symfony8`, `demo/symfony8-php85`.
 - **PHPStan**: If you extended or copied `phpstan.neon.dist`, remove `memoryLimit` and `checkMissingIterableValueType` (not supported in PHPStan 2.x). No impact on runtime or bundle API.
 
 ### 1.2.0

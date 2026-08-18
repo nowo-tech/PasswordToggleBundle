@@ -207,10 +207,10 @@ Each demo is independent and includes:
 
 ```bash
 cd demo
-make up-symfony7    # Start Symfony 7.0 demo (specific command)
-# Or use generic command: make up symfony7
-make install-symfony7  # Install dependencies
-# Or use generic command: make install symfony7
+make up-symfony8    # Start Symfony 7.0 demo (specific command)
+# Or use generic command: make up symfony8
+make install-symfony8  # Install dependencies
+# Or use generic command: make install symfony8
 # Access at: http://localhost:8001 (default port, configurable via .env)
 ```
 
