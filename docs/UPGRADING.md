@@ -2,6 +2,10 @@
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
+## 2.1.2 (Symfony 8 demos / Hot Reload 1.4)
+
+- **No application upgrade steps.** Demos only: Hot Reload Bundle `^1.4` (FrankenPHP Mercure/`hot_reload`, `dev`/`test`). Shipped demos are Symfony 8 only (Symfony 6/7 demo apps removed).
+
 ## 2.1.1 (CSP-safe icon visibility)
 
 - **Load the bundle CSS** (`asset('css/toggle_password.css', 'nowo_password_toggle')` or import the SCSS). Icon show/hide now depends on `.icon-visible` / `.is-password-visible` rules in that stylesheet.
@@ -106,14 +110,6 @@ First stable release.
 - **Optional:** symfony/ux-icons ^2.0 || ^3.0 for icon support.
 
 ## Unreleased
-
-## To 2.1.2
-
-From **2.1.1** — No application upgrade steps. **Demos only:** Hot Reload Bundle `^1.4` (FrankenPHP Mercure/`hot_reload`, `dev`/`test`). Shipped demos are Symfony 8 only (Symfony 6/7 demo apps removed).
-
-```bash
-composer update nowo-tech/password-toggle-bundle
-```
 
 ## To 2.1.0
 
