@@ -27,11 +27,12 @@
         "twig/twig": "^3.21"
     },
     "require-dev": {
+        "nowo-tech/hot-reload-bundle": "^1.4",
         "nowo-tech/twig-inspector-bundle": "v1.0.3",
         "phpunit/phpunit": "^10.0",
-        "symfony/debug-bundle": "^8.0",
         "symfony/browser-kit": "^8.0",
-        "symfony/css-selector": "^8.0"
+        "symfony/css-selector": "^8.0",
+        "symfony/debug-bundle": "^8.0"
     },
     "config": {
         "allow-plugins": {

@@ -25,7 +25,7 @@ The demos use:
 - **Two Caddyfiles**: `Caddyfile` (production, with worker) and `Caddyfile.dev` (development, no worker).
 - An **entrypoint** that selects classic vs worker Caddyfile from **`FRANKENPHP_MODE`** (`classic` \| `worker`, default **`worker`** in `.env.example`)
 
-There are demos for **Symfony 7**, **8** and **8 (PHP 8.5)** (e.g. **demo/symfony7**, **demo/symfony8**, **demo/symfony8-php85**). Each has its own Dockerfile, docker-compose.yml and Makefile. From the bundle root you run e.g. `make -C demo/symfony8 up` (see the demo's README for the URL and port).
+There are demos for **Symfony 8** and **8 (PHP 8.5)** (e.g. **demo/symfony8**, **demo/symfony8-php85**). Each has its own Dockerfile, docker-compose.yml and Makefile. From the bundle root you run e.g. `make -C demo/symfony8 up` (see the demo's README for the URL and port).
 
 The main difference between development and production is:
 
@@ -46,6 +46,7 @@ The main difference between development and production is:
 The demo applications are configured for **local development and debugging**:
 
 - **Symfony Web Profiler** — enabled in `dev` and `test` environments.
+- **Nowo Twig Inspector** (`nowo-tech/twig-inspector-bundle`) and **Nowo Hot Reload** (`nowo-tech/hot-reload-bundle`) — required together on FrankenPHP demos (dev/test only; Caddyfile Mercure + `hot_reload`, plus `worker { watch }` in worker mode). Do not enable Hot Reload in production.
 - **Password Toggle Bundle** (`Nowo\PasswordToggleBundle\NowoPasswordToggleBundle`) — the bundle under test; enabled in the demos.
 
 Example `config/bundles.php` (aligned with **demo/symfony8**):
