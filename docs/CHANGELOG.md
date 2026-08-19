@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.1.3] - 2026-08-19](#213---2026-08-19)
 - [[2.1.2] - 2026-08-18](#212---2026-08-18)
 - [[2.1.1] - 2026-08-12](#211---2026-08-12)
 - [[2.1.0] - 2026-08-04](#210---2026-08-04)
@@ -33,6 +34,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.1.3] - 2026-08-19
+
+### Security
+
+- **CI:** run `composer audit --locked` after dependency install (REQ-SEC / P3).
 
 ## [2.1.2] - 2026-08-18
 
