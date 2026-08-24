@@ -1,5 +1,27 @@
 # Upgrading
 
+## Table of contents
+
+- [From 2.1.3 to 2.1.4](#from-213-to-214)
+
+## From 2.1.3 to 2.1.4
+
+No breaking changes. **No application upgrade steps.**
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
+
+## From 2.1.3 to 2.1.4
+
+No breaking changes. **No application upgrade steps.**
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
+
+# Upgrading
+
 This document describes how to upgrade between major versions of Password Toggle Bundle.
 
 ## 2.1.3 (composer audit CI)
