@@ -22,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * - Toggle button with customizable icons (hidden/visible states)
  * - Customizable labels for accessibility
  * - Configurable CSS classes for styling
- * - Native JavaScript implementation for maximum compatibility
+ * - Native JavaScript custom element (`<nowo-password-toggle>`) for CSP-safe toggling
  *
  * Default values can be configured in config/packages/nowo_password_toggle.yaml
  * and can be overridden when using this form type in a form builder.

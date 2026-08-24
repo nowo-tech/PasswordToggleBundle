@@ -16,7 +16,7 @@ This bundle is **FrankenPHP worker mode friendly**.
 
 - ✅ Password form type with toggle visibility
 - ✅ Customizable icons and labels
-- ✅ **No Stimulus / no extra asset bundle** — toggle uses **inline** `onclick` / `onkeydown` (see `toggle_password_widget.html.twig`) for compatibility with Live Components
+- ✅ **Web Component** `<nowo-password-toggle>` — CSP-safe script (no inline `onclick`); event delegation stays compatible with Live Components
 - ✅ Icons via **`symfony/ux-icons`** + **`symfony/http-client`** (Flex recipe installs both; graceful fallback + log warning if missing)
 - ✅ Fully configurable CSS classes
 - ✅ Works with Live Components

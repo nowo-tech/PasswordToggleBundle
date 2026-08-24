@@ -73,6 +73,13 @@ With **UX Icons 3.x**, this command scans Twig templates for `ux_icon()` usage (
 
 - **Option 1:** Include the bundle CSS:  
   `<link rel="stylesheet" href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}">`
+- **Web Component script:** the default widget loads `js/nowo-password-toggle.js` once per request. After `assets:install` you can also include it in the layout:
+
+```twig
+<script src="{{ asset('js/nowo-password-toggle.js', 'nowo_password_toggle') }}" defer></script>
+```
+
+The host tag is `<nowo-password-toggle>` (light DOM: native password input + toggle button). Inline `onclick` / `onkeydown` handlers are no longer used.
 - **Option 2:** Import the SCSS in your build (Webpack Encore, Vite, etc.):  
   `@import '@nowo-tech/password-toggle-bundle/src/Resources/public/css/toggle_password.scss';`
 - **Option 3:** Style the classes yourself: `.input-group-text.cursor-pointer`, `.form-password-toggle`, etc.
