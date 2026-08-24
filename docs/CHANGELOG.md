@@ -35,6 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Web Component:** the widget renders `<nowo-password-toggle>` and loads `js/nowo-password-toggle.js` (CSP-safe; no inline `onclick` / `onkeydown`). Event delegation on the host remains compatible with Live Components.
+
 
 ## [2.1.4] - 2026-08-24
 

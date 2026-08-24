@@ -2,7 +2,12 @@
 
 ## Table of contents
 
+- [Unreleased](#unreleased)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
+
+## Unreleased
+
+The default widget is now `<nowo-password-toggle>` plus `js/nowo-password-toggle.js` (loaded once per request). Run `php bin/console assets:install`. If you copied `toggle_password_widget.html.twig`, remove inline `onclick` / `onkeydown` and wrap the input group in `<nowo-password-toggle>` (see the bundle template). Strict `script-src` hosts no longer need `'unsafe-inline'` for the toggle.
 
 ## From 2.1.3 to 2.1.4
 

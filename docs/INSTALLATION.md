@@ -90,6 +90,8 @@ return [
    <link rel="stylesheet" href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}">
    ```
 
+   The default widget also loads `js/nowo-password-toggle.js` (custom element `<nowo-password-toggle>`). Run `assets:install` so both CSS and JS are published under `public/bundles/nowopasswordtoggle/`.
+
    ### AssetMapper
 
    If your app uses [Symfony AssetMapper](https://symfony.com/doc/current/frontend/asset_mapper.html), the bundle registers the `nowo_password_toggle` asset package. Run `assets:install` once so `css/toggle_password.css` is published to `public/bundles/nowopasswordtoggle/`.
