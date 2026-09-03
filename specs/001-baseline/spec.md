@@ -17,6 +17,11 @@
 
 Symfony `PasswordType` form field with **show/hide** toggle using inline JavaScript (Live Component safe), optional Symfony UX Icons, configurable CSS classes, and ARIA labels.
 
+
+## Notes / release sync
+
+- **2026-09-03:** Toggle host is `<nowo-password-toggle>` with CSP-safe event delegation (no inline onclick/onkeydown).
+
 ---
 
 ## User Scenarios & Testing

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.2.0] - 2026-09-03](#220---2026-09-03)
 - [[2.1.3] - 2026-08-19](#213---2026-08-19)
 - [[2.1.2] - 2026-08-18](#212---2026-08-18)
 - [[2.1.1] - 2026-08-12](#211---2026-08-12)
@@ -35,10 +36,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-09-03
+
 ### Changed
 
 - **Web Component:** the widget renders `<nowo-password-toggle>` and loads `js/nowo-password-toggle.js` (CSP-safe; no inline `onclick` / `onkeydown`). Event delegation on the host remains compatible with Live Components.
+- **Deps (dev):** bump `rector/rector`, `friendsofphp/php-cs-fixer`; refresh Composer lockfiles.
 
+### Notes
+
+- Run `assets:install`. Custom theme overrides must remove inline handlers and wrap the input group in `<nowo-password-toggle>`.
+
+[2.2.0]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.0
 
 ## [2.1.4] - 2026-08-24
 
