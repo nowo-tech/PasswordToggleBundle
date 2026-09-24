@@ -5,9 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.2.1] - 2026-09-24](#221---2026-09-24)
 - [[2.2.0] - 2026-09-03](#220---2026-09-03)
 - [[2.1.3] - 2026-08-19](#213---2026-08-19)
 - [[2.1.2] - 2026-08-18](#212---2026-08-18)
@@ -35,6 +43,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.2.1] - 2026-09-24
+
+### Added
+
+- FrankenPHP worker audit for sticky Kernel (`FRANKENPHP_RESET_KERNEL=false`): [FRANKENPHP-WORKER-AUDIT.md](FRANKENPHP-WORKER-AUDIT.md) — verdict **100% compatible** (Scenario B / REQ-FP-001).
+- Unit regression `PasswordTypeTest::testSharedInstanceDoesNotLeakOptionsAcrossConsecutiveBuilds` (shared form type under sticky Kernel).
+- Demo env: `FRANKENPHP_RESET_KERNEL=false` in `.env.example` / Compose for `symfony8` and `symfony8-php85`.
+
+### Changed
+
+- **`PasswordType`**: constructor `$defaults` is `readonly` (safe reuse when the kernel is not reset).
+- **PHPStan**: enable `ruleset-worker-strict.neon` + `ruleset-hardening.neon` (alongside classic).
+- **Docs / specs**: README 100% worker claim; DEMO-FRANKENPHP; baseline Spec Kit notes; Spec-driven REQ-FP-001.
+- **Deps (dev):** refresh Composer lockfile (PHPUnit, PHPStan, PHP-CS-Fixer, Twig CS Fixer).
+
+### Notes
+
+- **No API or configuration changes** for integrators. Hosts may run FrankenPHP workers with `FRANKENPHP_RESET_KERNEL=false` without bundle-specific reset hooks.
+
+[2.2.1]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.1
 
 ## [2.2.0] - 2026-09-03
 

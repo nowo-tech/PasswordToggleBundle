@@ -39,13 +39,17 @@ final class PasswordType extends AbstractType
     /**
      * Constructor.
      *
+     * Defaults are {@see readonly}: under FrankenPHP worker with
+     * {@code FRANKENPHP_RESET_KERNEL=false} the same form type instance is reused
+     * across requests and must not accumulate per-request state.
+     *
      * @param array<string, mixed> $defaults Default configuration values from bundle config
      */
     public function __construct(
         /**
-         * Default configuration values from bundle configuration.
+         * Default configuration values from bundle configuration (immutable for worker reuse).
          */
-        private array $defaults = [],
+        private readonly array $defaults = [],
         ?IconSupportChecker $iconSupportChecker = null,
     ) {
         $this->iconSupportChecker = $iconSupportChecker ?? new IconSupportChecker();

@@ -10,7 +10,7 @@ Symfony bundle providing a password form type with toggle visibility feature.
 
 ![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
 
-This bundle is **FrankenPHP worker mode friendly**.
+This bundle is **100% compatible** with FrankenPHP **worker** mode when the host runs with **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel). See the [worker audit](docs/FRANKENPHP-WORKER-AUDIT.md).
 
 ## Features
 
@@ -196,7 +196,7 @@ The bundle includes three demo projects demonstrating usage with different Symfo
 - **Symfony 8.0 Demo with PHP 8.5** - Port 8001 (default, configurable via `.env`)
 
 Each demo is independent and includes:
-- Complete Docker setup with FrankenPHP (HTTP on port 80). With **`APP_ENV=dev`** (default), the image **entrypoint uses `Caddyfile.dev`** (no FrankenPHP worker, comfortable local dev). **FrankenPHP worker mode is supported and tested** in production demo configuration; see [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md).
+- Complete Docker setup with FrankenPHP (HTTP on port 80). With **`APP_ENV=dev`** (default), the image **entrypoint uses `Caddyfile.dev`** when `FRANKENPHP_MODE=classic`. Default demos use **`FRANKENPHP_MODE=worker`** and document **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel). See [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md) and the [worker audit](docs/FRANKENPHP-WORKER-AUDIT.md).
 - Comprehensive test suite
 - Port configuration via `.env` file
 - Symfony Web Profiler for debugging (dev and test environments)
@@ -303,6 +303,7 @@ See `.github/workflows/ci.yml` for details.
 ### Additional documentation
 
 - [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md)
+- [FrankenPHP worker audit (`reset_kernel: false`)](docs/FRANKENPHP-WORKER-AUDIT.md)
 - [Overriding bundle templates](docs/USAGE.md#overriding-bundle-templates)
 - [Branching](docs/BRANCHING.md)
 

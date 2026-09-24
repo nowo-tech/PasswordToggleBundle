@@ -286,6 +286,62 @@ final class PasswordTypeTest extends TestCase
         $this->assertSame('Ocultar', $view->vars['hidden_label']);
     }
 
+    /**
+     * Simulates FrankenPHP worker with FRANKENPHP_RESET_KERNEL=false: one shared
+     * PasswordType instance serves consecutive form builds without services_resetter.
+     */
+    public function testSharedInstanceDoesNotLeakOptionsAcrossConsecutiveBuilds(): void
+    {
+        $type = new PasswordType(
+            [
+                'toggle'        => true,
+                'visible_label' => 'Show',
+                'hidden_label'  => 'Hide',
+                'visible_icon'  => 'tabler:eye-off',
+                'hidden_icon'   => 'tabler:eye',
+            ],
+            new IconSupportChecker(uxIconsAvailable: true, httpClientAvailable: true),
+        );
+
+        $view1 = new FormView();
+        $form1 = $this->createMock(FormInterface::class);
+        $type->buildView($view1, $form1, [
+            'toggle'                   => false,
+            'toggle_container_classes' => ['custom-a'],
+            'button_classes'           => ['btn-a'],
+            'visible_icon'             => 'custom:a-off',
+            'hidden_icon'              => 'custom:a',
+            'visible_label'            => 'A-show',
+            'hidden_label'             => 'A-hide',
+        ]);
+
+        $resolver = new OptionsResolver();
+        $type->configureOptions($resolver);
+        $defaults = $resolver->resolve([]);
+
+        $view2 = new FormView();
+        $form2 = $this->createMock(FormInterface::class);
+        $type->buildView($view2, $form2, [
+            'toggle'                   => $defaults['toggle'],
+            'toggle_container_classes' => $defaults['toggle_container_classes'],
+            'button_classes'           => $defaults['button_classes'],
+            'visible_icon'             => $defaults['visible_icon'],
+            'hidden_icon'              => $defaults['hidden_icon'],
+            'visible_label'            => $defaults['visible_label'],
+            'hidden_label'             => $defaults['hidden_label'],
+        ]);
+
+        $this->assertFalse($view1->vars['toggle']);
+        $this->assertSame('A-show', $view1->vars['visible_label']);
+        $this->assertSame(['custom-a'], $view1->vars['toggle_container_classes']);
+
+        $this->assertTrue($view2->vars['toggle']);
+        $this->assertSame('Show', $view2->vars['visible_label']);
+        $this->assertSame('Hide', $view2->vars['hidden_label']);
+        $this->assertSame('tabler:eye-off', $view2->vars['visible_icon']);
+        $this->assertTrue($view2->vars['icons_available']);
+    }
+
     public function testConfigureOptionsWithAllDefaults(): void
     {
         $resolver = new OptionsResolver();

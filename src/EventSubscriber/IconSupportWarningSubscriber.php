@@ -16,7 +16,9 @@ use Symfony\Contracts\Service\ResetInterface;
 /**
  * Logs a one-time warning when icon dependencies are missing (does not block cache warmup).
  *
- * Instance state + ResetInterface keeps the one-shot guard safe under FrankenPHP worker.
+ * Instance state + ResetInterface: under Scenario A (services_resetter) the one-shot
+ * guard is cleared each request; under Scenario B (`FRANKENPHP_RESET_KERNEL=false`)
+ * it stays set for the worker lifetime. Never stores request or user data.
  */
 final class IconSupportWarningSubscriber implements EventSubscriberInterface, ResetInterface
 {

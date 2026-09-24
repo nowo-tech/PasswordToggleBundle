@@ -58,6 +58,7 @@ The sections below state **behavior**; this subsection states **intent** in back
 | ID | Where | What it marks |
 | --- | --- | --- |
 | *(none yet)* | `Makefile`, `demo/**/Makefile` | Add `REQ-*` comments next to targets when scripted behavior must stay traceable; document each ID here. |
+| REQ-FP-001 | `docs/FRANKENPHP-WORKER-AUDIT.md`, `phpstan.neon.dist`, `PasswordTypeTest::testSharedInstanceDoesNotLeakOptionsAcrossConsecutiveBuilds` | FrankenPHP worker + `FRANKENPHP_RESET_KERNEL=false` (Scenario B): no per-request state in shared services; PHPStan classic + worker-strict + hardening. |
 
 When you change scripted behavior, **update the existing `REQ-*` comment** if the ID still matches the rule, or **add a new `REQ-*`** and document it here and in the PR description.
 

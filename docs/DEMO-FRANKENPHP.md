@@ -2,6 +2,8 @@
 
 This document describes how the bundle's demo applications run under **FrankenPHP** in Docker, and how to reproduce **development** (no cache, changes visible on refresh) and **production** (worker mode, cache enabled) configurations. The same approach can be used in other Symfony bundles or applications that ship a FrankenPHP-based demo.
 
+This bundle is **100% compatible** with FrankenPHP worker mode when `FRANKENPHP_RESET_KERNEL=false` (see the main [README](../README.md) banner and the [worker audit](FRANKENPHP-WORKER-AUDIT.md)).
+
 ## Contents
 
 - [Overview](#overview)
@@ -104,6 +106,8 @@ Use the default Caddyfile (with worker). Set `APP_ENV=prod` and `APP_DEBUG=0`. D
 
 - **Classic:** `FRANKENPHP_MODE=classic` — entrypoint copies `Caddyfile.dev`
 - **Worker (default):** `FRANKENPHP_MODE=worker` — worker Caddyfile
+- **Sticky Kernel (Friendly Worker):** set `FRANKENPHP_RESET_KERNEL=false` (default in demo `.env.example`) so the host does not reboot the Symfony kernel between requests. This bundle is audited for that mode — see [FRANKENPHP-WORKER-AUDIT.md](FRANKENPHP-WORKER-AUDIT.md).
+
 Recreate the container after changing `.env` (`docker compose up -d`).
 
 After changing env or Caddyfile, restart: `docker-compose restart` or `make -C demo/symfony8 restart`.

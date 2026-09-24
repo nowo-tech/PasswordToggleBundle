@@ -2,9 +2,18 @@
 
 ## Table of contents
 
+- [From 2.2.0 to 2.2.1](#from-220-to-221)
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
 
+
+## From 2.2.0 to 2.2.1
+
+Confirmed compatible with FrankenPHP **worker** mode when the host runs with **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel). See [FRANKENPHP-WORKER-AUDIT.md](FRANKENPHP-WORKER-AUDIT.md). **No application upgrade steps.**
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
 
 ## From 2.1.4 to 2.2.0
 
@@ -23,17 +32,13 @@ No breaking changes. **No application upgrade steps.**
 composer update nowo-tech/password-toggle-bundle
 ```
 
-## From 2.1.3 to 2.1.4
-
-No breaking changes. **No application upgrade steps.**
-
-```bash
-composer update nowo-tech/password-toggle-bundle
-```
-
 # Upgrading
 
 This document describes how to upgrade between major versions of Password Toggle Bundle.
+
+## 2.2.1 (FrankenPHP sticky Kernel)
+
+- **No application upgrade steps.** Confirmed **100% compatible** with `FRANKENPHP_MODE=worker` + `FRANKENPHP_RESET_KERNEL=false` (see [FRANKENPHP-WORKER-AUDIT.md](FRANKENPHP-WORKER-AUDIT.md)).
 
 ## 2.1.3 (composer audit CI)
 

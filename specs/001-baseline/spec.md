@@ -21,6 +21,7 @@ Symfony `PasswordType` form field with **show/hide** toggle using inline JavaScr
 ## Notes / release sync
 
 - **2026-09-03:** Toggle host is `<nowo-password-toggle>` with CSP-safe event delegation (no inline onclick/onkeydown).
+- **2026-09-24:** Confirmed **100% compatible** with FrankenPHP worker + `FRANKENPHP_RESET_KERNEL=false` (Scenario B). Shared `PasswordType` stays stateless (`readonly` defaults); see [`docs/FRANKENPHP-WORKER-AUDIT.md`](../../docs/FRANKENPHP-WORKER-AUDIT.md) and REQ-FP-001.
 
 ---
 
@@ -42,14 +43,14 @@ As a form author, I use `Nowo\PasswordToggleBundle\Form\Type\PasswordType` so us
 
 ### User Story 2 — Live Component compatibility (Priority: P1)
 
-As an integrator using Symfony UX Live Components, I need inline handlers without Stimulus controllers on the widget.
+As an integrator using Symfony UX Live Components, I need a CSP-safe toggle without Stimulus controllers on the widget.
 
 **Independent Test**: Embed field in Live Component form → toggle works after re-render without Stimulus registration.
 
 **Acceptance Scenarios**:
 
-1. **Given** `toggle_password_widget.html.twig`, **When** rendered, **Then** visibility toggled via inline `onclick`/`onkeydown` only.
-2. **Given** Live Component partial update, **When** DOM replaced, **Then** toggle still functions on new nodes (no global controller state).
+1. **Given** `toggle_password_widget.html.twig`, **When** rendered, **Then** visibility is toggled via `<nowo-password-toggle>` event delegation (no inline `onclick` / `onkeydown`).
+2. **Given** Live Component partial update, **When** DOM replaced, **Then** toggle still functions on new nodes (delegation on the host; no global controller state in PHP).
 
 ---
 

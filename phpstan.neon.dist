@@ -16,4 +16,6 @@ includes:
     - vendor/phpstan/phpstan-phpunit/rules.neon
     - vendor/nowo-tech/phpstan-frankenphp/extension.neon
     - vendor/nowo-tech/phpstan-frankenphp/ruleset-classic.neon
-    - vendor/nowo-tech/phpstan-frankenphp/ruleset-worker.neon
+    # worker-strict includes worker rules and also flags request-superglobal access (REQ-FP-001)
+    - vendor/nowo-tech/phpstan-frankenphp/ruleset-worker-strict.neon
+    - vendor/nowo-tech/phpstan-frankenphp/ruleset-hardening.neon
