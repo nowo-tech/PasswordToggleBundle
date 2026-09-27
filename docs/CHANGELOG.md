@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.2.2] - 2026-09-27](#222---2026-09-27)
 - [[2.2.1] - 2026-09-24](#221---2026-09-24)
 - [[2.2.0] - 2026-09-03](#220---2026-09-03)
 - [[2.1.3] - 2026-08-19](#213---2026-08-19)
@@ -43,6 +44,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.2.2] - 2026-09-27
+
+### Added
+
+- **REQ-CS-008:** `igor-php/igor-php` (require-dev only), root `igor.json`, Composer/`Makefile` `igor` target, and `release-check` wiring for FrankenPHP worker-state audit.
+
+### Changed
+
+- **Worker safety (Igor):** justified `// @igor-ignore` annotations and/or `ResetInterface` / request-scoped fixes so `make igor` passes on package `src/`.
+
+[2.2.2]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.2
 
 ## [2.2.1] - 2026-09-24
 

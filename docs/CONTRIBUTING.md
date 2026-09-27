@@ -133,6 +133,7 @@ open coverage/index.html
    - Add tests for new features
    - Ensure all tests pass
    - Run `make qa` to verify everything
+- Run `make igor` for the Igor FrankenPHP worker-state audit (REQ-CS-008).
 
 3. **Commit your changes**:
    ```bash

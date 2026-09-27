@@ -43,6 +43,7 @@ final class NowoPasswordToggleBundle extends Bundle
     public function getContainerExtension(): ExtensionInterface
     {
         if (!$this->extension instanceof ExtensionInterface) {
+            // @igor-ignore - Boot-time Symfony Bundle extension cache (not request state).
             $this->extension = new NowoPasswordToggleExtension();
         }
 
@@ -51,6 +52,7 @@ final class NowoPasswordToggleBundle extends Bundle
         // Parent Bundle::$extension is ExtensionInterface|false; ensure we never return false
         /* @phpstan-ignore identical.alwaysFalse */
         if ($extension === false) {
+            // @igor-ignore - Boot-time Symfony Bundle extension cache (not request state).
             $this->extension = new NowoPasswordToggleExtension();
             $extension       = $this->extension;
         }
