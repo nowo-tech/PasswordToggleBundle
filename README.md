@@ -6,11 +6,22 @@
 
 Symfony bundle providing a password form type with toggle visibility feature.
 
-![Password Toggle Bundle Demo](docs/images/demo-screenshot.png)
-
 ![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
 
 This bundle is **100% compatible** with FrankenPHP **worker** mode when the host runs with **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel). See the [worker audit](docs/FRANKENPHP-WORKER-AUDIT.md).
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/images/demo/overview.png" alt="Password field masked with eye-off toggle" />
+      <br /><sub>Masked password + show control</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/images/demo/interaction.png" alt="Password field revealed with eye toggle" />
+      <br /><sub>Password revealed after toggle</sub>
+    </td>
+  </tr>
+</table>
 
 ## Features
 
@@ -212,6 +223,13 @@ make up-symfony8    # Start Symfony 7.0 demo (specific command)
 make install-symfony8  # Install dependencies
 # Or use generic command: make install symfony8
 # Access at: http://localhost:8001 (default port, configurable via .env)
+```
+
+Playwright e2e + cropped widget screenshots (**REQ-DEMO-013**):
+
+```bash
+make -C demo/symfony8 test-e2e
+make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.png
 ```
 
 Or start any other demo:

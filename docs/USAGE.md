@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [Screenshots](#screenshots)
 - [Basic usage](#basic-usage)
 - [With options](#with-options)
 - [Disabling the toggle](#disabling-the-toggle)
@@ -9,6 +10,16 @@
 - [Styling](#styling)
 - [Overriding bundle templates](#overriding-bundle-templates)
 - [See also](#see-also)
+
+## Screenshots
+
+Cropped to `<nowo-password-toggle>` (not the demo page):
+
+| Masked | Revealed |
+|--------|----------|
+| ![Masked password](images/demo/overview.png) | ![Revealed password](images/demo/interaction.png) |
+
+Regenerate with `make -C demo/symfony8 demo-screenshots` (REQ-DEMO-013).
 
 ## Basic usage
 

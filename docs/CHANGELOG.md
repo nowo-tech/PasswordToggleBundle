@@ -45,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **REQ-DEMO-013:** Playwright e2e under `demo/symfony8/e2e/` (`make test-e2e`), `demo-screenshots` target, and README gallery cropped to `<nowo-password-toggle>` (`docs/images/demo/overview.png`, `interaction.png`).
+
 ## [2.2.2] - 2026-09-27
 
 ### Added

@@ -1,0 +1,14 @@
+{
+  "name": "nowo-demo-e2e",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Playwright e2e + screenshots for Nowo bundle demos (REQ-DEMO-013)",
+  "scripts": {
+    "test": "playwright test",
+    "test:screenshots": "playwright test --project=screenshots",
+    "install-browsers": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

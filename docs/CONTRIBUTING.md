@@ -103,6 +103,10 @@ make test
 # or
 composer test
 
+# Playwright e2e + README widget screenshots (REQ-DEMO-013)
+make -C demo/symfony8 test-e2e
+make -C demo/symfony8 demo-screenshots
+
 # Run tests with coverage
 make test-coverage
 # or
