@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.2.3] - 2026-09-28](#223---2026-09-28)
 - [[2.2.2] - 2026-09-27](#222---2026-09-27)
 - [[2.2.1] - 2026-09-24](#221---2026-09-24)
 - [[2.2.0] - 2026-09-03](#220---2026-09-03)
@@ -45,9 +46,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.3] - 2026-09-28
+
+### Fixed
+
+- CI: restore valid `release.yml` workflow YAML.
+
 ### Added
 
 - **REQ-DEMO-013:** Playwright e2e under `demo/symfony8/e2e/` (`make test-e2e`), `demo-screenshots` target, and README gallery cropped to `<nowo-password-toggle>` (`docs/images/demo/overview.png`, `interaction.png`).
+
+[2.2.3]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.3
 
 ## [2.2.2] - 2026-09-27
 
