@@ -40,4 +40,26 @@ final class TogglePasswordWidgetTemplateTest extends TestCase
         $this->assertStringContainsString('NowoPasswordToggle', $content);
         $this->assertStringNotContainsString('onclick=', $content);
     }
+
+    public function testShippedStimulusControllerHasNoInlineHandlersOrStyleMutation(): void
+    {
+        $path    = dirname(__DIR__, 3) . '/assets/controllers/password_toggle_controller.js';
+        $content = file_get_contents($path);
+
+        $this->assertIsString($content);
+        $this->assertStringContainsString("from '@hotwired/stimulus'", $content);
+        $this->assertStringContainsString('toggle(event)', $content);
+        $this->assertStringContainsString('keydown(event)', $content);
+        $this->assertStringContainsString('is-password-visible', $content);
+        $this->assertStringNotContainsString('.style.', $content);
+        $this->assertStringNotContainsString('innerHTML', $content);
+    }
+
+    public function testTemplateCarriesCspNonce(): void
+    {
+        $content = file_get_contents(dirname(__DIR__, 3) . '/src/Resources/views/Form/toggle_password_widget.html.twig');
+
+        $this->assertIsString($content);
+        $this->assertStringContainsString('nonce="{{ _csp_nonce|e(\'html_attr\') }}"', $content);
+    }
 }

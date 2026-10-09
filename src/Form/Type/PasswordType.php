@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function array_key_exists;
+
 /**
  * Form type for password fields with toggle visibility functionality.
  *
@@ -23,6 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * - Customizable labels for accessibility
  * - Configurable CSS classes for styling
  * - Native JavaScript custom element (`<nowo-password-toggle>`) for CSP-safe toggling
+ *   (no inline handlers; the emitted <script> carries the CSP nonce), or an optional Stimulus controller
  *
  * Default values can be configured in config/packages/nowo_password_toggle.yaml
  * and can be overridden when using this form type in a form builder.
@@ -34,6 +37,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 final class PasswordType extends AbstractType
 {
+    /** Widget emits one <script src="nowo-password-toggle.js"> per request (with CSP nonce). */
+    public const JAVASCRIPT_WEB_COMPONENT = 'web_component';
+
+    /** No script tag; markup carries data-controller / data-action for the shipped Stimulus controller. */
+    public const JAVASCRIPT_STIMULUS = 'stimulus';
+
+    /** No script tag; the host loads nowo-password-toggle.js itself (AssetMapper, Encore, own <script nonce>). */
+    public const JAVASCRIPT_NONE = 'none';
+
+    public const JAVASCRIPT_MODES = [self::JAVASCRIPT_WEB_COMPONENT, self::JAVASCRIPT_STIMULUS, self::JAVASCRIPT_NONE];
+
     private readonly IconSupportChecker $iconSupportChecker;
 
     /**
@@ -90,6 +104,9 @@ final class PasswordType extends AbstractType
             'use_toggle_form_theme'    => $this->defaults['use_toggle_form_theme'] ?? true,
             'visible_icon'             => $this->defaults['visible_icon'] ?? 'tabler:eye-off',
             'visible_label'            => $this->defaults['visible_label'] ?? 'Show',
+            'javascript'               => $this->defaults['javascript'] ?? self::JAVASCRIPT_WEB_COMPONENT,
+            'stimulus_controller'      => $this->defaults['stimulus_controller'] ?? 'nowo-password-toggle',
+            'csp_nonce_attribute'      => $this->defaults['csp_nonce_attribute'] ?? 'csp_nonce',
         ]);
 
         // Validate types
@@ -104,6 +121,9 @@ final class PasswordType extends AbstractType
         $resolver->setAllowedTypes('invalid_message', 'string');
         $resolver->setAllowedTypes('button_classes', 'array');
         $resolver->setAllowedTypes('toggle_container_classes', 'array');
+        $resolver->setAllowedValues('javascript', self::JAVASCRIPT_MODES);
+        $resolver->setAllowedTypes('stimulus_controller', 'string');
+        $resolver->setAllowedTypes('csp_nonce_attribute', ['string', 'null']);
     }
 
     /**
@@ -127,6 +147,9 @@ final class PasswordType extends AbstractType
         $view->vars['visible_label']            = $options['visible_label'];
         $view->vars['hidden_label']             = $options['hidden_label'];
         $view->vars['icons_available']          = $this->iconSupportChecker->isIconRenderingSupported();
+        $view->vars['javascript']               = $options['javascript'] ?? self::JAVASCRIPT_WEB_COMPONENT;
+        $view->vars['stimulus_controller']      = $options['stimulus_controller'] ?? 'nowo-password-toggle';
+        $view->vars['csp_nonce_attribute']      = array_key_exists('csp_nonce_attribute', $options) ? ($options['csp_nonce_attribute'] ?? '') : 'csp_nonce';
     }
 
     /**

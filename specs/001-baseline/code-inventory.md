@@ -23,10 +23,11 @@ This file proves that **every production source artifact** under `src/` is refer
 | Source file | Spec section | Requirement IDs |
 | --- | --- | --- |
 | `Resources/config/services.yaml` | Service wiring | FR-DI-001 |
-| `Resources/views/Form/toggle_password_widget.html.twig` | Web Component toggle widget (no Stimulus) | FR-TWIG-002 |
+| `Resources/views/Form/toggle_password_widget.html.twig` | Toggle widget: web component (nonce) / Stimulus / none | FR-TWIG-002, FR-CSP-001, FR-CSP-002 |
 | `Resources/public/css/toggle_password.css` | Compiled styles | FR-ASSET-001 |
 | `Resources/public/css/toggle_password.scss` | Source styles | FR-ASSET-001 |
 | `Resources/public/js/nowo-password-toggle.js` | CSP-safe custom element + delegation | FR-ASSET-002, FR-TWIG-002 |
+| `../assets/controllers/password_toggle_controller.js` | Optional Stimulus controller | FR-CSP-002 |
 
 ## Coverage summary
 

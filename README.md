@@ -28,6 +28,7 @@ This bundle is **100% compatible** with FrankenPHP **worker** mode when the host
 - ✅ Password form type with toggle visibility
 - ✅ Customizable icons and labels
 - ✅ **Web Component** `<nowo-password-toggle>` — CSP-safe script (no inline `onclick`); event delegation stays compatible with Live Components
+- ✅ **Strict CSP ready** — the widget's `<script>` carries the nonce from request attribute `csp_nonce`; optional **Stimulus** mode (`javascript: stimulus`) or `javascript: none` to load the JS yourself. See [docs/USAGE.md#content-security-policy-csp](docs/USAGE.md#content-security-policy-csp)
 - ✅ Icons via **`symfony/ux-icons`** + **`symfony/http-client`** (Flex recipe installs both; graceful fallback + log warning if missing)
 - ✅ Fully configurable CSS classes
 - ✅ Works with Live Components
@@ -89,6 +90,9 @@ nowo_password_toggle:
   always_empty: true
   trim: false
   invalid_message: 'The password is invalid.'
+  javascript: web_component        # web_component | stimulus | none
+  stimulus_controller: nowo-password-toggle
+  csp_nonce_attribute: csp_nonce   # request attribute with the CSP nonce
 ```
 
 These defaults will be used for all `PasswordType` instances unless overridden when using the form type directly.
@@ -135,6 +139,9 @@ All options can be configured globally in `config/packages/nowo_password_toggle.
 | `always_empty` | `bool` | `true` | Always render empty value |
 | `trim` | `bool` | `false` | Trim whitespace |
 | `invalid_message` | `string` | `'The password is invalid.'` | Invalid message (must be non-empty) |
+| `javascript` | `string` | `'web_component'` | How behaviour is attached (all CSP-safe, no inline handlers): `web_component` = widget emits one `<script src>` per request for `nowo-password-toggle.js` carrying the CSP nonce; `stimulus` = no `<script>`, renders `data-controller` / `data-action` for the shipped Stimulus controller; `none` = no `<script>`, load the JS yourself. |
+| `stimulus_controller` | `string` | `'nowo-password-toggle'` | Stimulus identifier used when `javascript: stimulus`. |
+| `csp_nonce_attribute` | `string\|null` | `'csp_nonce'` | Request attribute holding the CSP nonce; added as `nonce="…"` to the emitted `<script>`. `''`/`null` disables. |
 
 ### Disabling Toggle
 

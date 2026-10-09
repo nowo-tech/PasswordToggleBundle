@@ -113,4 +113,48 @@ final class ConfigurationTest extends TestCase
 
         $this->processor->processConfiguration($this->configuration, $configs);
     }
+
+    public function testCspSafeJavascriptDefaults(): void
+    {
+        $config = $this->processor->processConfiguration($this->configuration, []);
+
+        $this->assertSame('web_component', $config['javascript']);
+        $this->assertSame('nowo-password-toggle', $config['stimulus_controller']);
+        $this->assertSame('csp_nonce', $config['csp_nonce_attribute']);
+    }
+
+    public function testJavascriptModesAndNonceAttribute(): void
+    {
+        $config = $this->processor->processConfiguration($this->configuration, [[
+            'javascript'          => 'stimulus',
+            'stimulus_controller' => 'acme--password-toggle',
+            'csp_nonce_attribute' => '_csp_nonce',
+        ]]);
+
+        $this->assertSame('stimulus', $config['javascript']);
+        $this->assertSame('acme--password-toggle', $config['stimulus_controller']);
+        $this->assertSame('_csp_nonce', $config['csp_nonce_attribute']);
+
+        $config = $this->processor->processConfiguration($this->configuration, [['javascript' => 'none', 'csp_nonce_attribute' => null]]);
+        $this->assertSame('none', $config['javascript']);
+        $this->assertNull($config['csp_nonce_attribute']);
+    }
+
+    public function testInvalidJavascriptModeIsRejected(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->processor->processConfiguration($this->configuration, [['javascript' => 'inline']]);
+    }
+
+    public function testInvalidStimulusIdentifierIsRejected(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->processor->processConfiguration($this->configuration, [['stimulus_controller' => 'Bad Name']]);
+    }
+
+    public function testNonStringNonceAttributeIsRejected(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->processor->processConfiguration($this->configuration, [['csp_nonce_attribute' => ['x']]]);
+    }
 }

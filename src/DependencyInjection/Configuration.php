@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle\DependencyInjection;
 
+use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -105,6 +106,28 @@ final class Configuration implements ConfigurationInterface
                 ->booleanNode('trim')
                     ->defaultFalse()
                     ->info('Trim whitespace (default)')
+                ->end()
+                ->enumNode('javascript')
+                    ->values(PasswordType::JAVASCRIPT_MODES)
+                    ->defaultValue(PasswordType::JAVASCRIPT_WEB_COMPONENT)
+                    ->info('How the toggle behaviour is attached (all CSP-safe, no inline handlers): "web_component" = widget emits one <script src> for nowo-password-toggle.js (with the CSP nonce); "stimulus" = no script tag, renders data-controller/data-action for the shipped Stimulus controller; "none" = no script tag, the host loads nowo-password-toggle.js itself.')
+                ->end()
+                ->scalarNode('stimulus_controller')
+                    ->defaultValue('nowo-password-toggle')
+                    ->info('Stimulus controller identifier used when javascript is "stimulus".')
+                    ->cannotBeEmpty()
+                    ->validate()
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || preg_match('/^[a-z0-9][a-z0-9_-]*(--[a-z0-9_-]+)*$/', $v) !== 1)
+                        ->thenInvalid('stimulus_controller must be a valid Stimulus identifier (e.g. "nowo-password-toggle")')
+                    ->end()
+                ->end()
+                ->scalarNode('csp_nonce_attribute')
+                    ->defaultValue('csp_nonce')
+                    ->info('Request attribute holding the CSP nonce; added as nonce="..." to the <script> the widget emits. Empty string disables.')
+                    ->validate()
+                        ->ifTrue(static fn ($v): bool => $v !== null && !is_string($v))
+                        ->thenInvalid('csp_nonce_attribute must be a string')
+                    ->end()
                 ->end()
                 ->scalarNode('invalid_message')
                     ->defaultValue('The password is invalid.')

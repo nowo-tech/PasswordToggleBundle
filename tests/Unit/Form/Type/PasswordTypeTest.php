@@ -361,4 +361,44 @@ final class PasswordTypeTest extends TestCase
         $this->assertArrayHasKey('visible_icon', $resolved);
         $this->assertArrayHasKey('visible_label', $resolved);
     }
+
+    public function testCspAndJavascriptOptionsDefaultsAndValidation(): void
+    {
+        $resolver = new OptionsResolver();
+        $this->formType->configureOptions($resolver);
+        $resolved = $resolver->resolve([]);
+
+        $this->assertSame(PasswordType::JAVASCRIPT_WEB_COMPONENT, $resolved['javascript']);
+        $this->assertSame('nowo-password-toggle', $resolved['stimulus_controller']);
+        $this->assertSame('csp_nonce', $resolved['csp_nonce_attribute']);
+
+        $configured = new PasswordType(['javascript' => 'stimulus', 'stimulus_controller' => 'pw', 'csp_nonce_attribute' => '_nonce']);
+        $resolver   = new OptionsResolver();
+        $configured->configureOptions($resolver);
+        $resolved = $resolver->resolve([]);
+        $this->assertSame('stimulus', $resolved['javascript']);
+        $this->assertSame('pw', $resolved['stimulus_controller']);
+        $this->assertSame('_nonce', $resolved['csp_nonce_attribute']);
+        $this->assertNull($resolver->resolve(['csp_nonce_attribute' => null])['csp_nonce_attribute']);
+
+        $this->expectException(InvalidOptionsException::class);
+        $resolver->resolve(['javascript' => 'inline']);
+    }
+
+    public function testBuildViewPassesJavascriptAndNonceVars(): void
+    {
+        $form = $this->createStub(FormInterface::class);
+
+        $view = new FormView();
+        $this->formType->buildView($view, $form, ['toggle' => true, 'toggle_container_classes' => [], 'button_classes' => [], 'visible_icon' => 'a', 'hidden_icon' => 'b', 'visible_label' => 'S', 'hidden_label' => 'H', 'javascript' => 'none', 'stimulus_controller' => 'x', 'csp_nonce_attribute' => null]);
+        $this->assertSame('none', $view->vars['javascript']);
+        $this->assertSame('x', $view->vars['stimulus_controller']);
+        $this->assertSame('', $view->vars['csp_nonce_attribute']);
+
+        $legacy = new FormView();
+        $this->formType->buildView($legacy, $form, ['toggle' => true, 'toggle_container_classes' => [], 'button_classes' => [], 'visible_icon' => 'a', 'hidden_icon' => 'b', 'visible_label' => 'S', 'hidden_label' => 'H']);
+        $this->assertSame('web_component', $legacy->vars['javascript']);
+        $this->assertSame('nowo-password-toggle', $legacy->vars['stimulus_controller']);
+        $this->assertSame('csp_nonce', $legacy->vars['csp_nonce_attribute']);
+    }
 }

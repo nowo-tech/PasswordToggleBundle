@@ -21,6 +21,9 @@ When installed via Symfony Flex, a default file is created at `config/packages/n
 | `always_empty` | `bool` | `true` | Always render empty value. |
 | `trim` | `bool` | `false` | Trim whitespace. |
 | `invalid_message` | `string` | `'The password is invalid.'` | Invalid message (must be non-empty). |
+| `javascript` | `string` | `'web_component'` | How behaviour is attached (all CSP-safe, no inline handlers): `web_component` = widget emits one `<script src>` per request for `nowo-password-toggle.js` carrying the CSP nonce; `stimulus` = no `<script>`, renders `data-controller` / `data-action` for the shipped Stimulus controller; `none` = no `<script>`, load the JS yourself. |
+| `stimulus_controller` | `string` | `'nowo-password-toggle'` | Stimulus identifier used when `javascript: stimulus`. |
+| `csp_nonce_attribute` | `string\|null` | `'csp_nonce'` | Request attribute holding the CSP nonce; added as `nonce="…"` to the emitted `<script>`. `''`/`null` disables. |
 
 ## Example
 
@@ -38,7 +41,12 @@ nowo_password_toggle:
     always_empty: true
     trim: false
     invalid_message: 'The password is invalid.'
+    javascript: web_component        # web_component | stimulus | none
+    stimulus_controller: nowo-password-toggle
+    csp_nonce_attribute: csp_nonce
 ```
+
+`javascript`, `stimulus_controller` and `csp_nonce_attribute` are also form options (per-field override). See [Usage → Content Security Policy](USAGE.md#content-security-policy-csp).
 
 All options are validated for correct types. Invalid values will throw exceptions with clear error messages.
 

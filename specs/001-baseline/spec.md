@@ -80,7 +80,7 @@ As an integrator, I set bundle-wide defaults in YAML and override per field in f
 
 ### Edge Cases
 
-- Keyboard: toggle button activatable via Enter/Space (`onkeydown`).
+- Keyboard: toggle button activatable via Enter/Space (delegated `keydown` listener, no inline `onkeydown`).
 - `always_empty=true` (default): field renders empty on validation errors (security).
 - `trim=false` (default): whitespace preserved in password values.
 - SCSS source compiled to CSS for consumers without Sass pipeline.
@@ -93,7 +93,7 @@ As an integrator, I set bundle-wide defaults in YAML and override per field in f
 
 - **FR-BUNDLE-001**: `NowoPasswordToggleBundle` MUST register `TwigPathsPass` and expose alias `nowo_password_toggle`.
 - **FR-DI-001**: `services.yaml` MUST wire `PasswordType` with config defaults and `IconSupportChecker`.
-- **FR-CFG-001**: `Configuration` MUST define: `toggle`, `visible_icon`, `hidden_icon`, `visible_label`, `hidden_label`, `button_classes`, `toggle_container_classes`, `use_toggle_form_theme`, `always_empty`, `trim`, `invalid_message` with non-empty validation on strings.
+- **FR-CFG-001**: `Configuration` MUST define: `toggle`, `visible_icon`, `hidden_icon`, `visible_label`, `hidden_label`, `button_classes`, `toggle_container_classes`, `use_toggle_form_theme`, `always_empty`, `trim`, `invalid_message`, `javascript` (enum), `stimulus_controller` (Stimulus identifier), `csp_nonce_attribute` (string|null) with non-empty validation on strings.
 - **FR-CFG-002**: `NowoPasswordToggleExtension` MUST load services, merge config into form type defaults, and register form theme when `use_toggle_form_theme=true`.
 - **FR-TWIG-001**: `TwigPathsPass` MUST register bundle views namespace for theme overrides.
 
@@ -108,7 +108,9 @@ As an integrator, I set bundle-wide defaults in YAML and override per field in f
 
 ### Widget & assets
 
-- **FR-TWIG-002**: `toggle_password_widget.html.twig` MUST render input group with toggle button, ARIA attributes, inline JS toggle function, and optional UX icon partials.
+- **FR-TWIG-002**: `toggle_password_widget.html.twig` MUST render input group with toggle button, ARIA attributes, and optional UX icon partials, with **no inline event handlers or `style` attributes**.
+- **FR-CSP-001**: In `javascript: web_component` (default) the widget MUST emit `nowo-password-toggle.js` once per request with `nonce` taken from the request attribute named by `csp_nonce_attribute` (default `csp_nonce`), omitting the attribute when empty.
+- **FR-CSP-002**: In `javascript: stimulus` the widget MUST NOT emit a `<script>` and MUST render `data-controller` (configurable `stimulus_controller`), label values, button target and `data-action` for `toggle` / `keydown`, plus `data-nowo-password-toggle-init="1"` to prevent double binding; `assets/controllers/password_toggle_controller.js` implements it. In `javascript: none` no `<script>` is emitted.
 - **FR-ASSET-001**: `toggle_password.scss` / `toggle_password.css` MUST style container, button hover/focus rings, and input-group alignment for accessibility.
 
 ---
@@ -137,13 +139,16 @@ As an integrator, I set bundle-wide defaults in YAML and override per field in f
 | `use_toggle_form_theme` | `true` | Auto-register form theme |
 | `always_empty` | `true` | Clear value on re-render |
 | `trim` | `false` | Preserve whitespace |
+| `javascript` | `web_component` | `web_component` \| `stimulus` \| `none` |
+| `stimulus_controller` | `nowo-password-toggle` | Stimulus identifier (stimulus mode) |
+| `csp_nonce_attribute` | `csp_nonce` | Request attribute with the CSP nonce |
 
 ---
 
 ## Explicit non-goals
 
 - Password strength or policy enforcement.
-- Stimulus controller requirement.
+- Stimulus controller requirement (Stimulus mode is optional).
 - Custom icon rendering beyond UX Icons contract.
 - Demo-only behavior unless documented as stable API.
 

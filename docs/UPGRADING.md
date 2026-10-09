@@ -2,12 +2,26 @@
 
 ## Table of contents
 
+- [From 2.2.4 to 2.3.0](#from-224-to-230)
 - [From 2.2.3 to 2.2.4](#from-223-to-224)
 - [From 2.2.2 to 2.2.3](#from-222-to-223)
 - [From 2.2.0 to 2.2.1](#from-220-to-221)
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
 
+
+## From 2.2.4 to 2.3.0
+
+CSP hardening. **No breaking changes**: the default (`javascript: web_component`) renders the same markup; the only difference is a `nonce` attribute on the widget `<script>` when the request attribute `csp_nonce` is set.
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+php bin/console cache:clear
+```
+
+- **Strict / nonce-based CSP:** set the nonce on the request (`$request->attributes->set('csp_nonce', $nonce)`) before rendering; other attribute name → `nowo_password_toggle.csp_nonce_attribute`.
+- **Replacing an app-side Stimulus controller** (e.g. a host `password_toggle_controller.ts` that worked around the old inline handlers): either drop it and keep the default web component, or set `javascript: stimulus` and register `assets/controllers/password_toggle_controller.js` (or your own controller under `stimulus_controller`). The shipped controller is attached to the host element (not the button) and toggles the `is-password-visible` class instead of `style.display`.
+- **Overridden widget templates** must add the nonce to their own `<script>` tag (see [USAGE.md#content-security-policy-csp](USAGE.md#content-security-policy-csp)).
 
 ## From 2.2.3 to 2.2.4
 

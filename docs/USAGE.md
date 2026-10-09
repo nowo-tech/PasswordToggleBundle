@@ -8,6 +8,7 @@
 - [Disabling the toggle](#disabling-the-toggle)
 - [Default icons (UX Icons)](#default-icons-ux-icons)
 - [Styling](#styling)
+- [Content Security Policy (CSP)](#content-security-policy-csp)
 - [Overriding bundle templates](#overriding-bundle-templates)
 - [See also](#see-also)
 
@@ -90,12 +91,54 @@ With **UX Icons 3.x**, this command scans Twig templates for `ux_icon()` usage (
 <script src="{{ asset('js/nowo-password-toggle.js', 'nowo_password_toggle') }}" defer></script>
 ```
 
-The host tag is `<nowo-password-toggle>` (light DOM: native password input + toggle button). Inline `onclick` / `onkeydown` handlers are no longer used.
+The host tag is `<nowo-password-toggle>` (light DOM: native password input + toggle button). Inline `onclick` / `onkeydown` handlers are no longer used. Under a nonce-based CSP add `nonce="…"` to that tag (the widget does it automatically, see [CSP](#content-security-policy-csp)).
 - **Option 2:** Import the SCSS in your build (Webpack Encore, Vite, etc.):  
   `@import '@nowo-tech/password-toggle-bundle/src/Resources/public/css/toggle_password.scss';`
 - **Option 3:** Style the classes yourself: `.input-group-text.cursor-pointer`, `.form-password-toggle`, etc.
 
 See the main [README](../../README.md#styling) for more styling details.
+
+## Content Security Policy (CSP)
+
+The widget never uses inline event handlers (`onclick`, `onkeydown`) or inline `style` attributes; icon visibility is a class (`is-password-visible`) styled by `toggle_password.css`. Three ways to attach the behaviour, set globally (`nowo_password_toggle.javascript`) or per field (`'javascript' => ...`):
+
+| Mode | `<script>` emitted by the widget | Use when |
+|------|-----------------------------------|----------|
+| `web_component` (default) | Once per request: `<script src="…/js/nowo-password-toggle.js" nonce="…" defer>` | Classic Twig pages; works with `script-src 'self'` and with nonce-based policies (`'nonce-…' 'strict-dynamic'`). |
+| `stimulus` | None | You use Symfony UX / Stimulus. The host gets `data-controller="nowo-password-toggle"`, the button `data-action="click->nowo-password-toggle#toggle keydown->nowo-password-toggle#keydown"`. |
+| `none` | None | You load `nowo-password-toggle.js` yourself (AssetMapper/importmap, Encore, or your own `<script nonce>` in the layout). |
+
+**Nonce.** In `web_component` mode the script tag carries `nonce="{{ app.request.attributes.get('csp_nonce') }}"` when that request attribute is set (attribute name: `csp_nonce_attribute`, default `csp_nonce`; `''` disables). Set it in your CSP listener before rendering, e.g. `$request->attributes->set('csp_nonce', $nonce)`, and send the same value in `script-src 'nonce-…'`.
+
+**Stimulus.** Register the shipped controller under the configured identifier (default `nowo-password-toggle`):
+
+```yaml
+# AssetMapper: config/packages/asset_mapper.yaml
+framework:
+    asset_mapper:
+        paths:
+            vendor/nowo-tech/password-toggle-bundle/assets/controllers: nowo-password-toggle
+```
+
+```php
+// importmap.php
+'nowo-password-toggle-controller' => ['path' => 'nowo-password-toggle/password_toggle_controller.js'],
+```
+
+```js
+// assets/bootstrap.js (Encore/Vite: import the vendor file by relative path instead)
+import PasswordToggleController from 'nowo-password-toggle-controller';
+app.register('nowo-password-toggle', PasswordToggleController);
+```
+
+In `stimulus` mode the host also gets `data-nowo-password-toggle-init="1"`, so a page that loads `nowo-password-toggle.js` anyway does not attach a second handler. Labels come from `data-nowo-password-toggle-visible-label-value` / `-hidden-label-value`.
+
+If you override `toggle_password_widget.html.twig`, keep the `nonce` on any `<script>`/`<style>` you add:
+
+```twig
+{% set _csp_nonce = app.request.attributes.get('csp_nonce')|default('') %}
+<script src="…"{% if _csp_nonce %} nonce="{{ _csp_nonce }}"{% endif %} defer></script>
+```
 
 ## Overriding bundle templates
 

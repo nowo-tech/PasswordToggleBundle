@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+
+- [[2.3.0] - 2026-10-09](#230---2026-10-09)
 - [[2.2.4] - 2026-10-09](#224---2026-10-09)
 - [[2.2.3] - 2026-09-28](#223---2026-09-28)
 - [[2.2.2] - 2026-09-27](#222---2026-09-27)
@@ -40,6 +42,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-10-09
+
+### Added
+
+- **CSP nonce:** the `<script src="nowo-password-toggle.js">` emitted by the widget now carries `nonce="…"` from the request attribute `csp_nonce` (configurable: `csp_nonce_attribute`; `''`/`null` disables). Required for nonce-based policies (`script-src 'nonce-…' 'strict-dynamic'`), where `'self'` alone no longer allows the bundle script.
+- **`javascript` option** (config + per-field form option): `web_component` (default, unchanged markup + nonce), `stimulus` (no `<script>`; renders `data-controller` / `data-action` for the new shipped Stimulus controller `assets/controllers/password_toggle_controller.js`), `none` (no `<script>`; host loads the JS itself).
+- **`stimulus_controller`** option (default `nowo-password-toggle`).
+- Render tests through the real Symfony form Twig bridge (strict variables) asserting no inline `on*=` / `style=` attributes.
+
+### Changed
+
+- Widget no longer touches `app.request` when there is no current request (CLI / mail rendering with `strict_variables`).
+- Demo widget overrides add the CSP nonce to their `<script>`.
+
 ## [2.2.4] - 2026-10-09
 
 ### Changed
@@ -51,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `igor-php/igor-php` require-dev constraint bumped to `^0.10.0`; dev lock refreshed (PHPStan 2.3.1, `phpstan/phpstan-phpunit` 2.1.1, Rector 2.7.0, `nowo-tech/phpstan-frankenphp` 1.2.3).
 - Demos `symfony8` and `symfony8-php85`: Symfony 8.1.8, Twig 3.30.0, `symfony/ux-icons` 3.5.1.
 
+[2.3.0]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.3.0
 [2.2.4]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.4
 
 ## [2.2.3] - 2026-09-28
