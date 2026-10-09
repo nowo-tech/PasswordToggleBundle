@@ -2,12 +2,20 @@
 
 ## Table of contents
 
+- [From 2.2.3 to 2.2.4](#from-223-to-224)
 - [From 2.2.2 to 2.2.3](#from-222-to-223)
 - [From 2.2.0 to 2.2.1](#from-220-to-221)
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
 
 
+## From 2.2.3 to 2.2.4
+
+CI action bumps and dependency refresh. **No breaking changes. No application upgrade steps.**
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
 ## From 2.2.2 to 2.2.3
 
 CI workflow fix and demo Playwright e2e. **No application upgrade steps.**

@@ -5,16 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.2.4] - 2026-10-09](#224---2026-10-09)
 - [[2.2.3] - 2026-09-28](#223---2026-09-28)
 - [[2.2.2] - 2026-09-27](#222---2026-09-27)
 - [[2.2.1] - 2026-09-24](#221---2026-09-24)
@@ -45,6 +39,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.2.4] - 2026-10-09
+
+### Changed
+
+- **CI:** GitHub Actions bumped (`actions/checkout` v7, `actions/github-script` v9, `actions/stale` v11).
+
+### Dependencies
+
+- `igor-php/igor-php` require-dev constraint bumped to `^0.10.0`; dev lock refreshed (PHPStan 2.3.1, `phpstan/phpstan-phpunit` 2.1.1, Rector 2.7.0, `nowo-tech/phpstan-frankenphp` 1.2.3).
+- Demos `symfony8` and `symfony8-php85`: Symfony 8.1.8, Twig 3.30.0, `symfony/ux-icons` 3.5.1.
+
+[2.2.4]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.4
 
 ## [2.2.3] - 2026-09-28
 
