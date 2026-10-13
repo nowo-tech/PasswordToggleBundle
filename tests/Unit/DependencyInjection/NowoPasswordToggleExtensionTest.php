@@ -27,6 +27,18 @@ final class MonologExtensionStub extends Extension
     }
 }
 
+final class TwigExtensionStub extends Extension
+{
+    public function load(array $configs, ContainerBuilder $container): void
+    {
+    }
+
+    public function getAlias(): string
+    {
+        return 'twig';
+    }
+}
+
 /**
  * Tests for NowoPasswordToggleExtension.
  *
@@ -159,5 +171,70 @@ final class NowoPasswordToggleExtensionTest extends TestCase
             new Reference('monolog.logger.nowo_password_toggle'),
             $definition->getArgument('$logger'),
         );
+    }
+
+    public function testPrependRegistersFormThemeByDefault(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new TwigExtensionStub());
+
+        $this->extension->prepend($container);
+
+        $this->assertSame(
+            [['form_themes' => [NowoPasswordToggleExtension::FORM_THEME]]],
+            $container->getExtensionConfig('twig'),
+        );
+    }
+
+    public function testPrependPlacesFormThemeBeforeApplicationThemes(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new TwigExtensionStub());
+        $container->loadFromExtension('twig', ['form_themes' => ['form/app_theme.html.twig']]);
+
+        $this->extension->prepend($container);
+
+        $this->assertSame(
+            [
+                ['form_themes' => [NowoPasswordToggleExtension::FORM_THEME]],
+                ['form_themes' => ['form/app_theme.html.twig']],
+            ],
+            $container->getExtensionConfig('twig'),
+        );
+    }
+
+    public function testPrependSkipsFormThemeWhenDisabled(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new TwigExtensionStub());
+        $container->registerExtension($this->extension);
+        $container->loadFromExtension('nowo_password_toggle', ['use_toggle_form_theme' => false]);
+
+        $this->extension->prepend($container);
+
+        $this->assertSame([], $container->getExtensionConfig('twig'));
+    }
+
+    public function testPrependSkipsFormThemeAlreadyRegisteredByApplication(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new TwigExtensionStub());
+        $container->loadFromExtension('twig', ['form_themes' => [NowoPasswordToggleExtension::FORM_THEME]]);
+
+        $this->extension->prepend($container);
+
+        $this->assertSame(
+            [['form_themes' => [NowoPasswordToggleExtension::FORM_THEME]]],
+            $container->getExtensionConfig('twig'),
+        );
+    }
+
+    public function testPrependSkipsFormThemeWithoutTwig(): void
+    {
+        $container = new ContainerBuilder();
+
+        $this->extension->prepend($container);
+
+        $this->assertFalse($container->hasExtension('twig'));
     }
 }

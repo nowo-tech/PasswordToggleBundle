@@ -32,9 +32,9 @@
     ],
     "require": {
         "php": ">=8.2 <8.6",
-        "symfony/form": "^7.0 || ^8.0",
-        "symfony/framework-bundle": "^7.0 || ^8.0",
-        "symfony/twig-bundle": "^7.0 || ^8.0",
+        "symfony/form": "^7.4 || ^8.0",
+        "symfony/framework-bundle": "^7.4 || ^8.0",
+        "symfony/twig-bundle": "^7.4 || ^8.0",
         "twig/extra-bundle": "^3.12",
         "twig/string-extra": "^3.12"
     },
@@ -53,13 +53,13 @@
         "phpunit/phpunit": "^10.0",
         "psr/log": "^3.0",
         "rector/rector": "^2.0",
-        "symfony/asset": "^7.0 || ^8.0",
-        "symfony/console": "^7.0 || ^8.0",
-        "symfony/dependency-injection": "^7.0 || ^8.0",
-        "symfony/http-client": "^7.0 || ^8.0",
-        "symfony/http-kernel": "^7.0 || ^8.0",
+        "symfony/asset": "^7.4 || ^8.0",
+        "symfony/console": "^7.4 || ^8.0",
+        "symfony/dependency-injection": "^7.4 || ^8.0",
+        "symfony/http-client": "^7.4 || ^8.0",
+        "symfony/http-kernel": "^7.4 || ^8.0",
         "symfony/ux-icons": "^2.0 || ^3.0",
-        "symfony/yaml": "^7.0 || ^8.0",
+        "symfony/yaml": "^7.4 || ^8.0",
         "vincentlanglet/twig-cs-fixer": "^4.0"
     },
     "archive": {

@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 
+use function in_array;
+
 /**
  * Dependency injection extension for the PasswordToggle bundle.
  *
@@ -25,6 +27,11 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 final class NowoPasswordToggleExtension extends Extension implements PrependExtensionInterface
 {
+    /**
+     * Form theme registered in twig.form_themes when use_toggle_form_theme is true (default).
+     */
+    public const FORM_THEME = '@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig';
+
     /**
      * Loads the services configuration and processes the bundle configuration.
      *
@@ -57,6 +64,8 @@ final class NowoPasswordToggleExtension extends Extension implements PrependExte
 
     public function prepend(ContainerBuilder $container): void
     {
+        $this->prependFormTheme($container);
+
         // Only when symfony/asset is installed — FrameworkBundle rejects assets config otherwise.
         if ($container->hasExtension('framework') && class_exists(Package::class)) {
             $container->prependExtensionConfig('framework', [
@@ -76,6 +85,34 @@ final class NowoPasswordToggleExtension extends Extension implements PrependExte
 
         $container->prependExtensionConfig('monolog', [
             'channels' => ['nowo_password_toggle'],
+        ]);
+    }
+
+    /**
+     * Registers the widget form theme in twig.form_themes when use_toggle_form_theme is true (default).
+     *
+     * Prepended configuration comes before the application's own form_themes, so an application theme
+     * that redefines the toggle_password_widget block still wins.
+     */
+    private function prependFormTheme(ContainerBuilder $container): void
+    {
+        if (!$container->hasExtension('twig')) {
+            return;
+        }
+
+        $config = $this->processConfiguration(new Configuration(), $container->getExtensionConfig($this->getAlias()));
+        if ($config['use_toggle_form_theme'] !== true) {
+            return;
+        }
+
+        foreach ($container->getExtensionConfig('twig') as $twigConfig) {
+            if (in_array(self::FORM_THEME, (array) ($twigConfig['form_themes'] ?? []), true)) {
+                return; // Already registered by the application.
+            }
+        }
+
+        $container->prependExtensionConfig('twig', [
+            'form_themes' => [self::FORM_THEME],
         ]);
     }
 

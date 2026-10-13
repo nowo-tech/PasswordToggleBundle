@@ -11,6 +11,11 @@
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
 
+## Unreleased
+
+- Symfony **7.0–7.3** are no longer supported: the bundle requires `^7.4 || ^8.0`.
+- The bundle form theme is now registered in `twig.form_themes` automatically (`use_toggle_form_theme: true`, default). You can remove `@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig` from your `twig.yaml` (keeping it is harmless). If you render password fields with your own theme only and do not want the bundle theme loaded, set `use_toggle_form_theme: false`.
+
 ## From 2.3.1 to 2.3.2
 
 From **2.3.1** — security: always_empty honoured (no plaintext echo after failed submit).

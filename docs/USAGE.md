@@ -144,7 +144,7 @@ If you override `toggle_password_widget.html.twig`, keep the `nonce` on any `<sc
 
 The bundle registers its Twig views so that `@NowoPasswordToggleBundle/...` works, and it adds its view path **after** the application paths. Your overrides in **`templates/bundles/NowoPasswordToggleBundle/`** are therefore checked first.
 
-**Using the bundle's form theme:** add the bundle's widget to your form themes (e.g. in `config/packages/twig.yaml`):
+**Using the bundle's form theme:** it is added to `twig.form_themes` automatically while `use_toggle_form_theme: true` (default). With `use_toggle_form_theme: false`, add it yourself (e.g. in `config/packages/twig.yaml`):
 
 ```yaml
 twig:

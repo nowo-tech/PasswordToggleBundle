@@ -44,6 +44,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`use_toggle_form_theme` had no effect**: the option was documented as rendering with the bundle's form theme but nothing read it, so the widget only rendered when the application listed the theme in `twig.form_themes` by hand. When `true` (default) the extension now prepends `@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig` to `twig.form_themes` (skipped if already listed; application themes still override it).
+
+### Changed
+
+- Minimum Symfony version is now **7.4** (`^7.4 || ^8.0`): the CI "7.0" cell resolved to the latest 7.x, so 7.0–7.3 were never tested. The cell is dropped and the coverage job runs on 7.4.
+
 ## [2.3.2] - 2026-10-13
 
 ### Security
