@@ -134,7 +134,7 @@ All options can be configured globally in `config/packages/nowo_password_toggle.
 | `visible_label` | `string` | `'Show'` | Label when password is hidden (must be non-empty) |
 | `hidden_label` | `string` | `'Hide'` | Label when password is visible (must be non-empty) |
 | `button_classes` | `array` | `['input-group-text', 'cursor-pointer']` | CSS classes for toggle button (must be an array) |
-| `toggle_container_classes` | `array` | `['form-password-toggle']` | CSS classes for container (must be an array) |
+| `toggle_container_classes` | `array` | `['form-password-toggle']` | Extra CSS classes for container (must be an array). `form-password-toggle` is always rendered once by the template; duplicates are dropped |
 | `use_toggle_form_theme` | `bool` | `true` | Register the bundle's form theme in `twig.form_themes` automatically (set `false` to manage it yourself) |
 | `always_empty` | `bool` | `true` | Never render the submitted password back into `value`; when `false`, keep the submitted value after a failed submit (initial data is never rendered) |
 | `trim` | `bool` | `false` | Trim whitespace |

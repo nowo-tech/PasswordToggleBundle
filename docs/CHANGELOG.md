@@ -45,6 +45,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Duplicated `form-password-toggle` container class**: the widget hardcoded `form-password-toggle` and also appended `toggle_container_classes`, whose default already contains it, so the host rendered `class="… form-password-toggle form-password-toggle"`. The template is now the authoritative source of the structural classes (`input-group input-group-merge form-password-toggle`, always present because the shipped CSS/JS rely on them); `toggle_container_classes` only adds extra classes and duplicates are dropped. Markup otherwise unchanged; overriding `toggle_container_classes` (with or without `form-password-toggle`) keeps the class exactly once.
+
 ## [2.4.0] - 2026-10-13
 
 ### Fixed

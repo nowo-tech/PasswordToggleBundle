@@ -16,7 +16,7 @@ When installed via Symfony Flex, a default file is created at `config/packages/n
 | `visible_label` | `string` | `'Show'` | Label when password is hidden (must be non-empty). |
 | `hidden_label` | `string` | `'Hide'` | Label when password is visible (must be non-empty). |
 | `button_classes` | `array` | `['input-group-text', 'cursor-pointer']` | CSS classes for toggle button. |
-| `toggle_container_classes` | `array` | `['form-password-toggle']` | CSS classes for container. |
+| `toggle_container_classes` | `array` | `['form-password-toggle']` | Extra CSS classes for the container. The template always renders `input-group input-group-merge form-password-toggle` (CSS/JS hook), so listing them again never duplicates them. |
 | `use_toggle_form_theme` | `bool` | `true` | Register the bundle's form theme (`@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig`) in `twig.form_themes` automatically. It is prepended, so an application theme that redefines the `toggle_password_widget` block still wins; it is not added twice if you already list it. Set `false` to manage `form_themes` yourself. |
 | `always_empty` | `bool` | `true` | Never render the submitted password back into `value` (e.g. after a validation error). When `false`, the submitted value is kept after submit; initial data is never rendered. |
 | `trim` | `bool` | `false` | Trim whitespace. |

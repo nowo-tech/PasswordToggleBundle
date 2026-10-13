@@ -24,6 +24,7 @@ use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig\TwigFunction;
 
 use function dirname;
+use function in_array;
 
 /**
  * Renders the real widget through the Symfony form Twig bridge (strict variables) to check CSP output.
@@ -43,6 +44,26 @@ final class TogglePasswordWidgetRenderTest extends TestCase
         self::assertDoesNotMatchRegularExpression('/\son[a-z]+=/i', $html);
         self::assertDoesNotMatchRegularExpression('/\sstyle=/i', $html);
         self::assertStringNotContainsString('data-controller', $html);
+    }
+
+    public function testContainerClassFormPasswordToggleIsRenderedExactlyOnce(): void
+    {
+        // Bundle default (['form-password-toggle']), empty override, custom override and a duplicated list.
+        foreach ([[], ['toggle_container_classes' => []], ['toggle_container_classes' => ['custom-a']], ['toggle_container_classes' => ['form-password-toggle', 'custom-a', 'custom-a input-group']]] as $options) {
+            $html = $this->render($options + ['javascript' => 'none'], new Request());
+
+            self::assertSame(1, preg_match('/<nowo-password-toggle\s+class="([^"]*)"/', $html, $m));
+            $classes = explode(' ', $m[1]);
+            self::assertSame(array_values(array_unique($classes)), $classes, 'no duplicated container class');
+            self::assertSame(1, substr_count($html, 'form-password-toggle'));
+            self::assertContains('input-group', $classes);
+            if (isset($options['toggle_container_classes']) && in_array('custom-a', $options['toggle_container_classes'], true)) {
+                self::assertContains('custom-a', $classes);
+            }
+        }
+
+        $defaults = $this->render(['javascript' => 'none'], new Request());
+        self::assertStringContainsString('class="input-group input-group-merge form-password-toggle"', $defaults);
     }
 
     public function testNoNonceAttributeWithoutRequestNonce(): void
