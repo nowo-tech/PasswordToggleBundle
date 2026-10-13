@@ -13,11 +13,11 @@ This bundle is **100% compatible** with FrankenPHP **worker** mode when the host
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="docs/images/demo/overview.png" alt="Password field masked with eye-off toggle" />
+      <img src="docs/images/demo/overview.webp" alt="Password field masked with eye-off toggle" />
       <br /><sub>Masked password + show control</sub>
     </td>
     <td align="center" width="50%">
-      <img src="docs/images/demo/interaction.png" alt="Password field revealed with eye toggle" />
+      <img src="docs/images/demo/interaction.webp" alt="Password field revealed with eye toggle" />
       <br /><sub>Password revealed after toggle</sub>
     </td>
   </tr>
@@ -235,7 +235,7 @@ Playwright e2e + cropped widget screenshots (**REQ-DEMO-013**):
 
 ```bash
 make -C demo/symfony8 test-e2e
-make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.png
+make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.webp
 ```
 
 Or start any other demo:

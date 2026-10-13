@@ -18,7 +18,7 @@ Cropped to `<nowo-password-toggle>` (not the demo page):
 
 | Masked | Revealed |
 |--------|----------|
-| ![Masked password](images/demo/overview.png) | ![Revealed password](images/demo/interaction.png) |
+| ![Masked password](images/demo/overview.webp) | ![Revealed password](images/demo/interaction.webp) |
 
 Regenerate with `make -C demo/symfony8 demo-screenshots` (REQ-DEMO-013).
 
