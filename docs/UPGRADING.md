@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [From 2.3.1 to 2.3.2](#from-231-to-232)
 - [From 2.3.0 to 2.3.1](#from-230-to-231)
 - [From 2.2.4 to 2.3.0](#from-224-to-230)
 - [From 2.2.3 to 2.2.4](#from-223-to-224)
@@ -9,6 +10,17 @@
 - [From 2.2.0 to 2.2.1](#from-220-to-221)
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
+
+## From 2.3.1 to 2.3.2
+
+From **2.3.1** — security: always_empty honoured (no plaintext echo after failed submit).
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
+
+- After a failed submit the password field now comes back empty by default (it used to echo the plaintext). Set `always_empty: false` to keep the submitted value.
+- The missing-icon warning is logged once per worker process instead of every request.
 
 ## From 2.3.0 to 2.3.1
 
