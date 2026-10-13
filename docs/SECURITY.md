@@ -4,6 +4,7 @@
 
 - [Supported Versions](#supported-versions)
 - [Reporting a Vulnerability](#reporting-a-vulnerability)
+- [Security fixes and recommended defaults](#security-fixes-and-recommended-defaults)
 - [Preferred Languages](#preferred-languages)
 - [Contact](#contact)
 - [Release security checklist (12.4.1)](#release-security-checklist-1241)
@@ -47,6 +48,21 @@ Include the following information in your report:
 - We will work with you to understand and validate the issue
 - We will develop and release a fix as quickly as possible
 - We will publicly acknowledge your responsible disclosure (if desired)
+
+## Security fixes and recommended defaults
+
+### 2.3.2 — `always_empty` is honoured
+
+Before **2.3.2**, `Nowo\PasswordToggleBundle\Form\Type\PasswordType` ignored `always_empty`: after a failed submit (e.g. a validation error elsewhere in the form) the submitted **plaintext password was rendered back** into the input `value` attribute, where it could end up in the HTML source, browser caches, proxies or page snapshots.
+
+Since 2.3.2 the type behaves like Symfony's core `PasswordType`: with `always_empty: true` (the default) the value is always rendered empty; with `always_empty: false` the submitted value is kept after a submit, and initial model data is never rendered. **Upgrade to 2.3.2 or later** (all 2.x releases from 2.3.2 include the fix).
+
+### Recommended defaults
+
+- Keep **`always_empty: true`** (bundle config and per field). Only disable it if you have a concrete UX need and the page is served over HTTPS with `Cache-Control: no-store`.
+- Keep **`trim: false`**: whitespace is significant in passwords.
+- Set the right `autocomplete` attribute per field (`current-password` on login, `new-password` on registration / change forms) via `attr`.
+- With a nonce-based Content Security Policy, store the nonce in the request attribute named by `csp_nonce_attribute` (default `csp_nonce`) so the widget's `<script>` carries it, or use `javascript: stimulus` / `none` and load the JS yourself. See [Usage → Content Security Policy](USAGE.md#content-security-policy-csp).
 
 ## Preferred Languages
 
