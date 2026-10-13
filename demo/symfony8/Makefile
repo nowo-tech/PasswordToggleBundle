@@ -17,7 +17,7 @@ help:
 	@echo "  make cache-clear    Clear Symfony cache"
 	@echo "  make update-bundle  Update nowo-tech/password-toggle-bundle and clear cache"
 	@echo "  make test-e2e       Playwright e2e against this demo (REQ-DEMO-013)"
-	@echo "  make demo-screenshots  Refresh docs/images/demo/*.png via Playwright"
+	@echo "  make demo-screenshots  Refresh docs/images/demo/*.webp via Playwright"
 	@echo ""
 
 up:
@@ -102,5 +102,5 @@ demo-screenshots: ensure-up
 		-e DEMO_BASE_URL=http://127.0.0.1:$$PORT \
 		-e SCREENSHOT_DIR=/screenshots \
 		$(PLAYWRIGHT_IMAGE) \
-		bash -lc 'npm install --no-fund --no-audit && npx playwright test --project=screenshots'
-	@echo "Screenshots written under docs/images/demo/"
+		bash -lc 'npm install --no-fund --no-audit && npx playwright test --project=screenshots && node scripts/to-webp.mjs /screenshots'
+	@echo "Screenshots written under docs/images/demo/ (WebP)"

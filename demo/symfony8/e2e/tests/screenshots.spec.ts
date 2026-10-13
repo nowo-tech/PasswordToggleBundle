@@ -30,6 +30,7 @@ test.describe('PasswordToggle screenshots (use-case context)', () => {
     const host = toggleHost(page);
     await host.locator('input').first().fill('DemoPass!1');
     await expect(host.locator('input[type="password"]').first()).toBeVisible();
+    await expect(host.locator('[data-nowo-password-toggle-target="button"] svg:visible')).toHaveCount(1);
     await panel.screenshot({ path: resolve(outDir, 'overview.png') });
   });
 
@@ -41,6 +42,8 @@ test.describe('PasswordToggle screenshots (use-case context)', () => {
     await host.locator('input').first().fill('DemoPass!1');
     await host.locator('[data-nowo-password-toggle-target="button"], [role="button"]').first().click();
     await expect(host.locator('input[type="text"]').first()).toBeVisible({ timeout: 5000 });
+    await expect(host.locator('[data-nowo-password-toggle-target="button"] svg:visible')).toHaveCount(1);
+    await page.mouse.move(0, 0);
     await panel.screenshot({ path: resolve(outDir, 'interaction.png') });
   });
 });

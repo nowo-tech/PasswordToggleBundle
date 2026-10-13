@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7380168a40166dc2e741f702e37149e1",
+    "content-hash": "d306468d1110705253fd63ea4c90fdf0",
     "packages": [
         {
             "name": "composer/semver",
@@ -89,13 +89,13 @@
             "dist": {
                 "type": "path",
                 "url": "/var/password-toggle-bundle",
-                "reference": "b2a2c8f2ebcbc60a1ce82a56be39188720980758"
+                "reference": "8048d9ff58d98ec255db4ed0834625fd012b431c"
             },
             "require": {
                 "php": ">=8.2 <8.6",
-                "symfony/form": "^7.0 || ^8.0",
-                "symfony/framework-bundle": "^7.0 || ^8.0",
-                "symfony/twig-bundle": "^7.0 || ^8.0",
+                "symfony/form": "^7.4 || ^8.0",
+                "symfony/framework-bundle": "^7.4 || ^8.0",
+                "symfony/twig-bundle": "^7.4 || ^8.0",
                 "twig/extra-bundle": "^3.12",
                 "twig/string-extra": "^3.12"
             },
@@ -109,13 +109,13 @@
                 "phpunit/phpunit": "^10.0",
                 "psr/log": "^3.0",
                 "rector/rector": "^2.0",
-                "symfony/asset": "^7.0 || ^8.0",
-                "symfony/console": "^7.0 || ^8.0",
-                "symfony/dependency-injection": "^7.0 || ^8.0",
-                "symfony/http-client": "^7.0 || ^8.0",
-                "symfony/http-kernel": "^7.0 || ^8.0",
+                "symfony/asset": "^7.4 || ^8.0",
+                "symfony/console": "^7.4 || ^8.0",
+                "symfony/dependency-injection": "^7.4 || ^8.0",
+                "symfony/http-client": "^7.4 || ^8.0",
+                "symfony/http-kernel": "^7.4 || ^8.0",
                 "symfony/ux-icons": "^2.0 || ^3.0",
-                "symfony/yaml": "^7.0 || ^8.0",
+                "symfony/yaml": "^7.4 || ^8.0",
                 "vincentlanglet/twig-cs-fixer": "^4.0"
             },
             "suggest": {
@@ -4774,20 +4774,20 @@
         },
         {
             "name": "nowo-tech/hot-reload-bundle",
-            "version": "v1.5.5",
+            "version": "v1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nowo-tech/HotReloadBundle.git",
-                "reference": "7584eadd1e130038b4952188096b1af07a4c1806"
+                "reference": "6d3117328bd9d7f55a70743567d04ee25d6bc366"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nowo-tech/HotReloadBundle/zipball/7584eadd1e130038b4952188096b1af07a4c1806",
-                "reference": "7584eadd1e130038b4952188096b1af07a4c1806",
+                "url": "https://api.github.com/repos/nowo-tech/HotReloadBundle/zipball/6d3117328bd9d7f55a70743567d04ee25d6bc366",
+                "reference": "6d3117328bd9d7f55a70743567d04ee25d6bc366",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1 <8.6",
+                "php": ">=8.2 <8.6",
                 "symfony/config": "^7.4 || ^8.0",
                 "symfony/dependency-injection": "^7.4 || ^8.0",
                 "symfony/http-foundation": "^7.4 || ^8.0",
@@ -4797,7 +4797,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
-                "igor-php/igor-php": "^0.9.7",
+                "igor-php/igor-php": "^0.10.1",
                 "nowo-tech/phpstan-frankenphp": "^1.0",
                 "phpstan/extension-installer": "^1.4",
                 "phpstan/phpstan": "^2.0",
@@ -4861,38 +4861,54 @@
                 "issues": "https://github.com/nowo-tech/HotReloadBundle/issues",
                 "source": "https://github.com/nowo-tech/HotReloadBundle"
             },
-            "time": "2026-10-09T07:31:19+00:00"
+            "time": "2026-10-13T10:57:34+00:00"
         },
         {
             "name": "nowo-tech/twig-inspector-bundle",
-            "version": "v1.0.3",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nowo-tech/TwigInspectorBundle.git",
-                "reference": "cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8"
+                "reference": "827d2284be47e86f344faf2f0b32b2a252154b1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nowo-tech/TwigInspectorBundle/zipball/cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8",
-                "reference": "cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8",
+                "url": "https://api.github.com/repos/nowo-tech/TwigInspectorBundle/zipball/827d2284be47e86f344faf2f0b32b2a252154b1d",
+                "reference": "827d2284be47e86f344faf2f0b32b2a252154b1d",
                 "shasum": ""
             },
             "require": {
-                "php": ">=8.1 <8.6",
-                "symfony/config": "^6.0 || ^7.0 || ^8.0",
-                "symfony/console": "^6.0 || ^7.0 || ^8.0",
-                "symfony/dependency-injection": "^6.0 || ^7.0 || ^8.0",
-                "symfony/filesystem": "^6.0 || ^7.0 || ^8.0",
-                "symfony/http-foundation": "^6.0 || ^7.0 || ^8.0",
-                "symfony/http-kernel": "^6.0 || ^7.0 || ^8.0",
-                "symfony/routing": "^6.0 || ^7.0 || ^8.0",
-                "symfony/web-profiler-bundle": "^6.0 || ^7.0 || ^8.0",
+                "php": ">=8.2 <8.6",
+                "symfony/config": "^6.4 || ^7.0 || ^8.0",
+                "symfony/console": "^6.4 || ^7.0 || ^8.0",
+                "symfony/dependency-injection": "^6.4 || ^7.0 || ^8.0",
+                "symfony/error-handler": "^6.4 || ^7.0 || ^8.0",
+                "symfony/filesystem": "^6.4 || ^7.0 || ^8.0",
+                "symfony/http-foundation": "^6.4 || ^7.0 || ^8.0",
+                "symfony/http-kernel": "^6.4 || ^7.0 || ^8.0",
+                "symfony/routing": "^6.4 || ^7.0 || ^8.0",
+                "symfony/web-profiler-bundle": "^6.4 || ^7.0 || ^8.0",
+                "twig/extra-bundle": "^3.12",
+                "twig/string-extra": "^3.12",
                 "twig/twig": "^3.8 || ^4.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
+                "igor-php/igor-php": "^0.10.0",
+                "nowo-tech/phpstan-frankenphp": "^1.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
                 "phpunit/phpunit": "^10.0",
-                "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
+                "rector/rector": "^2.0",
+                "symfony/framework-bundle": "^6.4 || ^7.0 || ^8.0",
+                "symfony/twig-bundle": "^6.4 || ^7.0 || ^8.0",
+                "symfony/yaml": "^6.4 || ^7.0 || ^8.0",
+                "vincentlanglet/twig-cs-fixer": "^4.0",
+                "webmozart/assert": "^2.4"
+            },
+            "suggest": {
+                "symfony/flex": "For automatic recipe installation (config and routes; registers this bundle for dev/test only — always install with composer require --dev)"
             },
             "type": "symfony-bundle",
             "autoload": {
@@ -4907,7 +4923,7 @@
             "authors": [
                 {
                     "name": "Héctor Franco Aceituno",
-                    "email": "hectorfranco@nowo.com",
+                    "email": "hectorfranco@nowo.tech",
                     "homepage": "https://github.com/HecFranco",
                     "role": "Developer"
                 },
@@ -4916,21 +4932,39 @@
                     "homepage": "https://nowo.tech"
                 }
             ],
-            "description": "Symfony bundle that adds the possibility to find Twig templates and blocks used for rendering HTML pages faster during development",
-            "homepage": "https://github.com/nowo-tech/twig-inspector-bundle",
+            "description": "Debug Twig templates in the browser: visual overlay, click-to-open in IDE, Web Profiler. Symfony 6|7|8.",
+            "homepage": "https://github.com/nowo-tech/TwigInspectorBundle",
             "keywords": [
+                "block-inspector",
                 "bundle",
                 "debug",
+                "debugging",
+                "dev-tool",
+                "development",
+                "frankenphp",
+                "ide-integration",
                 "inspect",
+                "inspector",
+                "php",
                 "symfony",
+                "symfony-bundle",
+                "symfony-flex",
+                "symfony-profiler",
                 "template",
+                "template-finder",
+                "template-inspector",
+                "templates",
                 "toolbar-extension",
                 "twig",
+                "twig-debug",
+                "twig-inspector",
                 "web-profiler"
             ],
             "support": {
-                "issues": "https://github.com/nowo-tech/twig-inspector-bundle/issues",
-                "source": "https://github.com/nowo-tech/twig-inspector-bundle"
+                "changelog": "https://github.com/nowo-tech/TwigInspectorBundle/blob/main/docs/CHANGELOG.md",
+                "docs": "https://github.com/nowo-tech/TwigInspectorBundle/tree/main/docs",
+                "issues": "https://github.com/nowo-tech/TwigInspectorBundle/issues",
+                "source": "https://github.com/nowo-tech/TwigInspectorBundle"
             },
             "funding": [
                 {
@@ -4938,7 +4972,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-12-15T11:49:16+00:00"
+            "time": "2026-10-13T10:24:28+00:00"
         },
         {
             "name": "phar-io/manifest",
