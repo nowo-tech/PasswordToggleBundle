@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [[Unreleased]](#unreleased)
 
+- [[2.3.1] - 2026-10-13](#231---2026-10-13)
 - [[2.3.0] - 2026-10-09](#230---2026-10-09)
 - [[2.2.4] - 2026-10-09](#224---2026-10-09)
 - [[2.2.3] - 2026-09-28](#223---2026-09-28)
@@ -42,9 +43,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.1] - 2026-10-13
+
 ### Changed
 
 - Development: `composer.json` pins `config.platform.php` to 8.2.0 so the committed lock stays installable on the minimum PHP; CI overrides the platform per matrix cell.
+- Repository: `.twig-cs-fixer.cache` is now git-ignored.
+
+### Dependencies
+
+- `actions/cache` 5 → 6 (GitHub Actions; #29).
+- `codecov/codecov-action` 5 → 7 (GitHub Actions).
 
 ## [2.3.0] - 2026-10-09
 
@@ -71,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `igor-php/igor-php` require-dev constraint bumped to `^0.10.0`; dev lock refreshed (PHPStan 2.3.1, `phpstan/phpstan-phpunit` 2.1.1, Rector 2.7.0, `nowo-tech/phpstan-frankenphp` 1.2.3).
 - Demos `symfony8` and `symfony8-php85`: Symfony 8.1.8, Twig 3.30.0, `symfony/ux-icons` 3.5.1.
 
+[2.3.1]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.3.1
 [2.3.0]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.3.0
 [2.2.4]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.2.4
 

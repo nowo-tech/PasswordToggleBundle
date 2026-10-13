@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [From 2.3.0 to 2.3.1](#from-230-to-231)
 - [From 2.2.4 to 2.3.0](#from-224-to-230)
 - [From 2.2.3 to 2.2.4](#from-223-to-224)
 - [From 2.2.2 to 2.2.3](#from-222-to-223)
@@ -9,6 +10,15 @@
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
 
+## From 2.3.0 to 2.3.1
+
+From **2.3.0** — dependency refresh and repository maintenance.
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
+
+- No breaking changes. No application upgrade steps.
 
 ## From 2.2.4 to 2.3.0
 
@@ -198,7 +208,6 @@ php bin/console cache:clear
 ```
 
 - No application upgrade steps for require-dev Igor tooling (REQ-CS-008). Consumers do not pull `igor-php/igor-php` transitively.
-
 
 ## To 2.1.0
 
