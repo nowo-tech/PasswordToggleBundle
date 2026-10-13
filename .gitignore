@@ -13,6 +13,7 @@
 
 # PHP tool caches
 /.php-cs-fixer.cache
+/.twig-cs-fixer.cache
 /.phpunit.cache
 /.phpunit.result.cache
 
