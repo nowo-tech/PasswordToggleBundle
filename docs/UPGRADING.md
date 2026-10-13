@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Unreleased](#unreleased)
+- [From 2.4.0 to 2.4.1](#from-240-to-241)
 - [From 2.3.2 to 2.4.0](#from-232-to-240)
 - [From 2.3.1 to 2.3.2](#from-231-to-232)
 - [From 2.3.0 to 2.3.1](#from-230-to-231)
@@ -42,6 +43,16 @@
   - [Twig-CS-Fixer (maintainers)](#twig-cs-fixer-maintainers)
 
 ## Unreleased
+
+## From 2.4.0 to 2.4.1
+
+From **2.4.0** — container class form-password-toggle rendered once
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
+
+- No breaking changes. No application upgrade steps.
 
 ## From 2.3.2 to 2.4.0
 
