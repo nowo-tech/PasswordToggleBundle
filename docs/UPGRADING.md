@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [From 2.3.2 to 2.4.0](#from-232-to-240)
 - [From 2.3.1 to 2.3.2](#from-231-to-232)
 - [From 2.3.0 to 2.3.1](#from-230-to-231)
 - [From 2.2.4 to 2.3.0](#from-224-to-230)
@@ -12,6 +13,14 @@
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
 
 ## Unreleased
+
+## From 2.3.2 to 2.4.0
+
+From **2.3.2** — form theme registered when use_toggle_form_theme is true; Symfony >=7.4.
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
 
 - Symfony **7.0–7.3** are no longer supported: the bundle requires `^7.4 || ^8.0`.
 - The bundle form theme is now registered in `twig.form_themes` automatically (`use_toggle_form_theme: true`, default). You can remove `@NowoPasswordToggleBundle/Form/toggle_password_widget.html.twig` from your `twig.yaml` (keeping it is harmless). If you render password fields with your own theme only and do not want the bundle theme loaded, set `use_toggle_form_theme: false`.

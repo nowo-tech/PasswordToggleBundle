@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [[Unreleased]](#unreleased)
 
+- [[2.4.0] - 2026-10-13](#240---2026-10-13)
 - [[2.3.2] - 2026-10-13](#232---2026-10-13)
 - [[2.3.1] - 2026-10-13](#231---2026-10-13)
 - [[2.3.0] - 2026-10-09](#230---2026-10-09)
@@ -43,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.4.0] - 2026-10-13
 
 ### Fixed
 
@@ -99,6 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `igor-php/igor-php` require-dev constraint bumped to `^0.10.0`; dev lock refreshed (PHPStan 2.3.1, `phpstan/phpstan-phpunit` 2.1.1, Rector 2.7.0, `nowo-tech/phpstan-frankenphp` 1.2.3).
 - Demos `symfony8` and `symfony8-php85`: Symfony 8.1.8, Twig 3.30.0, `symfony/ux-icons` 3.5.1.
 
+[2.4.0]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.4.0
 [2.3.2]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.3.2
 [2.3.1]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.3.1
 [2.3.0]: https://github.com/nowo-tech/PasswordToggleBundle/releases/tag/v2.3.0
