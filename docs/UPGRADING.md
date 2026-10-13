@@ -2,6 +2,7 @@
 
 ## Table of contents
 
+- [Unreleased](#unreleased)
 - [From 2.3.2 to 2.4.0](#from-232-to-240)
 - [From 2.3.1 to 2.3.2](#from-231-to-232)
 - [From 2.3.0 to 2.3.1](#from-230-to-231)
@@ -11,6 +12,34 @@
 - [From 2.2.0 to 2.2.1](#from-220-to-221)
 - [From 2.1.4 to 2.2.0](#from-214-to-220)
 - [From 2.1.3 to 2.1.4](#from-213-to-214)
+- [2.2.1 (FrankenPHP sticky Kernel)](#221-frankenphp-sticky-kernel)
+- [2.1.3 (composer audit CI)](#213-composer-audit-ci)
+- [2.1.2 (Symfony 8 demos / Hot Reload 1.4)](#212-symfony-8-demos--hot-reload-14)
+- [2.1.1 (CSP-safe icon visibility)](#211-csp-safe-icon-visibility)
+- [2.0.5](#205)
+- [2.0.4](#204)
+- [2.0.3](#203)
+- [2.0.2](#202)
+- [2.0.1](#201)
+- [2.0.0](#200)
+- [1.x](#1x)
+  - [1.2.10](#1210)
+  - [1.2.9](#129)
+  - [1.2.8](#128)
+  - [1.2.7](#127)
+  - [1.2.6](#126)
+  - [1.2.5](#125)
+  - [1.2.4](#124)
+  - [1.2.3](#123)
+  - [1.2.2](#122)
+  - [1.2.1](#121)
+  - [1.2.0](#120)
+  - [1.0.0](#100)
+- [Unreleased](#unreleased-1)
+- [To 2.2.2](#to-222)
+- [To 2.1.0](#to-210)
+  - [Twig Extra Bundle (REQ-TWIG-004)](#twig-extra-bundle-req-twig-004)
+  - [Twig-CS-Fixer (maintainers)](#twig-cs-fixer-maintainers)
 
 ## Unreleased
 
