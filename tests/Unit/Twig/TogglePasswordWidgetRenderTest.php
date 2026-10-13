@@ -101,10 +101,39 @@ final class TogglePasswordWidgetRenderTest extends TestCase
         self::assertStringNotContainsString('data-controller', $html);
     }
 
+    public function testSubmittedPasswordIsNotRenderedBackByDefault(): void
+    {
+        $html = $this->render([], new Request(), submitted: 'S3cr3t-plaintext!');
+
+        self::assertStringNotContainsString('S3cr3t-plaintext!', $html);
+        self::assertDoesNotMatchRegularExpression('/<input[^>]*\svalue=/', $html);
+    }
+
+    public function testSubmittedPasswordIsNotRenderedBackWithAlwaysEmptyTrue(): void
+    {
+        $html = $this->render(['always_empty' => true], new Request(), submitted: 'S3cr3t-plaintext!');
+
+        self::assertStringNotContainsString('S3cr3t-plaintext!', $html);
+    }
+
+    public function testSubmittedPasswordIsKeptWithAlwaysEmptyFalse(): void
+    {
+        $html = $this->render(['always_empty' => false], new Request(), submitted: 'S3cr3t-plaintext!');
+
+        self::assertStringContainsString('value="S3cr3t-plaintext!"', $html);
+    }
+
+    public function testInitialDataIsNeverRendered(): void
+    {
+        $html = $this->render(['always_empty' => false], new Request(), data: 'stored-hash');
+
+        self::assertStringNotContainsString('stored-hash', $html);
+    }
+
     /**
      * @param array<string, mixed> $options
      */
-    private function render(array $options, ?Request $request, int $fields = 1): string
+    private function render(array $options, ?Request $request, int $fields = 1, ?string $submitted = null, ?string $data = null): string
     {
         $bridgeViews = dirname((string) (new ReflectionClass(AppVariable::class))->getFileName()) . '/Resources/views/Form';
         $bundleViews = dirname(__DIR__, 3) . '/src/Resources/views/Form';
@@ -145,7 +174,12 @@ final class TogglePasswordWidgetRenderTest extends TestCase
 
         $forms = [];
         for ($i = 0; $i < $fields; ++$i) {
-            $forms[] = $factory->createNamed('password' . $i, PasswordType::class, null, $options)->createView();
+            $form = $factory->createNamed('password' . $i, PasswordType::class, $data, $options);
+            if ($submitted !== null) {
+                $form->submit($submitted);
+            }
+
+            $forms[] = $form->createView();
         }
 
         return $twig->render('page.html.twig', ['forms' => $forms]);

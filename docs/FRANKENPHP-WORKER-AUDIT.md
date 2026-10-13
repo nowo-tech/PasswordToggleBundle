@@ -32,7 +32,7 @@ A bundle that is safe under **B** is safe under **A** and under classic mode / P
 |------|--------|-------|
 | Mutable state in shared services | ✅ | `PasswordType` uses `readonly` constructor defaults; only `IconSupportWarningSubscriber::$warned` (one-shot log guard, no user data) |
 | Static properties / `static` locals | ✅ | None; only static closures in `Configuration` OptionsResolver validators |
-| `ResetInterface` / `kernel.reset` coverage | ✅ | `IconSupportWarningSubscriber` implements `ResetInterface` (auto-tagged); under Scenario B the flag simply stays `true` (once per worker) |
+| `ResetInterface` / `kernel.reset` coverage | ✅ | `IconSupportWarningSubscriber` intentionally does **not** implement `ResetInterface`: its log guard stays `true` for the worker lifetime in both scenarios (once per worker) |
 | Request / user / locale captured in services | ✅ | Form options and values live on per-request `FormView` / `FormInterface` only |
 | Superglobals, `$_ENV`, `putenv`, `ini_set`, `setlocale`, timezone | ✅ | None used; config is compiled into container parameters |
 | Doctrine / EntityManager | ✅ N/A | No persistence |
@@ -52,7 +52,7 @@ Worker demos: `demo/symfony8` and `demo/symfony8-php85` default to `FRANKENPHP_M
 |---------|--------|---------------|------------|------------|
 | `Nowo\PasswordToggleBundle\Form\Type\PasswordType` (`form.type`) | yes | none (`readonly array $defaults`; `readonly` checker) | ✅ | ✅ |
 | `Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker` | yes | none (`final readonly`; `class_exists` / `interface_exists`) | ✅ | ✅ |
-| `Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber` | yes | `bool $warned` (log de-duplication only) | ✅ (reset each request → warn again if packages missing) | ✅ (stays `true`, warn once per worker) |
+| `Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber` | yes | `bool $warned` (log de-duplication only) | ✅ (not reset, warn once per worker) | ✅ (stays `true`, warn once per worker) |
 
 `NowoPasswordToggleExtension`, `Configuration`, and `TwigPathsPass` only run at container compile time. The Twig widget writes only into the current request’s HTML and request attributes (`_nowo_password_toggle_js` for single script include). Frontend JS does not share PHP worker memory.
 
@@ -60,11 +60,11 @@ Worker demos: `demo/symfony8` and `demo/symfony8-php85` default to `FRANKENPHP_M
 
 No open findings that block Scenario B.
 
-### Info — W-01 — One-time icon warning under Scenario A (Low / informational)
+### Info — W-01 — One-time icon warning (Low / informational)
 
-- **Where:** `IconSupportWarningSubscriber::$warned` + `reset()`.
-- **Impact:** Under Scenario A, `services_resetter` clears the guard after each request, so a missing `symfony/ux-icons` / `symfony/http-client` produces one warning **per main request** (same as PHP-FPM). Under Scenario B the warning is once per worker. No user or request data is stored.
-- **Action:** install the icon packages or lower the `nowo_password_toggle` Monolog channel in production. No code change required for sticky-Kernel compatibility.
+- **Where:** `IconSupportWarningSubscriber::$warned`.
+- **Impact:** The guard is process-wide and not reset by `services_resetter`, so a missing `symfony/ux-icons` / `symfony/http-client` produces one warning per worker (per request under PHP-FPM, where the process is new). Earlier versions implemented `ResetInterface`, which logged the warning on every request in Scenario A. No user or request data is stored.
+- **Action:** install the icon packages or lower the `nowo_password_toggle` Monolog channel in production.
 
 Covered by unit regression `PasswordTypeTest::testSharedInstanceDoesNotLeakOptionsAcrossConsecutiveBuilds`.
 

@@ -43,6 +43,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- `PasswordType` now honours `always_empty` (default `true`): after a failed submit the plaintext password is no longer rendered back into the input `value` attribute. With `always_empty: false` the submitted value is kept (initial model data is never rendered), mirroring Symfony's core `PasswordType`.
+
+### Fixed
+
+- `IconSupportWarningSubscriber` no longer implements `ResetInterface`, so the missing icon dependencies warning is logged once per process instead of on every request in FrankenPHP worker mode (`kernel.reset`).
+
 ## [2.3.1] - 2026-10-13
 
 ### Changed

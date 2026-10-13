@@ -18,7 +18,7 @@ When installed via Symfony Flex, a default file is created at `config/packages/n
 | `button_classes` | `array` | `['input-group-text', 'cursor-pointer']` | CSS classes for toggle button. |
 | `toggle_container_classes` | `array` | `['form-password-toggle']` | CSS classes for container. |
 | `use_toggle_form_theme` | `bool` | `true` | Use the bundle's form theme for rendering. |
-| `always_empty` | `bool` | `true` | Always render empty value. |
+| `always_empty` | `bool` | `true` | Never render the submitted password back into `value` (e.g. after a validation error). When `false`, the submitted value is kept after submit; initial data is never rendered. |
 | `trim` | `bool` | `false` | Trim whitespace. |
 | `invalid_message` | `string` | `'The password is invalid.'` | Invalid message (must be non-empty). |
 | `javascript` | `string` | `'web_component'` | How behaviour is attached (all CSP-safe, no inline handlers): `web_component` = widget emits one `<script src>` per request for `nowo-password-toggle.js` carrying the CSP nonce; `stimulus` = no `<script>`, renders `data-controller` / `data-action` for the shipped Stimulus controller; `none` = no `<script>`, load the JS yourself. |

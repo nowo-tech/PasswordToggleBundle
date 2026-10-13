@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Contracts\Service\ResetInterface;
 
 final class IconSupportWarningSubscriberTest extends TestCase
 {
@@ -60,21 +61,23 @@ final class IconSupportWarningSubscriberTest extends TestCase
         $subscriber->onKernelRequest(new RequestEvent($kernel, Request::create('/'), HttpKernelInterface::SUB_REQUEST));
     }
 
-    public function testResetAllowsSecondWarning(): void
+    public function testWarnsOncePerProcessAcrossManyWorkerRequests(): void
     {
         $logger = $this->createMock(LoggerInterface::class);
-        $logger->expects($this->exactly(2))->method('warning');
+        $logger->expects($this->once())->method('warning');
 
         $subscriber = new IconSupportWarningSubscriber(
             new IconSupportChecker(uxIconsAvailable: false, httpClientAvailable: false),
             $logger,
         );
 
+        // The guard must survive services_resetter (kernel.reset) between worker requests.
+        $this->assertArrayNotHasKey(ResetInterface::class, class_implements($subscriber));
+
         $kernel = $this->createMock(HttpKernelInterface::class);
-        $event  = new RequestEvent($kernel, Request::create('/'), HttpKernelInterface::MAIN_REQUEST);
-        $subscriber->onKernelRequest($event);
-        $subscriber->reset();
-        $subscriber->onKernelRequest($event);
+        for ($i = 0; $i < 3; ++$i) {
+            $subscriber->onKernelRequest(new RequestEvent($kernel, Request::create('/'), HttpKernelInterface::MAIN_REQUEST));
+        }
     }
 
     public function testDoesNotLogWhenDependenciesPresent(): void

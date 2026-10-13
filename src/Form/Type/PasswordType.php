@@ -139,6 +139,12 @@ final class PasswordType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
+        // Same as Symfony's PasswordType: never echo the submitted (plaintext) password back
+        // into the HTML unless always_empty is explicitly disabled.
+        if (($options['always_empty'] ?? true) || !$form->isSubmitted()) {
+            $view->vars['value'] = '';
+        }
+
         $view->vars['toggle']                   = $options['toggle'];
         $view->vars['toggle_container_classes'] = $options['toggle_container_classes'];
         $view->vars['button_classes']           = $options['button_classes'];
