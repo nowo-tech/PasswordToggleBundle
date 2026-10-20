@@ -4,7 +4,12 @@
 
 - [Supported Versions](#supported-versions)
 - [Reporting a Vulnerability](#reporting-a-vulnerability)
+  - [How to Report](#how-to-report)
+  - [Response Timeline](#response-timeline)
+  - [Disclosure Policy](#disclosure-policy)
 - [Security fixes and recommended defaults](#security-fixes-and-recommended-defaults)
+  - [2.3.2 — `always_empty` is honoured](#232--always_empty-is-honoured)
+  - [Recommended defaults](#recommended-defaults)
 - [Preferred Languages](#preferred-languages)
 - [Contact](#contact)
 - [Release security checklist (12.4.1)](#release-security-checklist-1241)

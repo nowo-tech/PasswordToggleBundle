@@ -9,6 +9,16 @@
 | Method | Manual review of every file under `src/` (form type, event subscriber, icon support checker, DI extension, configuration, compiler pass, `services.yaml`, Twig widget, public JS) + PHPStan classic + worker-strict + hardening |
 | **Verdict** | ✅ **100% compatible** under Scenario B (`reset_kernel: false`) — no remediations required for sticky Kernel |
 
+## Table of contents
+
+- [Execution model assumed](#execution-model-assumed)
+- [Summary](#summary)
+- [Services reviewed](#services-reviewed)
+- [Findings](#findings)
+  - [Info — W-01 — One-time icon warning (Low / informational)](#info--w-01--one-time-icon-warning-low--informational)
+- [Usage recommendations in worker mode](#usage-recommendations-in-worker-mode)
+- [Re-audit triggers](#re-audit-triggers)
+
 ## Execution model assumed
 
 FrankenPHP worker mode boots the Symfony kernel once per worker and serves many requests with the same container. This audit assumes the **strict** host contract used by Nowo “Friendly Worker” / kernel-isolation E2E:

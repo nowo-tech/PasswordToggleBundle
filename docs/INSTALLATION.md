@@ -2,6 +2,17 @@
 
 This guide covers installing Password Toggle Bundle in a Symfony application.
 
+## Table of contents
+
+- [Requirements](#requirements)
+- [Install with Composer](#install-with-composer)
+- [Register the bundle](#register-the-bundle)
+  - [With Symfony Flex](#with-symfony-flex)
+  - [Manual registration](#manual-registration)
+- [Missing icon packages (runtime behaviour)](#missing-icon-packages-runtime-behaviour)
+- [Twig Extra Bundle (REQ-TWIG-004)](#twig-extra-bundle-req-twig-004)
+- [Next steps](#next-steps)
+
 ## Requirements
 
 - **PHP** >= 8.2, < 8.6

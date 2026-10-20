@@ -46,6 +46,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Documentation: wave-1 REQ compliance — README GitHub stars and Coverage badges, Symfony badge lists 8.1, canonical FrankenPHP claim, documentation list order (extras under Additional documentation), de-duplicated CODEOWNERS and pull request template, CONTRIBUTING Code of Conduct link and Cursor Agent queue settings (REQ-IDE-006), tables of contents on long docs.
+
 ## [2.4.1] - 2026-10-13
 
 ### Fixed

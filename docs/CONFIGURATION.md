@@ -2,6 +2,13 @@
 
 The bundle is configured under the root key `nowo_password_toggle`. All options can be set globally here or overridden per field when using the form type.
 
+## Table of contents
+
+- [Configuration file](#configuration-file)
+- [Options](#options)
+- [Example](#example)
+- [See also](#see-also)
+
 ## Configuration file
 
 When installed via Symfony Flex, a default file is created at `config/packages/nowo_password_toggle.yaml`. Otherwise create it manually.
