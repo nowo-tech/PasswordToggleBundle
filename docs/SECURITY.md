@@ -2,6 +2,10 @@
 
 ## Table of contents
 
+- [Attack surface](#attack-surface)
+- [Threat model](#threat-model)
+- [Logging](#logging)
+- [Dependencies](#dependencies)
 - [Supported Versions](#supported-versions)
 - [Reporting a Vulnerability](#reporting-a-vulnerability)
   - [How to Report](#how-to-report)
@@ -13,6 +17,34 @@
 - [Preferred Languages](#preferred-languages)
 - [Contact](#contact)
 - [Release security checklist (12.4.1)](#release-security-checklist-1241)
+
+## Attack surface
+
+| Input | Where | Notes |
+| --- | --- | --- |
+| Submitted password | `PasswordType` (extends Symfony `PasswordType`) | Plain text in the request; never rendered back with `always_empty: true` |
+| Field options / bundle config | `nowo_password_toggle` YAML, form options | Developer-controlled (icons, labels, CSP nonce attribute, JS mode) |
+| CSP nonce | Request attribute (`csp_nonce_attribute`, default `csp_nonce`) | Read and stamped on the widget `<script>` only |
+| Widget JS | `public/js/nowo-password-toggle.js` (or the Stimulus `password_toggle_controller.js`) | Toggles the input `type` only; no network access |
+
+The bundle exposes **no HTTP routes**, performs no outbound HTTP, stores nothing and runs no subprocesses.
+
+## Threat model
+
+| Threat | Mitigation |
+| --- | --- |
+| Password echoed into HTML / caches | `always_empty: true` by default (fixed in 2.3.2, see below) |
+| XSS through labels or icons | Twig auto-escaping; icon names are passed to `ux_icon()`, not rendered as raw HTML |
+| Inline script blocked by CSP / CSP bypass | Nonce read from the request attribute; `javascript: stimulus` / `none` modes avoid inline script entirely |
+| Supply chain (shipped JS) | Small committed source, no third-party JS runtime dependency |
+
+## Logging
+
+`IconSupportWarningSubscriber` logs a single `warning` per process when the configured icons cannot be rendered (missing `symfony/ux-icons` / icon set). **Never logged:** passwords, field values, request data or user identifiers.
+
+## Dependencies
+
+Runtime requirements: Symfony Form / FrameworkBundle / TwigBundle, `twig/extra-bundle`, `psr/log`. `composer audit` runs in CI; Dependabot proposes updates; security fixes ship as patch releases of the supported major (see below).
 
 ## Supported Versions
 

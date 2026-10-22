@@ -23,10 +23,10 @@ Others are **N/A** (or already covered by Symfony) so the decision stays auditab
 
 | PSR | Decision | Notes |
 | --- | -------- | ----- |
-| PSR-3 Logger | **Adopted** | Type-hint `Psr\Log\LoggerInterface` on services that log; injectable via Symfony DI. |
+| PSR-3 Logger | **Adopted** | `IconSupportWarningSubscriber` type-hints `Psr\Log\LoggerInterface` (one-time warning when icon support is missing); `psr/log` is a runtime requirement. |
 | PSR-6 / PSR-16 Cache | **N/A** | No package-owned cache layer. |
 | PSR-7 / PSR-17 HTTP messages | **N/A** | Symfony HttpFoundation (or no HTTP messages API) is the correct surface; a PSR-7 bridge would not help consumers. |
-| PSR-18 HTTP client | **N/A** | Outbound HTTP uses Symfony `HttpClientInterface` (or a package transport) as the supported SPI instead of PSR-18. |
+| PSR-18 HTTP client | **N/A** | The bundle makes no outbound HTTP calls (icons are rendered by `symfony/ux-icons` in the host). |
 | PSR-11 Container | **N/A** | No container locator in the public API; constructor injection only. |
 | PSR-14 Event dispatcher | **Already satisfied via Symfony** | Uses Symfony `EventDispatcherInterface` / subscribers (PSR-14 compatible). No separate FIG dependency required. |
 | PSR-15 HTTP middleware | **N/A** | Uses Symfony kernel listeners/subscribers (or has no HTTP middleware pipeline). |

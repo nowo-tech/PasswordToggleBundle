@@ -44,6 +44,8 @@
 
 ## Unreleased
 
+- `psr/log` is now a runtime requirement (it was already needed by the icon-support subscriber).
+
 ## From 2.4.0 to 2.4.1
 
 From **2.4.0** — container class form-password-toggle rendered once

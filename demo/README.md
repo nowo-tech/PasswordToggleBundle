@@ -1,240 +1,63 @@
 # Password Toggle Bundle - Demo
 
-This directory contains three demo projects demonstrating the usage of the Password Toggle Bundle with different Symfony and PHP versions.
+`demo/symfony8` is the bundle demo: Symfony 8 on FrankenPHP **PHP 8.5** (the newest PHP allowed by `require.php`), a login form using the bundle's `PasswordType`, Bootstrap 5 and tabler icons. One demo covers the supported PHP range; the former `symfony8-php85` copy was merged into it.
 
-## Features
+## Table of contents
 
-- Three separate demo projects for different Symfony/PHP combinations
-- Simple login form with password toggle functionality
-- Bootstrap 5 styling
-- Tabler icons for the toggle button
-- Docker setup for easy development
-- Independent Docker containers for each demo
-- Symfony Web Profiler included for debugging (dev and test environments)
-- FrankenPHP with HTTP on port 80 and worker mode (single php service, no nginx)
-- Attribute-based routing configuration
-
-## Demo Projects
-
-The bundle includes three demo projects:
-
-1. **Symfony 7.0 Demo** - PHP 8.2 (Port 8001 by default, configurable via `.env`)
-2. **Symfony 8.0 Demo** - PHP 8.4 (Port 8001 by default, configurable via `.env`)
-3. **Symfony 8.0 Demo with PHP 8.5** - PHP 8.5 (Port 8001 by default, configurable via `.env`)
+- [Requirements](#requirements)
+- [Quick start with Docker](#quick-start-with-docker)
+- [Make targets](#make-targets)
+- [Port](#port)
+- [How it works](#how-it-works)
+- [Customization](#customization)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
 
 ## Requirements
 
-- Docker and Docker Compose
-- Or PHP 8.2+ to 8.5 (8.4+ for Symfony 8.0) and Composer (for local development)
+- Docker with Docker Compose (V2 preferred, V1 fallback).
 
-## Quick Start with Docker
-
-Each demo has its own `docker-compose.yml` and can be run independently. You can start any demo you want:
-
-### Symfony 7.0 Demo (PHP 8.2)
+## Quick start with Docker
 
 ```bash
-# Navigate to the demo directory
 cd demo/symfony8
-
-# Start containers
-docker-compose up -d
-
-# Install dependencies
-docker-compose exec php composer install
-
-# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
+cp -n .env.example .env   # first run only
+make up                   # FrankenPHP (worker mode by default) + composer install
+# http://localhost:8003
 ```
 
-Or using the Makefile:
+From the bundle root you can also run `make -C demo up-symfony8` and `make demo-smoke` (boot + final HTTP 200). See [docs/DEMO-FRANKENPHP.md](../docs/DEMO-FRANKENPHP.md) for `FRANKENPHP_MODE` (worker / classic) and the worker audit.
 
-```bash
-cd demo
-make up-symfony8
-make install-symfony8
-```
+## Make targets
 
-### Symfony 8.0 Demo (PHP 8.4)
+| Target | What it does |
+| --- | --- |
+| `make -C demo/symfony8 up` / `down` | Start / stop the demo |
+| `make -C demo/symfony8 test` | Demo PHPUnit suite |
+| `make -C demo/symfony8 update-bundle` | Re-sync the bundle from the path repository and clear the cache |
+| `make -C demo/symfony8 test-e2e` / `demo-screenshots` | Playwright e2e and the README screenshots (REQ-DEMO-013) |
+| `make -C demo release-check` | update-bundle, demo tests, then release-verify (boot + HTTP 200) |
 
-```bash
-# Navigate to the demo directory
-cd demo/symfony8
+## Port
 
-# Start containers
-docker-compose up -d
+`PORT` in `demo/symfony8/.env` (default **8003**, from `.env.example`) is the host port mapped to FrankenPHP's port 80; `make up` prints `Demo started at: http://localhost:<PORT>`. Change it in `.env` and recreate the containers if 8003 is taken.
 
-# Install dependencies
-docker-compose exec php composer install
+## How it works
 
-# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
-```
-
-Or using the Makefile:
-
-```bash
-cd demo
-make up-symfony8
-make install-symfony8
-```
-
-### Symfony 8.0 Demo with PHP 8.5
-
-```bash
-# Navigate to the demo directory
-cd demo/symfony8-php85
-
-# Start containers
-docker-compose up -d
-
-# Install dependencies
-docker-compose exec php composer install
-
-# Access at: http://localhost:8001 (default port, configurable via PORT env variable)
-```
-
-Or using the Makefile:
-
-```bash
-cd demo
-make up-symfony8-php85
-make install-symfony8-php85
-```
-
-### Stop Containers
-
-Stop a specific demo:
-
-```bash
-# Stop Symfony 7.0 demo
-cd demo/symfony8
-docker-compose down
-
-# Or using Makefile
-cd demo
-make down-symfony8
-```
-
-Similar commands for other demos:
-- Symfony 8.0: `make down-symfony8`
-- Symfony 8.0 + PHP 8.5: `make down-symfony8-php85`
-
-## Local Development (without Docker)
-
-### Symfony 7.0 Demo
-
-1. **Navigate to the demo directory:**
-   ```bash
-   cd demo/symfony8
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   composer install
-   ```
-
-3. **Start the Symfony server:**
-   ```bash
-   symfony server:start
-   ```
-
-### Symfony 8.0 Demo
-
-1. **Navigate to the demo directory:**
-   ```bash
-   cd demo/symfony8
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   composer install
-   ```
-
-3. **Start the Symfony server:**
-   ```bash
-   symfony server:start
-   ```
-
-### Symfony 8.0 Demo with PHP 8.5
-
-1. **Navigate to the demo directory:**
-   ```bash
-   cd demo/symfony8-php85
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   composer install
-   ```
-
-3. **Start the Symfony server:**
-   ```bash
-   symfony server:start
-   ```
-
-## What's Included
-
-Each demo includes:
-
-- **DemoController**: A simple controller with a form that uses the PasswordType
-- **Form Template**: A Bootstrap-styled form template showing the password toggle in action
-- **Docker Setup**: Single FrankenPHP service (HTTP on port 80, worker mode; no nginx)
-- **Dockerfile**: FrankenPHP (Dunglas) image with Composer pre-installed
-- **Test Suite**: Complete PHPUnit test suite to verify bundle integration
-- **Web Profiler**: Symfony Web Profiler bundle for debugging (enabled in dev and test environments)
-- **Proper Configuration**: All demos include Caddyfile (HTTP :80, worker), routing setup, and required dependencies
-
-## Demo Structure
-
-```
-demo/
-│   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # FrankenPHP PHP 8.2 image with Composer
-│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
-│   ├── composer.json       # Dependencies for Symfony 7.0
-│   ├── .env                # Port configuration (default: 8001)
-│   ├── .env.example        # Example port configuration file
-│   └── ...
-├── symfony8/          # Symfony 8.0 demo (Port 8001 by default, PHP 8.4)
-│   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # FrankenPHP PHP 8.4 image with Composer
-│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
-│   ├── composer.json       # Dependencies for Symfony 8.0
-│   ├── .env                # Port configuration (default: 8001)
-│   ├── .env.example        # Example port configuration file
-│   └── ...
-├── symfony8-php85/    # Symfony 8.0 demo with PHP 8.5 (Port 8001 by default)
-│   ├── docker-compose.yml  # Independent docker-compose for this demo
-│   ├── Dockerfile          # FrankenPHP PHP 8.4 image (symfony8-php85 demo)
-│   ├── docker/frankenphp/Caddyfile  # HTTP :80, worker mode
-│   ├── composer.json       # Dependencies for Symfony 8.0
-│   ├── .env                # Port configuration (default: 8001)
-│   ├── .env.example        # Example port configuration file
-│   └── ...
-└── Makefile                # Helper commands for all demos
-```
-
-Each demo is completely independent with its own `docker-compose.yml` and FrankenPHP Caddyfile (HTTP :80, worker).
-
-## How It Works
-
-The demo uses the `PasswordType` form type from the bundle:
+The demo form uses the bundle's `PasswordType`:
 
 ```php
 ->add('password', PasswordType::class, [
-    'label' => 'Password',
-    'toggle' => true,
-    'visible_icon' => 'tabler:eye-off',
-    'hidden_icon' => 'tabler:eye',
+    'label'         => 'Password',
+    'toggle'        => true,
+    'visible_icon'  => 'tabler:eye-off',
+    'hidden_icon'   => 'tabler:eye',
     'visible_label' => 'Show password',
-    'hidden_label' => 'Hide password',
+    'hidden_label'  => 'Hide password',
 ])
 ```
 
-The form automatically includes:
-- A password input field
-- A toggle button with eye icons
-- JavaScript functionality to show/hide the password
-- Accessibility labels (ARIA)
+It renders the password input, a toggle button with eye icons, the Stimulus/JS behaviour that shows or hides the value, and ARIA labels.
 
 ## Customization
 
@@ -262,43 +85,6 @@ You can also customize the password field by modifying the options in each demo'
 
 **Note**: Options specified in the controller override the global configuration from `nowo_password_toggle.yaml`.
 
-## Port Configuration
-
-Each demo includes a `.env` file with the default port configuration:
-
-- **Symfony 8.0**: Port 8001 (configured in `symfony8/.env`)
-- **Symfony 8.0 + PHP 8.5**: Port 8001 (configured in `symfony8-php85/.env`)
-
-### Changing the Port
-
-If a port is already in use, you can customize it by editing the `.env` file in the demo directory:
-
-```bash
-# Edit the .env file
-cd demo/symfony8
-nano .env  # or use your preferred editor
-
-# Change the PORT value
-PORT=8080
-```
-
-Then restart the containers:
-
-```bash
-docker-compose down
-docker-compose up -d
-```
-
-The `docker-compose.yml` files use `${PORT:-8001}` syntax, which means:
-- If `PORT` is set in the `.env` file, it will use that value
-- If `PORT` is not set, it will use the default value (8001 for all demos)
-
-You can also override the port temporarily using an environment variable:
-
-```bash
-PORT=8080 docker-compose up -d
-```
-
 ## Troubleshooting
 
 ### Composer install fails
@@ -315,37 +101,7 @@ Demos require **symfony/ux-icons** and **symfony/http-client** (matching the dem
 docker-compose exec php php bin/console ux:icons:lock
 ```
 
-Composer `auto-scripts` in each demo run this on `post-install-cmd` / `post-update-cmd`. If icons are still missing, ensure `assets/icons/tabler/eye.svg` and `eye-off.svg` exist (copy from `.symfony/recipes/nowo-tech/password-toggle-bundle/1.2.3/assets/icons/tabler/` in the bundle repo) and check `config/packages/ux_icons.yaml`.
-
-### PHP version compatibility
-
-Make sure you're using the correct PHP version for each demo:
-- Symfony 7.0: PHP >= 8.2
-- Symfony 8.0: PHP >= 8.4
-
-The Dockerfiles are configured with the correct PHP versions, so using Docker is recommended.
-
-### Port already in use
-
-If port 8001 is already in use, you can change it by setting the `PORT` environment variable:
-
-```bash
-# Stop the containers first
-cd demo/symfony8
-docker-compose down
-
-# Start with a different port
-PORT=8002 docker-compose up -d
-```
-
-Or edit the `.env` file in the demo directory to set a permanent port.
-
-### Nginx configuration issues
-
-If you encounter "File not found" errors, make sure:
-- FrankenPHP serves the app from `/app/public` (worker mode); access via HTTP on the port set in `.env` (default 8001).
-- The containers are running: `docker-compose ps`
-- The cache is cleared: `docker-compose exec php php bin/console cache:clear`
+Composer `auto-scripts` in each demo run this on `post-install-cmd` / `post-update-cmd`. If icons are still missing, ensure `assets/icons/tabler/eye.svg` and `eye-off.svg` exist (copy from `.symfony/recipes/nowo-tech/password-toggle-bundle/1.2.4/assets/icons/tabler/` in the bundle repo) and check `config/packages/ux_icons.yaml`.
 
 ### Routes not loading
 
@@ -354,57 +110,6 @@ If routes are not loading, verify:
 - The controller uses the `#[Route]` attribute correctly
 - The cache is cleared after configuration changes
 
-## Testing
-
-Each demo includes its own test suite to verify that the Password Toggle Bundle works correctly with the specific Symfony version.
-
-### Run Tests
-
-```bash
-# Run tests for Symfony 7.0 demo
-cd demo/symfony8
-docker-compose exec php vendor/bin/phpunit
-
-# Run tests for Symfony 8.0 demo
-cd demo/symfony8
-docker-compose exec php vendor/bin/phpunit
-
-# Run tests for Symfony 8.0 + PHP 8.5 demo
-cd demo/symfony8-php85
-docker-compose exec php vendor/bin/phpunit
-```
-
-Or using the Makefile from the `demo/` directory:
-
-```bash
-cd demo
-
-# Run tests for a specific demo (using specific commands)
-make test-symfony8
-make test-symfony8
-make test-symfony8-php85
-
-# Or using generic commands with demo name
-make test symfony8
-make test symfony8
-make test symfony8-php85
-
-# Run all tests
-make test-all
-```
-
-### Test Structure
-
-Each demo includes:
-- **Controller Tests**: Verify that the demo controller works correctly
-- **Bundle Integration Tests**: Verify that the Password Toggle Bundle is properly integrated
-- Tests verify:
-  - Form page accessibility
-  - Form fields presence (username, password)
-  - Password toggle functionality (icons, buttons)
-  - Form submission
-  - Bundle registration
-
 ## License
 
-This demo is part of the Password Toggle Bundle project and follows the same MIT license.
+MIT — see the bundle [LICENSE](../LICENSE).

@@ -1,6 +1,9 @@
 # Makefile for Symfony 8.0 Demo (Password Toggle Bundle)
 # Run from this directory: make up, make install, etc.
 
+# Prefer Compose V2, fall back to V1 (REQ-MAKE-010). COMPOSE was undefined here, so run-compose ran an empty command.
+COMPOSE ?= $(shell docker compose version >/dev/null 2>&1 && echo "docker compose" || echo "docker-compose")
+
 .PHONY: help up down build install shell logs test test-coverage cache-clear update-bundle ensure-up restart test-e2e demo-screenshots
 
 help:
@@ -22,6 +25,8 @@ help:
 
 up:
 	@if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || true; fi
+	@# Install vendor/ in a one-off container first: worker mode cannot boot a fresh checkout without it.
+	@$(call run-compose,run --rm -T --no-deps --entrypoint composer -e COMPOSER_MEMORY_LIMIT=-1 php install --no-interaction)
 	@$(call run-compose,up -d)
 	@echo "Waiting for container to be ready..."
 	@sleep 5
@@ -42,8 +47,7 @@ build:
 ensure-up:
 	@if ! $(COMPOSE) exec -T php true 2>/dev/null; then \
 		echo "Starting container..."; \
-		$(COMPOSE) up -d; \
-		sleep 3; \
+		$(MAKE) up; \
 	fi
 
 install: ensure-up

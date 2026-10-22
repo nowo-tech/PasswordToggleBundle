@@ -8,7 +8,7 @@ COMPOSE_BIN := $(shell docker compose version >/dev/null 2>&1 && echo "docker co
 COMPOSE     := $(COMPOSE_BIN) -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
-.PHONY: help up down down-dev build shell install test test-coverage coverage-php-percent cs-check cs-fix rector rector-dry phpstan igor qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra
+.PHONY: check-open-prs check-no-raw-html-form help up down down-dev build shell install test test-coverage coverage-php-percent cs-check cs-fix rector rector-dry phpstan igor qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra
 
 # Default target
 help:
@@ -88,8 +88,9 @@ test: ensure-up
 
 # Run tests with coverage (no -T so coverage is shown in console with colors)
 test-coverage: ensure-up
-	$(COMPOSE) exec $(SERVICE_PHP) composer test-coverage | tee coverage-php.txt
+	$(COMPOSE) exec -T $(SERVICE_PHP) composer test-coverage | tee coverage-php.txt
 	./.scripts/php-coverage-percent.sh coverage-php.txt
+	sh .scripts/coverage-fail-under.sh coverage-php.txt 99
 
 # Check code style
 cs-check: ensure-up
@@ -124,7 +125,7 @@ check-twig-extra:
 # Run Igor worker-state audit (REQ-CS-008)
 igor: ensure-up
 	$(COMPOSE) exec -T php composer igor
-release-check: check-no-cursor-coauthor check-twig-extra ensure-up composer-sync cs-fix cs-check rector-dry phpstan igor test-coverage release-check-demos
+release-check: ensure-up check-no-cursor-coauthor check-open-prs check-twig-extra check-no-raw-html-form composer-sync cs-fix cs-check rector-dry phpstan igor test-coverage release-check-demos
 
 release-check-demos:
 	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-check; else echo "No demo/Makefile — skip release-check-demos"; fi
@@ -180,3 +181,14 @@ strip-cursor-coauthor-from-history:
 
 twig-lint: ensure-up
 	@$(COMPOSE) exec -T $(SERVICE_PHP) composer twig:lint || $(COMPOSE) exec -T $(SERVICE_PHP) ./vendor/bin/twig-cs-fixer lint --config=.twig-cs-fixer.php
+
+# REQ-REL-003 — no unresolved open GitHub PRs before release
+check-open-prs:
+	@chmod +x .scripts/check-open-prs.sh
+	@bash .scripts/check-open-prs.sh
+
+# REQ-TWIG-005 — no raw form markup in bundle views (form themes exempt) or demo templates
+check-no-raw-html-form:
+	@chmod +x .scripts/check-no-raw-html-form.sh
+	@./.scripts/check-no-raw-html-form.sh
+

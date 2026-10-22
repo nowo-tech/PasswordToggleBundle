@@ -1,11 +1,11 @@
 # Makefile for Password Toggle Bundle Demo
 # Each demo has its own docker-compose.yml and can be run independently
 
-# Define available demos (folder names = demo names, standard: symfony8, symfony8-php85)
+# Define available demos (folder names = demo names)
 # Prefer Compose V2 plugin (GitHub Actions / modern Docker Desktop); fall back to docker-compose V1 (REQ-MAKE-010).
 COMPOSE ?= $(shell docker compose version >/dev/null 2>&1 && echo "docker compose" || echo "docker-compose")
 
-DEMOS := symfony8 symfony8-php85
+DEMOS := symfony8
 
 # Helper function to get port from .env file (defaults to 8001)
 get-port = $(shell grep -E '^PORT=' $(1)/.env 2>/dev/null | cut -d '=' -f2 || echo "8001")
@@ -78,17 +78,7 @@ up-$(1):
 	cd $(1) && \
 	if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || true; fi && \
 	PORT=$$$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
-	echo "🔍 Checking port $$$$PORT..."; \
-	CONTAINER=$$$$(docker ps --format "{{.Names}}" --filter "publish=$$$$PORT" 2>/dev/null | head -1); \
-	if [ -n "$$$$CONTAINER" ]; then \
-		echo "⚠️  Port $$$$PORT is in use by container: $$$$CONTAINER"; \
-		echo "🛑 Stopping container $$$$CONTAINER..."; \
-		docker stop $$$$CONTAINER 2>/dev/null || true; \
-		docker rm $$$$CONTAINER 2>/dev/null || true; \
-		echo "✅ Port $$$$PORT is now free"; \
-	fi && \
-	$(COMPOSE) build && \
-	$(COMPOSE) up -d && \
+	$(MAKE) up && \
 	echo "⏳ Waiting for demo to be ready..." && \
 	sleep 5 && \
 	MAX_ATTEMPTS=12; \
@@ -120,14 +110,7 @@ define install-target-template
 install-$(1):
 	@VERSION=$$$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
 	echo "📦 Installing $$$$VERSION dependencies..."; \
-	cd $(1) && $(COMPOSE) exec php composer install || \
-		(PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
-		CONTAINER=$$(docker ps --format "{{.Names}}" --filter "publish=$$PORT" 2>/dev/null | head -1); \
-		if [ -n "$$CONTAINER" ]; then \
-			docker stop $$CONTAINER 2>/dev/null || true; \
-			docker rm $$CONTAINER 2>/dev/null || true; \
-		fi; \
-		$(COMPOSE) up -d && sleep 2 && $(COMPOSE) exec php composer install); \
+	$(MAKE) -C $(1) install; \
 	echo "✅ $$$$VERSION dependencies installed!"
 endef
 
@@ -146,31 +129,15 @@ endef
 # Generate test targets for each demo
 define test-target-template
 test-$(1):
-	@VERSION=$$$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
-	echo "🧪 Running $$$$VERSION tests..."; \
-	cd $(1) && $(COMPOSE) exec -e APP_ENV=test php composer test || \
-		(PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
-		CONTAINER=$$(docker ps --format "{{.Names}}" --filter "publish=$$PORT" 2>/dev/null | head -1); \
-		if [ -n "$$CONTAINER" ]; then \
-			docker stop $$CONTAINER 2>/dev/null || true; \
-			docker rm $$CONTAINER 2>/dev/null || true; \
-		fi; \
-		$(COMPOSE) up -d && sleep 2 && $(COMPOSE) exec -e APP_ENV=test php composer test)
+	@echo "Running $(1) tests..."
+	@$(MAKE) -C $(1) test
 endef
 
 # Generate test-coverage targets for each demo
 define test-coverage-target-template
 test-coverage-$(1):
-	@VERSION=$$$$(echo $(1) | sed 's/symfony/Symfony /' | sed 's/7/7.0/' | sed 's/8/8.0/' | sed 's/-php85/ + PHP 8.5/'); \
-	echo "🧪 Running $$$$VERSION tests with coverage..."; \
-	cd $(1) && $(COMPOSE) exec -e APP_ENV=test php composer test-coverage || \
-		(PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | head -1 || echo 8001); \
-		CONTAINER=$$(docker ps --format "{{.Names}}" --filter "publish=$$PORT" 2>/dev/null | head -1); \
-		if [ -n "$$CONTAINER" ]; then \
-			docker stop $$CONTAINER 2>/dev/null || true; \
-			docker rm $$CONTAINER 2>/dev/null || true; \
-		fi; \
-		$(COMPOSE) up -d && sleep 2 && $(COMPOSE) exec -e APP_ENV=test php composer test-coverage)
+	@echo "Running $(1) tests with coverage..."
+	@$(MAKE) -C $(1) test-coverage
 endef
 
 # Generate all targets for each demo
@@ -301,7 +268,8 @@ verify-all:
 	fi
 
 # release-check: refresh bundle code, test-coverage-all, then release-verify
-release-check: update-bundle-all test-coverage-all release-verify
+# REQ-DEMO-007: sync the bundle, run the demo test suite, then boot + HTTP check
+release-check: update-bundle-all test-all release-verify
 	@echo "✅ All demos passed release-check."
 
 # Pre-release: for each demo up → sleep → healthcheck HTTP 200 → down (§5.4.1, invoked by root release-check)

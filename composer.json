@@ -16,7 +16,8 @@
     "homepage": "https://github.com/nowo-tech/PasswordToggleBundle",
     "support": {
         "issues": "https://github.com/nowo-tech/PasswordToggleBundle/issues",
-        "source": "https://github.com/nowo-tech/PasswordToggleBundle"
+        "source": "https://github.com/nowo-tech/PasswordToggleBundle",
+        "docs": "https://github.com/nowo-tech/PasswordToggleBundle/tree/main/docs"
     },
     "authors": [
         {
@@ -32,6 +33,7 @@
     ],
     "require": {
         "php": ">=8.2 <8.6",
+        "psr/log": "^1.1 || ^2.0 || ^3.0",
         "symfony/form": "^7.4 || ^8.0",
         "symfony/framework-bundle": "^7.4 || ^8.0",
         "symfony/twig-bundle": "^7.4 || ^8.0",
@@ -51,7 +53,6 @@
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-symfony": "^2.0",
         "phpunit/phpunit": "^10.0",
-        "psr/log": "^3.0",
         "rector/rector": "^2.0",
         "symfony/asset": "^7.4 || ^8.0",
         "symfony/console": "^7.4 || ^8.0",
@@ -91,7 +92,7 @@
     "prefer-stable": true,
     "scripts": {
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html coverage --coverage-clover coverage.xml --coverage-text",
+        "test-coverage": "@php -d memory_limit=512M vendor/bin/phpunit --colors=always --coverage-html coverage --coverage-clover coverage.xml --coverage-text",
         "cs-check": "php-cs-fixer fix --dry-run --diff",
         "cs-fix": "php-cs-fixer fix",
         "rector": "rector process",

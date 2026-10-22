@@ -48,6 +48,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Single demo `demo/symfony8` on FrankenPHP **PHP 8.5** (the duplicate `demo/symfony8-php85` was merged into it); default port **8003** in `.env.example` and Compose; demo README rewritten for the single demo (REQ-DEMO-005, REQ-DEMO-010, REQ-DOC-002).
+- Flex recipe: the stale `.symfony/recipe/…/1.1.1` copy was removed; INSTALLATION points explicitly at `.symfony/recipes/nowo-tech/password-toggle-bundle/1.2.4/` (REQ-RECIPE-001).
+- `psr/log` moved to `require` (the icon-support subscriber type-hints `LoggerInterface`); `support.docs` added (REQ-PKG-004); PSR.md no longer claims outbound HTTP (REQ-CS-007).
+- `release-check` starts with `ensure-up` and runs `check-open-prs` and `check-no-raw-html-form`; the demo `test-*` targets delegate to the demo Makefile instead of stopping whichever container publishes the demo port, the demo release check runs the demo tests (REQ-DEMO-007), the demo Makefile defines `COMPOSE` (V2/V1, REQ-MAKE-010) and `make up` / `ensure-up` install `vendor/` first so worker mode boots from a fresh checkout; `make test-coverage` fails under 99% (REQ-MAKE-002, REQ-TEST-003); new `Demo smoke` workflow (REQ-TEST-011).
+- Redundant manual `form.type` tags removed from `services.yaml` (autoconfigure tags form types) (REQ-SF-003).
+- `docs/SECURITY.md` adds attack surface, threat model, logging and dependency policy (REQ-SEC-001); README publishes the measured coverage (REQ-TEST-007); the co-author check accepts git worktrees.
+
+### Changed
+
 - Dependencies refreshed (Composer and pnpm/npm lock files of the bundle and its demos, campaign 2026-10-19).
 - `.php-cs-fixer.dist.php`: `new ParallelConfig(2)` (REQ-CS-001).
 - Documentation: wave-1 REQ compliance — README GitHub stars and Coverage badges, Symfony badge lists 8.1, canonical FrankenPHP claim, documentation list order (extras under Additional documentation), de-duplicated CODEOWNERS and pull request template, CONTRIBUTING Code of Conduct link and Cursor Agent queue settings (REQ-IDE-006), tables of contents on long docs.

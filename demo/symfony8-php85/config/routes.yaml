@@ -1,9 +1,0 @@
-# Routes are defined using attributes in controllers
-# See App\Controller\DemoController for route definitions
-
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: App\Controller
-    type: attribute
-

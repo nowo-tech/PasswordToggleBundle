@@ -37,7 +37,7 @@ Use a constraint such as `^1.0` to stay on the current major version.
 
 ### With Symfony Flex
 
-If you use Symfony Flex, the bundle is registered automatically, configuration is created at `config/packages/nowo_password_toggle.yaml`, **symfony/ux-icons** and **symfony/http-client** are added, and tabler icons are copied under `assets/icons/tabler/`. Run after install:
+The Flex recipe lives in this repository under the legacy path **`.symfony/recipes/nowo-tech/password-toggle-bundle/`** (latest version `1.2.4/`: `manifest.json`, `config/`, `assets/`). If you use Symfony Flex, the bundle is registered automatically, configuration is created at `config/packages/nowo_password_toggle.yaml`, **symfony/ux-icons** and **symfony/http-client** are added, and tabler icons are copied under `assets/icons/tabler/`. Run after install:
 
 ```bash
 php bin/console ux:icons:lock
@@ -83,7 +83,7 @@ return [
        ignore_not_found: '%kernel.debug%'
    ```
 
-   Copy tabler SVGs under `assets/icons/tabler/` (see the Flex recipe in `.symfony/recipes/.../1.2.3/assets/icons/tabler/`) or lock icons after install:
+   Copy tabler SVGs under `assets/icons/tabler/` (see the Flex recipe in `.symfony/recipes/nowo-tech/password-toggle-bundle/1.2.4/assets/icons/tabler/`) or lock icons after install:
 
    ```bash
    php bin/console ux:icons:lock

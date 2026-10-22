@@ -32,7 +32,7 @@ The demos use:
 - **Two Caddyfiles**: `Caddyfile` (production, with worker) and `Caddyfile.dev` (development, no worker).
 - An **entrypoint** that selects classic vs worker Caddyfile from **`FRANKENPHP_MODE`** (`classic` \| `worker`, default **`worker`** in `.env.example`)
 
-There are demos for **Symfony 8** and **8 (PHP 8.5)** (e.g. **demo/symfony8**, **demo/symfony8-php85**). Each has its own Dockerfile, docker-compose.yml and Makefile. From the bundle root you run e.g. `make -C demo/symfony8 up` (see the demo's README for the URL and port).
+The bundle ships one demo, **demo/symfony8**, on `dunglas/frankenphp:1-php8.5-alpine`: the newest PHP tag allowed by the package `require.php` (bump it together with `require.php`). It has its own Dockerfile, docker-compose.yml and Makefile. From the bundle root run `make -C demo/symfony8 up` (default URL http://localhost:8003, `PORT` in `.env`).
 
 The main difference between development and production is:
 
@@ -97,7 +97,7 @@ Each demo's **docker-compose.yml** sets `APP_ENV=dev` and `APP_DEBUG=1`, mounts 
 
 ### 5. Start the demo (development)
 
-From the bundle root: `make -C demo/symfony8 up` (or symfony7, symfony8-php85). Or from the demo directory: `make up`.
+From the bundle root: `make -C demo/symfony8 up`. Or from the demo directory: `make up`.
 
 ---
 

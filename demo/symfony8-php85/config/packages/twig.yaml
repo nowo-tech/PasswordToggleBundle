@@ -1,4 +1,0 @@
-twig:
-    default_path: '%kernel.project_dir%/templates'
-    # Since password-toggle-bundle 2.4.0 the bundle form theme is registered automatically
-    # (use_toggle_form_theme: true), so no form_themes entry is needed here.

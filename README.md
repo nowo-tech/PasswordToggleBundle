@@ -1,6 +1,6 @@
 # Password Toggle Bundle
 
-[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7.4%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/PasswordToggleBundle) [![Coverage](https://img.shields.io/badge/Coverage-89.51%25-yellowgreen)](#tests-and-coverage)
+[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7.4%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/PasswordToggleBundle) [![Coverage](https://img.shields.io/badge/Coverage-99.21%25-yellowgreen)](#tests-and-coverage)
 
 > ⭐ **Found this useful?** Give it a star on GitHub! It helps us maintain and improve the project.
 
@@ -209,28 +209,17 @@ Example custom styles:
 
 ## Demo Projects
 
-The bundle includes two demo projects demonstrating usage with different PHP versions:
+The bundle ships one demo, **demo/symfony8** (Symfony 8 on FrankenPHP PHP 8.5, port **8003** by default via `.env`):
 
-- **Symfony 8.0 Demo** (PHP 8.4) - Port 8001 (default, configurable via `.env`)
-- **Symfony 8.0 Demo with PHP 8.5** - Port 8001 (default, configurable via `.env`)
-
-Each demo is independent and includes:
-- Complete Docker setup with FrankenPHP (HTTP on port 80). With **`APP_ENV=dev`** (default), the image **entrypoint uses `Caddyfile.dev`** when `FRANKENPHP_MODE=classic`. Default demos use **`FRANKENPHP_MODE=worker`** and document **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel). See [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md) and the [worker audit](docs/FRANKENPHP-WORKER-AUDIT.md).
-- Comprehensive test suite
-- Port configuration via `.env` file
-- Symfony Web Profiler for debugging (dev and test environments)
-- Properly configured routing with attribute-based routes
-- Bundle configuration file (`config/packages/nowo_password_toggle.yaml`) demonstrating global configuration (v1.2.0+)
+- Docker setup with FrankenPHP (HTTP on port 80). Default **`FRANKENPHP_MODE=worker`** with **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel); `classic` uses `Caddyfile.dev`. See [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md) and the [worker audit](docs/FRANKENPHP-WORKER-AUDIT.md).
+- Test suite, Symfony Web Profiler (dev/test), attribute routing and a `config/packages/nowo_password_toggle.yaml` showing the global configuration.
 
 ### Quick Start with Docker
 
 ```bash
-cd demo
-make up-symfony8    # Start Symfony 8.0 demo (specific command)
-# Or use generic command: make up symfony8
-make install-symfony8  # Install dependencies
-# Or use generic command: make install symfony8
-# Access at: http://localhost:8001 (default port, configurable via .env)
+make -C demo/symfony8 up     # or: cd demo && make up-symfony8
+# Access at: http://localhost:8003 (PORT in demo/symfony8/.env)
+make demo-smoke              # boot + final HTTP 200 (REQ-TEST-011)
 ```
 
 Playwright e2e + cropped widget screenshots (**REQ-DEMO-013**):
@@ -240,19 +229,7 @@ make -C demo/symfony8 test-e2e
 make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.webp
 ```
 
-Or start any other demo:
-
-```bash
-# Using specific commands
-make up-symfony8    # Symfony 8.0
-make up-symfony8-php85 # Symfony 8.0 with PHP 8.5
-
-# Or using generic commands with demo name
-make up symfony8    # Symfony 8.0
-make up symfony8-php85 # Symfony 8.0 with PHP 8.5
-```
-
-See `demo/README.md` for detailed instructions for all demos.
+See `demo/README.md` for the full demo guide.
 
 ## Development
 ### Using Docker (Recommended)
@@ -359,8 +336,10 @@ All classes and methods are fully tested with 100% code coverage.
 
 ## Tests and coverage
 
-- Tests: PHPUnit (PHP)
-- PHP: 89.51%
+- Tests: PHPUnit (PHP); the demo adds functional and Playwright e2e checks
+- PHP: **99.21%** lines (`make test-coverage`, gate ≥99%)
+- TS/JS: N/A (the shipped widget script / Stimulus controller have no unit-test suite; covered by the demo e2e)
+- Python: N/A
 
 ## License
 
