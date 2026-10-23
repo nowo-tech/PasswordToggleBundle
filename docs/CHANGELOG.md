@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[2.6.0] - 2026-10-23](#260---2026-10-23)
 - [[2.5.0] - 2026-10-22](#250---2026-10-22)
 - [[2.4.1] - 2026-10-13](#241---2026-10-13)
 - [[2.4.0] - 2026-10-13](#240---2026-10-13)
@@ -46,6 +47,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2024-12-11](#100---2024-12-11)
 
 ## [Unreleased]
+
+## [2.6.0] - 2026-10-23
+
+### Changed
+
+- The widget's input is the form theme's `form_widget_simple` block instead of a hand-written `<input>`, so a host form
+  theme that styles inputs styles the password field too (no widget override needed). Output is unchanged with the
+  default Symfony themes.
 
 ## [2.5.0] - 2026-10-22
 

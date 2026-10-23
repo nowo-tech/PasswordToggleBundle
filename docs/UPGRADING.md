@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Unreleased](#unreleased)
+- [To 2.6.0](#to-260)
 - [To 2.5.0](#to-250)
 - [From 2.4.0 to 2.4.1](#from-240-to-241)
 - [From 2.3.2 to 2.4.0](#from-232-to-240)
@@ -44,6 +45,12 @@
   - [Twig-CS-Fixer (maintainers)](#twig-cs-fixer-maintainers)
 
 ## Unreleased
+
+## To 2.6.0
+
+From **2.5.0**: `composer update nowo-tech/password-toggle-bundle`. The input now renders through `form_widget_simple`:
+if you overrode `toggle_password_widget` only to reuse your form theme's input markup, delete the override (and use
+`javascript: stimulus` with `stimulus_controller` for a Stimulus controller of your own).
 
 ## To 2.5.0
 

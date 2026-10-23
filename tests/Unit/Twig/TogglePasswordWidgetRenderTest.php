@@ -151,10 +151,18 @@ final class TogglePasswordWidgetRenderTest extends TestCase
         self::assertStringNotContainsString('stored-hash', $html);
     }
 
+    public function testTheInputIsTheFormThemesWidgetSoAHostThemeStylesIt(): void
+    {
+        $html = $this->render(['javascript' => 'none'], new Request(), hostTheme: "{% use 'form_div_layout.html.twig' %}{% block form_widget_simple %}<input data-host-theme=\"1\" type=\"{{ type }}\" {{ block('widget_attributes') }}/>{% endblock %}");
+
+        self::assertMatchesRegularExpression('#<nowo-password-toggle[^>]*>\s*<input data-host-theme="1" type="password"#', $html);
+        self::assertSame(1, substr_count($html, '<input'));
+    }
+
     /**
      * @param array<string, mixed> $options
      */
-    private function render(array $options, ?Request $request, int $fields = 1, ?string $submitted = null, ?string $data = null): string
+    private function render(array $options, ?Request $request, int $fields = 1, ?string $submitted = null, ?string $data = null, ?string $hostTheme = null): string
     {
         $bridgeViews = dirname((string) (new ReflectionClass(AppVariable::class))->getFileName()) . '/Resources/views/Form';
         $bundleViews = dirname(__DIR__, 3) . '/src/Resources/views/Form';
@@ -165,7 +173,7 @@ final class TogglePasswordWidgetRenderTest extends TestCase
         }
 
         $twig = new Environment(new ChainLoader([
-            new ArrayLoader(['page.html.twig' => $templates]),
+            new ArrayLoader(['page.html.twig' => $templates, 'host_theme.html.twig' => $hostTheme ?? '']),
             new FilesystemLoader([$bridgeViews, $bundleViews]),
         ]), ['strict_variables' => true, 'autoescape' => 'html']);
         $twig->addExtension(new FormExtension());
@@ -173,7 +181,7 @@ final class TogglePasswordWidgetRenderTest extends TestCase
         $twig->addFunction(new TwigFunction('asset', static fn (string $path, ?string $package = null): string => '/bundles/nowopasswordtoggle/' . $path));
         $twig->addFunction(new TwigFunction('ux_icon', static fn (): string => '<svg></svg>', ['is_safe' => ['html']]));
 
-        $engine = new TwigRendererEngine(['form_div_layout.html.twig', 'toggle_password_widget.html.twig'], $twig);
+        $engine = new TwigRendererEngine(array_merge(['form_div_layout.html.twig'], $hostTheme === null ? [] : ['host_theme.html.twig'], ['toggle_password_widget.html.twig']), $twig);
         $twig->addRuntimeLoader(new FactoryRuntimeLoader([
             FormRenderer::class => static fn (): FormRenderer => new FormRenderer($engine),
         ]));
