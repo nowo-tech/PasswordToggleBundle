@@ -33,15 +33,12 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: ['8.2', '8.3', '8.4', '8.5']
-        symfony: ['7.4', '8.0', '8.1']
+        # Symfony 8.0 reached end of maintenance (July 2026): its CI cell is dropped (REQ-SF-002); composer.json still allows ^8.0.
+        symfony: ['7.4', '8.1']
         exclude:
-          # PHP 8.2 and 8.3 don't support Symfony 8.0, 8.1 (requires PHP 8.4+)
-          - php: '8.2'
-            symfony: '8.0'
+          # PHP 8.2 and 8.3 don't support Symfony 8.1 (requires PHP 8.4+)
           - php: '8.2'
             symfony: '8.1'
-          - php: '8.3'
-            symfony: '8.0'
           - php: '8.3'
             symfony: '8.1'
 
