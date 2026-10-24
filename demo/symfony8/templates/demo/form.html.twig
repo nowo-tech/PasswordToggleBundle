@@ -93,24 +93,12 @@
         {% endif %}
 
         {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
-            <div class="mb-3">
-                {{ form_label(form.username) }}
-                {{ form_widget(form.username) }}
-                {{ form_errors(form.username) }}
-            </div>
-
-            <div class="mb-3">
-                {{ form_label(form.password) }}
-                {{ form_widget(form.password) }}
-                {{ form_errors(form.password) }}
-                <small class="form-text text-muted">
-                    Click the eye icon to toggle password visibility
-                </small>
-            </div>
-
-            <div class="d-grid">
-                {{ form_widget(form.submit) }}
-            </div>
+            {# REQ-TWIG-003: child loop (row wrappers, the toggle hint and the submit wrapper come from the form builder row_attr / help options) #}
+            {% for child in form %}
+                {% if not child.rendered %}
+                    {{ form_row(child) }}
+                {% endif %}
+            {% endfor %}
         {{ form_end(form) }}
 
         <div class="mt-4 text-center">

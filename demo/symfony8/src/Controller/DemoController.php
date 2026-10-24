@@ -38,15 +38,19 @@ class DemoController extends AbstractController
     {
         $form = $this->createFormBuilder()
             ->add('username', TextType::class, [
-                'label' => 'Username',
-                'attr'  => [
+                'label'    => 'Username',
+                'row_attr' => ['class' => 'mb-3'],
+                'attr'     => [
                     'class'       => 'form-control',
                     'placeholder' => 'Enter your username',
                 ],
             ])
             ->add('password', PasswordType::class, [
-                'label' => 'Password',
-                'attr'  => [
+                'label'     => 'Password',
+                'row_attr'  => ['class' => 'mb-3'],
+                'help'      => 'Click the eye icon to toggle password visibility',
+                'help_attr' => ['class' => 'form-text text-muted'],
+                'attr'      => [
                     'class'       => 'form-control',
                     'placeholder' => 'Enter your password',
                 ],
@@ -58,8 +62,9 @@ class DemoController extends AbstractController
                 'toggle_container_classes' => ['form-password-toggle'],
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Submit',
-                'attr'  => [
+                'label'    => 'Submit',
+                'row_attr' => ['class' => 'd-grid'],
+                'attr'     => [
                     'class' => 'btn btn-primary',
                 ],
             ])
