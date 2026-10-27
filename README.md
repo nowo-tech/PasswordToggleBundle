@@ -1,6 +1,6 @@
 # Password Toggle Bundle
 
-[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7.4%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/PasswordToggleBundle) [![Coverage](https://img.shields.io/badge/Coverage-99.21%25-yellowgreen)](#tests-and-coverage)
+[![CI](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/PasswordToggleBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/password-toggle-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/password-toggle-bundle.svg)](https://packagist.org/packages/nowo-tech/password-toggle-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7.4%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/password-toggle-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/PasswordToggleBundle) [![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen)](#tests-and-coverage)
 
 > ⭐ **Found this useful?** Give it a star on GitHub! It helps us maintain and improve the project.
 
@@ -276,12 +276,12 @@ composer cs-fix
 
 The bundle uses GitHub Actions for continuous integration:
 
-- **Tests**: Runs on PHP 8.2, 8.3, 8.4, and 8.5 with Symfony 7.4, 8.0, and 8.1
- - PHP 8.2 and 8.3: Symfony 7.4 (Symfony 8.0+ requires PHP 8.4+)
- - PHP 8.4 and 8.5: All supported Symfony versions (7.4, 8.0, 8.1)
+- **Tests**: Runs on PHP 8.2, 8.3, 8.4, and 8.5 with Symfony 7.4 and 8.1
+  - PHP 8.2 and 8.3: Symfony 7.4 (Symfony 8.x requires PHP 8.4+)
+  - PHP 8.4 and 8.5: Symfony 7.4 and 8.1 (Symfony 8.0 is end of maintenance; `composer.json` still allows `^8.0`)
 - **Code Style**: Automatically fixes code style on push to main/master
 - **Code Style Check**: Validates code style on pull requests
-- **Coverage**: Validates ≥95% code coverage (see `MIN_COVERAGE` in CI)
+- **Coverage**: Requires 100% PHP code coverage (`MIN_COVERAGE: 100` in CI)
 - **Dependabot**: Automatically updates dependencies
 
 See `.github/workflows/ci.yml` for details.
@@ -312,7 +312,7 @@ See `.github/workflows/ci.yml` for details.
 
 ## Testing
 
-The bundle targets **≥95% code coverage** (CI minimum); current suite is at 100%. All tests are located in the `tests/` directory.
+The bundle requires **100% PHP line coverage**: CI (`MIN_COVERAGE`) and `make test-coverage` fail below it. All tests are located in the `tests/` directory.
 
 ### Running Tests
 
@@ -332,12 +332,12 @@ open coverage/index.html
 - `tests/Unit/` - Unit tests (bundle class, dependency injection, form type)
 - `tests/Integration/` - Integration tests (reserved for integration scenarios)
 
-All classes and methods are fully tested with 100% code coverage.
+No `@codeCoverageIgnore` exclusions are used.
 
 ## Tests and coverage
 
 - Tests: PHPUnit (PHP); the demo adds functional and Playwright e2e checks
-- PHP: **99.21%** lines (`make test-coverage`, gate ≥99%)
+- PHP: **100%** lines (`make test-coverage`, gate 100%)
 - TS/JS: N/A (the shipped widget script / Stimulus controller have no unit-test suite; covered by the demo e2e)
 - Python: N/A
 

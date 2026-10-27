@@ -47,16 +47,6 @@ final class NowoPasswordToggleBundle extends Bundle
             $this->extension = new NowoPasswordToggleExtension();
         }
 
-        $extension = $this->extension;
-
-        // Parent Bundle::$extension is ExtensionInterface|false; ensure we never return false
-        /* @phpstan-ignore identical.alwaysFalse */
-        if ($extension === false) {
-            // @igor-ignore - Boot-time Symfony Bundle extension cache (not request state).
-            $this->extension = new NowoPasswordToggleExtension();
-            $extension       = $this->extension;
-        }
-
-        return $extension;
+        return $this->extension;
     }
 }

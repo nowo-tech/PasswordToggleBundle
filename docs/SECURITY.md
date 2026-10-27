@@ -17,6 +17,7 @@
 - [Preferred Languages](#preferred-languages)
 - [Contact](#contact)
 - [Release security checklist (12.4.1)](#release-security-checklist-1241)
+- [AI security audit](#ai-security-audit)
 
 ## Attack surface
 
@@ -116,16 +117,34 @@ Before tagging a release, confirm:
 
 | Item | Notes |
 |------|--------|
-| **SECURITY.md** | This document is current and linked from the README where applicable. |
-| **`.gitignore` and `.env`** | `.env` and local env files are ignored; no committed secrets. |
-| **No secrets in repo** | No API keys, passwords, or tokens in tracked files. |
-| **Recipe / Flex** | Default recipe or installer templates do not ship production secrets. |
-| **Input / output** | Inputs validated; outputs escaped in Twig/templates where user-controlled. |
-| **Dependencies** | `composer audit` run; issues triaged. |
-| **Logging** | Logs do not print secrets, tokens, or session identifiers unnecessarily. |
-| **Cryptography** | If used: keys from secure config; never hardcoded. |
-| **Permissions / exposure** | Routes and admin features documented; roles configured for production. |
-| **Limits / DoS** | Timeouts, size limits, rate limits where applicable. |
+| **SECURITY.md** | This document is current and linked from the README. |
+| **`.gitignore` and `.env`** | `.env` and local env files are ignored; the demo ships `.env.example` only; no committed secrets. |
+| **No secrets in repo** | No API keys, passwords or tokens in tracked files (fixtures use obvious placeholders). |
+| **Recipe / Flex** | The Flex recipe (`.symfony/recipes/nowo-tech/password-toggle-bundle/`) only registers the bundle, requires `symfony/ux-icons` + `symfony/http-client`, writes the default `nowo_password_toggle.yaml` and copies the tabler SVGs; it ships no secrets. |
+| **Input / output** | `always_empty: true` stays the default (password never rendered back); labels, help and attributes go through Twig auto-escaping; icon names are passed to `ux_icon()`, never rendered as raw HTML. |
+| **Dependencies** | `composer audit` run; issues triaged ([Dependencies](#dependencies)). |
+| **No-secret logs** | [Logging](#logging) still holds: only the icon-support warning; never passwords, field values or request data (`grep -rn 'logger' src/`). |
+| **Cryptography** | Not applicable: the bundle performs no cryptography and stores nothing. |
+| **Permissions / exposure** | Still no HTTP routes, controllers, outbound HTTP, storage or subprocesses ([Attack surface](#attack-surface)); a release that adds any of these needs a new AI security audit. |
+| **CSP** | The inline widget `<script>` still carries the nonce from `csp_nonce_attribute`; `javascript: stimulus` / `none` still emit no inline script. |
+| **Limits / DoS** | No server-side processing beyond form rendering/submission; the widget JS only toggles the input `type` and makes no network calls. |
+| **AI security audit (REQ-SEC-004)** | Package **passes** the latest AI security audit, recorded in the Nowo monorepo `BUNDLES_SECURITY_ANALYSIS.md` (see [AI security audit](#ai-security-audit)). Do not release on a failing or missing grade; re-run the audit when the release adds attack surface. |
 
 Record confirmation in the release PR or tag notes.
 
+Recommended commands:
+
+```bash
+composer audit
+make release-check
+```
+
+## AI security audit
+
+| Field | Value |
+| ----- | ----- |
+| Latest recorded audit | 2026-07-29 |
+| Grade | **Pass (good)** |
+| Risk | Low |
+| Record | `BUNDLES_SECURITY_ANALYSIS.md` (Nowo bundles monorepo), REQ-SEC-004 table |
+| Pending | Re-audit requested: the 2026-07-29 record predates the 2.3.2 `always_empty` fix, the 2.4 CSP nonce / `javascript` modes (inline, Stimulus, none) and the 2.6 `form_widget_simple` rendering. Update this table with the new date and grade once it is recorded. |
