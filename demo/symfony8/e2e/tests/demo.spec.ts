@@ -45,4 +45,29 @@ test.describe('PasswordToggle demo', () => {
     await page.waitForLoadState('load');
     await expect(page.locator(HOST).first().locator('input').first()).toHaveValue('');
   });
+
+  test('2.6.1: a revealed password is masked again when its form is submitted', async ({ page }) => {
+    await page.goto('/');
+    const host = page.locator(HOST).first();
+    const button = host.locator(BUTTON).first();
+    const input = host.locator('input').first();
+    await input.fill('secret123');
+    await button.click();
+    await expect(input).toHaveAttribute('type', 'text');
+
+    const typeAtSubmit = await page.locator('form').first().evaluate((form: HTMLFormElement) => {
+      let seen = '';
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        seen = (form.querySelector('nowo-password-toggle input, [data-nowo-password-toggle] input') as HTMLInputElement).type;
+      }, { once: true });
+      form.requestSubmit();
+      return seen;
+    });
+
+    expect(typeAtSubmit).toBe('password');
+    await expect(input).toHaveAttribute('type', 'password');
+    await expect(input).toHaveValue('secret123');
+    await expect(button).not.toHaveClass(/is-password-visible/);
+  });
 });

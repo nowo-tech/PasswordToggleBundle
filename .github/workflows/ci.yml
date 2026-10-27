@@ -227,6 +227,26 @@ jobs:
       - name: PHPStan (level and ignoreErrors from phpstan.neon.dist; fails the build on any error)
         run: composer phpstan --no-interaction
 
+  js-tests:
+    name: JavaScript tests (Vitest)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm ci --no-fund --no-audit
+
+      - name: Test with coverage (thresholds in vitest.config.mjs, REQ-TEST-003)
+        run: npm run test:coverage
+
   coverage:
     name: Code Coverage
     runs-on: ubuntu-latest

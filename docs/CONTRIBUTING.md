@@ -99,7 +99,7 @@ composer cs-fix
 
 #### Tests
 
-**CI requires 100% PHP code coverage** (REQ-TEST-003; `MIN_COVERAGE` in `.github/workflows/ci.yml`, and `make test-coverage` fails below 100% lines). All tests must pass before merging. New features should include tests.
+**CI requires 100% PHP code coverage** (REQ-TEST-003; `MIN_COVERAGE` in `.github/workflows/ci.yml`, and `make test-coverage` fails below 100% lines); the JavaScript suite (`make test-js`, CI job *JavaScript tests (Vitest)*) fails below 90%. All tests must pass before merging. New features should include tests.
 
 ```bash
 # Run all tests
@@ -113,6 +113,9 @@ make -C demo/symfony8 demo-screenshots
 
 # Run tests with coverage
 make test-coverage
+
+# JavaScript unit tests (Vitest + happy-dom, coverage gate ≥90%; throwaway Node container)
+make test-js
 # or
 composer test-coverage
 

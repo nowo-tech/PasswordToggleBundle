@@ -31,3 +31,8 @@
 # Demo coverage artifacts
 demo/*/coverage/
 demo/*/coverage.xml
+
+# JavaScript unit tests (Vitest)
+/node_modules
+/coverage-js
+/coverage-js.txt

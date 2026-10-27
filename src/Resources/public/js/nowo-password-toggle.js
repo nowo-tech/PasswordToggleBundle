@@ -50,28 +50,96 @@
 
   /**
    * @param {HTMLElement} host
+   * @param {HTMLElement} button
+   * @returns {{visible: string, hidden: string}}
+   */
+  function labelsFor(host, button) {
+    return {
+      visible: attrOr(
+        host.getAttribute('data-nowo-password-toggle-visible-label'),
+        button.getAttribute('data-visible-label') || 'Show password'
+      ),
+      hidden: attrOr(
+        host.getAttribute('data-nowo-password-toggle-hidden-label'),
+        button.getAttribute('data-hidden-label') || 'Hide password'
+      ),
+    };
+  }
+
+  /**
+   * @param {HTMLElement} host
    * @param {HTMLInputElement} input
    * @param {HTMLElement} button
    */
   function toggleVisibility(host, input, button) {
-    var visibleLabel = attrOr(
-      host.getAttribute('data-nowo-password-toggle-visible-label'),
-      button.getAttribute('data-visible-label') || 'Show password'
-    );
-    var hiddenLabel = attrOr(
-      host.getAttribute('data-nowo-password-toggle-hidden-label'),
-      button.getAttribute('data-hidden-label') || 'Hide password'
-    );
-
     if (input.type === 'password') {
       input.type = 'text';
       button.classList.add('is-password-visible');
-      button.setAttribute('aria-label', hiddenLabel);
+      button.setAttribute('aria-label', labelsFor(host, button).hidden);
     } else {
-      input.type = 'password';
-      button.classList.remove('is-password-visible');
-      button.setAttribute('aria-label', visibleLabel);
+      concealHost(host);
     }
+  }
+
+  /**
+   * Masks a revealed password again: type="password", icon class removed, "show" label restored.
+   * Called on toggle, on the owning form's submit and on pagehide, so a revealed value is not left
+   * on screen, in the bfcache snapshot or offered to the browser as a plain text field.
+   *
+   * @param {HTMLElement} host
+   */
+  function concealHost(host) {
+    var input = findInput(host);
+    if (!input) {
+      return;
+    }
+    var button = host.querySelector('[data-nowo-password-toggle-target="button"], [role="button"]');
+    if (input.type === 'text') {
+      input.type = 'password';
+    }
+    if (button instanceof HTMLElement) {
+      button.classList.remove('is-password-visible');
+      button.setAttribute('aria-label', labelsFor(host, button).visible);
+    }
+  }
+
+  /**
+   * @param {ParentNode} root
+   * @param {HTMLFormElement|null} [form] only hosts whose input belongs to this form
+   */
+  function concealAll(root, form) {
+    var nodes = root.querySelectorAll(HOST_SELECTOR);
+    Array.prototype.forEach.call(nodes, function (node) {
+      if (!(node instanceof HTMLElement)) {
+        return;
+      }
+      var input = findInput(node);
+      if (!input || (form && input.form !== form)) {
+        return;
+      }
+      concealHost(node);
+    });
+  }
+
+  var resetListenersInstalled = false;
+
+  /**
+   * Installs the document-level reset listeners once (capture phase, so they run before host handlers
+   * and keep working for hosts morphed in later by Live Components / Turbo).
+   */
+  function installResetListeners() {
+    if (resetListenersInstalled || typeof document === 'undefined') {
+      return;
+    }
+    resetListenersInstalled = true;
+    document.addEventListener('submit', function (event) {
+      if (event.target instanceof HTMLFormElement) {
+        concealAll(document, event.target);
+      }
+    }, true);
+    global.addEventListener('pagehide', function () {
+      concealAll(document, null);
+    });
   }
 
   /**
@@ -82,6 +150,7 @@
       return;
     }
     host.setAttribute(ATTR_INIT, '1');
+    installResetListeners();
 
     host.addEventListener('click', function (event) {
       var input = findInput(host);
@@ -132,6 +201,10 @@
   global.NowoPasswordToggle = {
     enhance: enhanceHost,
     enhanceAll: enhanceAll,
+    conceal: concealHost,
+    concealAll: function (scope) {
+      concealAll(scope || document, null);
+    },
   };
 
   function boot() {

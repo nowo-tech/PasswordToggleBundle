@@ -117,7 +117,7 @@ final class Configuration implements ConfigurationInterface
                     ->info('Stimulus controller identifier used when javascript is "stimulus".')
                     ->cannotBeEmpty()
                     ->validate()
-                        ->ifTrue(static fn ($v): bool => !is_string($v) || preg_match('/^[a-z0-9][a-z0-9_-]*(--[a-z0-9_-]+)*$/', $v) !== 1)
+                        ->ifTrue(static fn ($v): bool => !is_string($v) || preg_match(PasswordType::STIMULUS_IDENTIFIER_PATTERN, $v) !== 1)
                         ->thenInvalid('stimulus_controller must be a valid Stimulus identifier (e.g. "nowo-password-toggle")')
                     ->end()
                 ->end()

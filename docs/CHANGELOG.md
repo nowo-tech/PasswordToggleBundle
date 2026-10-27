@@ -48,6 +48,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Revealed password re-masked (L1):** the web component script (`nowo-password-toggle.js`) and the Stimulus controller now set the input back to `type="password"`, remove `is-password-visible` and restore the "show" `aria-label` on the owning form's `submit` (capture phase, before host handlers) and on `pagehide`, so a revealed password is not left on screen, in the back/forward cache snapshot or offered to the browser as a plain text field. `window.NowoPasswordToggle` gains `conceal(host)` / `concealAll()`.
+- **Per-field `stimulus_controller` validated (L2):** the form option now must match the same Stimulus identifier pattern as the bundle configuration (`PasswordType::STIMULUS_IDENTIFIER_PATTERN`); an invalid value throws `InvalidOptionsException` at form build time.
+- `docs/SECURITY.md`: attack surface / threat model corrected (the type extends `TextType`; the widget only emits an external `<script src>`), production advice to lock UX icons and not HTTP-cache nonce pages, and the 2026-10-27 AI security audit recorded (Pass (good) / Low, Appendix AJ).
+
+### Fixed
+
+- Escaping regression test for `visible_label`, `hidden_label`, `button_classes` and `toggle_container_classes` containing `"` and `<` in every `javascript` mode.
+
 ### Changed
 
 - Demo: `demo/form.html.twig` renders the form through the child loop instead of hard-coded `form_label` / `form_widget` / `form_errors` for `username` / `password` and `form_widget(form.submit)`; the row wrappers move to `row_attr` and the toggle hint to the `help` option in the demo form builder (REQ-TWIG-003).
@@ -59,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Tests
 
+- JavaScript unit tests (Vitest + happy-dom) for the widget script and the Stimulus controller: `make test-js` (throwaway Node container), CI job `JavaScript tests (Vitest)`, coverage gate ≥90% (`vitest.config.mjs`), `.scripts/js-coverage-percent.sh`; Dependabot watches the npm dev tooling.
 - PHP line coverage is now **100%** and gated at 100% in CI (`MIN_COVERAGE`) and `make test-coverage` (was 99.21%, gates 95% / 99%) (REQ-TEST-003). `NowoPasswordToggleBundle::getContainerExtension()` drops an unreachable `=== false` fallback branch (no behaviour change).
 
 ## [2.6.0] - 2026-10-23

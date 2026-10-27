@@ -159,6 +159,29 @@ final class TogglePasswordWidgetRenderTest extends TestCase
         self::assertSame(1, substr_count($html, '<input'));
     }
 
+    public function testLabelsAndClassesAreEscapedInEveryJavascriptMode(): void
+    {
+        $payload = 'x" data-pwned="1" <b>';
+        $options = [
+            'visible_label'            => 'Show ' . $payload,
+            'hidden_label'             => 'Hide ' . $payload,
+            'button_classes'           => ['btn', $payload],
+            'toggle_container_classes' => ['wrap', $payload],
+        ];
+
+        foreach (PasswordType::JAVASCRIPT_MODES as $mode) {
+            $html = $this->render($options + ['javascript' => $mode], new Request());
+
+            self::assertStringNotContainsString('data-pwned="1"', $html, $mode . ': no attribute injection');
+            self::assertStringNotContainsString('<b>', $html, $mode . ': no markup injection');
+            self::assertStringNotContainsString('" data-pwned', $html, $mode);
+            self::assertStringContainsString('&quot;', $html, $mode . ': quotes are entity-encoded');
+            self::assertStringContainsString('&lt;b&gt;', $html, $mode . ': angle brackets are entity-encoded');
+            self::assertSame(1, substr_count($html, '<input'), $mode);
+            self::assertDoesNotMatchRegularExpression('/\son[a-z]+=/i', $html, $mode);
+        }
+    }
+
     /**
      * @param array<string, mixed> $options
      */

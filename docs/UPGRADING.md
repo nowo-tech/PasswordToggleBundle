@@ -46,6 +46,15 @@
 
 ## Unreleased
 
+From **2.6.0** (security patch, recommended):
+
+- The per-field `stimulus_controller` option is now validated like the bundle-level option (lowercase Stimulus identifier,
+  e.g. `nowo-password-toggle` or `app--password-toggle`). A field passing anything else now throws
+  `InvalidOptionsException` when the form is built: use a valid identifier.
+- A password revealed with the toggle is masked again on form submit and on `pagehide`. If you call your own code on
+  `submit` and need the plain value, read `input.value` (unchanged); the input `type` is `password` again by then.
+- Refresh the published assets after updating: `php bin/console assets:install` (the widget script changed).
+
 ## To 2.6.0
 
 From **2.5.0**: `composer update nowo-tech/password-toggle-bundle`. The input now renders through `form_widget_simple`:
