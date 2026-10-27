@@ -407,6 +407,7 @@ final class PasswordTypeTest extends TestCase
         yield 'markup' => ['x><script>'];
         yield 'space' => ['a b'];
         yield 'leading dash' => ['-toggle'];
+        yield 'trailing newline' => ["password\n"];
     }
 
     #[DataProvider('invalidStimulusIdentifierProvider')]

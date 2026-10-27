@@ -49,7 +49,7 @@ final class PasswordType extends AbstractType
     public const JAVASCRIPT_MODES = [self::JAVASCRIPT_WEB_COMPONENT, self::JAVASCRIPT_STIMULUS, self::JAVASCRIPT_NONE];
 
     /** Valid Stimulus controller identifier (also used in attribute names, so it must never carry markup). */
-    public const STIMULUS_IDENTIFIER_PATTERN = '/^[a-z0-9][a-z0-9_-]*(--[a-z0-9_-]+)*$/';
+    public const STIMULUS_IDENTIFIER_PATTERN = '/^[a-z0-9][a-z0-9_-]*(--[a-z0-9_-]+)*$/D';
 
     private readonly IconSupportChecker $iconSupportChecker;
 

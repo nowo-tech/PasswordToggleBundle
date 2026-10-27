@@ -93,10 +93,13 @@ test-coverage: ensure-up
 	./.scripts/php-coverage-percent.sh coverage-php.txt
 	sh .scripts/coverage-fail-under.sh coverage-php.txt 100
 
-# JavaScript unit tests (web component script + Stimulus controller) in a throwaway Node container (REQ-TEST-003)
+# JavaScript unit tests (web component script + Stimulus controller) in a throwaway Node container (REQ-TEST-003).
+# node_modules lives on a tmpfs so the host install (if any) is never replaced by Alpine binaries.
 NODE_IMAGE ?= node:24-alpine
 test-js:
-	@docker run --rm -u "$$(id -u):$$(id -g)" -e HOME=/tmp -v "$(CURDIR):/app" -w /app $(NODE_IMAGE) \
+	@mkdir -p node_modules
+	@docker run --rm -u "$$(id -u):$$(id -g)" -e HOME=/tmp -v "$(CURDIR):/app" \
+		--tmpfs "/app/node_modules:rw,exec,uid=$$(id -u),gid=$$(id -g)" -w /app $(NODE_IMAGE) \
 		sh -c 'npm ci --no-fund --no-audit && npm run test:coverage' > coverage-js.txt 2>&1; rc=$$?; cat coverage-js.txt; exit $$rc
 	./.scripts/js-coverage-percent.sh coverage-js.txt
 

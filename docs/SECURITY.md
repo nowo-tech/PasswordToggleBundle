@@ -37,7 +37,7 @@ The bundle exposes **no HTTP routes**, performs no outbound HTTP, stores nothing
 | --- | --- |
 | Password echoed into HTML / caches | `always_empty: true` by default (fixed in 2.3.2, see below) |
 | XSS through labels, classes or icons | Twig auto-escaping (regression-tested with `"` and `<` in labels and class options); icon names are passed to `ux_icon()`, not rendered as raw HTML; `stimulus_controller` must match the Stimulus identifier pattern (bundle config and per field, 2.6.1) because it is used inside attribute names |
-| Revealed password left visible | Since 2.6.1 the widget JS and the Stimulus controller set the input back to `type="password"` on the owning form's `submit` (capture phase) and on `pagehide`, so a revealed value is not left on screen, in the back/forward cache snapshot or offered to the browser as a plain text field |
+| Revealed password left visible | Since 2.6.1 the widget JS and the Stimulus controller set the input back to `type="password"` on the owning form's `submit` (capture phase) and on `pagehide`, so a revealed value is not left on screen, in the back/forward cache snapshot or offered to the browser as a plain text field. A programmatic `form.submit()` fires no `submit` event: host scripts should use `form.requestSubmit()` (see [Usage](USAGE.md#with-options)) |
 | Script blocked by CSP / CSP bypass | The widget only emits an external `<script src>` (never inline code), carrying the nonce read from the request attribute; `javascript: stimulus` / `none` emit no script at all |
 | Supply chain (shipped JS) | Small committed source, no third-party JS runtime dependency |
 
