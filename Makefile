@@ -8,7 +8,7 @@ COMPOSE_BIN := $(shell docker compose version >/dev/null 2>&1 && echo "docker co
 COMPOSE     := $(COMPOSE_BIN) -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
-.PHONY: check-open-prs check-no-raw-html-form help up down down-dev build shell install test test-coverage coverage-php-percent cs-check cs-fix rector rector-dry phpstan igor qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra
+.PHONY: check-open-prs check-no-raw-html-form help up down down-dev build shell install test test-coverage coverage-php-percent test-js cs-check cs-fix rector rector-dry phpstan igor qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra
 
 # Default target
 help:
@@ -25,6 +25,7 @@ help:
 	@echo "  install       Install Composer dependencies (starts container if needed)"
 	@echo "  test          Run PHPUnit tests"
 	@echo "  test-coverage Run tests with code coverage"
+	@echo "  test-js       Run the JavaScript unit tests (Vitest + coverage gate, throwaway Node container)"
 	@echo "  cs-check      Check code style"
 	@echo "  cs-fix        Fix code style"
 	@echo "  rector        Apply Rector refactoring"
@@ -92,6 +93,13 @@ test-coverage: ensure-up
 	./.scripts/php-coverage-percent.sh coverage-php.txt
 	sh .scripts/coverage-fail-under.sh coverage-php.txt 100
 
+# JavaScript unit tests (web component script + Stimulus controller) in a throwaway Node container (REQ-TEST-003)
+NODE_IMAGE ?= node:24-alpine
+test-js:
+	@docker run --rm -u "$$(id -u):$$(id -g)" -e HOME=/tmp -v "$(CURDIR):/app" -w /app $(NODE_IMAGE) \
+		sh -c 'npm ci --no-fund --no-audit && npm run test:coverage' > coverage-js.txt 2>&1; rc=$$?; cat coverage-js.txt; exit $$rc
+	./.scripts/js-coverage-percent.sh coverage-js.txt
+
 # Check code style
 cs-check: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer cs-check
@@ -125,7 +133,7 @@ check-twig-extra:
 # Run Igor worker-state audit (REQ-CS-008)
 igor: ensure-up
 	$(COMPOSE) exec -T php composer igor
-release-check: ensure-up check-no-cursor-coauthor check-open-prs check-twig-extra check-no-raw-html-form composer-sync cs-fix cs-check rector-dry phpstan igor test-coverage release-check-demos
+release-check: ensure-up check-no-cursor-coauthor check-open-prs check-twig-extra check-no-raw-html-form composer-sync cs-fix cs-check rector-dry phpstan igor test-coverage test-js release-check-demos
 
 release-check-demos:
 	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-check; else echo "No demo/Makefile — skip release-check-demos"; fi

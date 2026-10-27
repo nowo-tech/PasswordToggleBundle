@@ -26,6 +26,24 @@ export default class extends Controller {
     hiddenLabel: { type: String, default: 'Hide password' },
   };
 
+  connect() {
+    this.concealHandler = () => this.conceal();
+    const input = this.element.querySelector('input');
+    this.form = (input instanceof HTMLInputElement && input.form) || this.element.closest('form');
+    if (this.form) {
+      this.form.addEventListener('submit', this.concealHandler, true);
+    }
+    window.addEventListener('pagehide', this.concealHandler);
+  }
+
+  disconnect() {
+    if (this.form) {
+      this.form.removeEventListener('submit', this.concealHandler, true);
+    }
+    window.removeEventListener('pagehide', this.concealHandler);
+    this.form = null;
+  }
+
   toggle(event) {
     const input = this.element.querySelector('input');
     const button = this.resolveButton(event);
@@ -40,9 +58,26 @@ export default class extends Controller {
       return;
     }
 
-    input.type = 'password';
-    button.classList.remove('is-password-visible');
-    button.setAttribute('aria-label', this.visibleLabelValue);
+    this.conceal(button);
+  }
+
+  /**
+   * Masks a revealed password again (type="password", icon class removed, "show" label restored).
+   * Runs on toggle, on the owning form's submit (capture phase) and on pagehide, so a revealed value
+   * is not left on screen, in the bfcache snapshot or offered to the browser as a plain text field.
+   *
+   * @param {HTMLElement|null} [toggleButton] button that triggered the toggle (defaults to the button target)
+   */
+  conceal(toggleButton = null) {
+    const input = this.element.querySelector('input');
+    if (input instanceof HTMLInputElement && input.type === 'text') {
+      input.type = 'password';
+    }
+    const button = toggleButton || (this.hasButtonTarget ? this.buttonTarget : null);
+    if (button) {
+      button.classList.remove('is-password-visible');
+      button.setAttribute('aria-label', this.visibleLabelValue);
+    }
   }
 
   keydown(event) {

@@ -1,0 +1,18 @@
+{
+  "name": "@nowo-tech/password-toggle-bundle",
+  "private": true,
+  "description": "JavaScript unit tests for the Password Toggle Bundle widget script and Stimulus controller",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@vitest/coverage-v8": "^4.1.12",
+    "happy-dom": "^21.0.3",
+    "vitest": "^4.1.12"
+  },
+  "author": "Héctor Franco Aceituno <hectorfranco@nowo.tech>",
+  "license": "MIT"
+}
