@@ -9,9 +9,9 @@
   },
   "devDependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@vitest/coverage-v8": "^4.1.12",
+    "@vitest/coverage-v8": "^5.0.5",
     "happy-dom": "^21.0.3",
-    "vitest": "^4.1.12"
+    "vitest": "^5.0.5"
   },
   "author": "Héctor Franco Aceituno <hectorfranco@nowo.tech>",
   "license": "MIT"
