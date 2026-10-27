@@ -52,6 +52,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Demo: `demo/form.html.twig` renders the form through the child loop instead of hard-coded `form_label` / `form_widget` / `form_errors` for `username` / `password` and `form_widget(form.submit)`; the row wrappers move to `row_attr` and the toggle hint to the `help` option in the demo form builder (REQ-TWIG-003).
 
+### Documentation
+
+- `docs/SECURITY.md`: the release security checklist (12.4.1) is now bundle-specific and includes the AI security audit item (REQ-SEC-002 / REQ-SEC-004); new **AI security audit** section with the latest recorded grade; `docs/RELEASE.md` adds the checklist step before `make release-check`.
+- README / CONTRIBUTING: CI matrix text matches the workflow (Symfony 7.4 / 8.1) and the coverage figures match the measured value.
+
+### Tests
+
+- PHP line coverage is now **100%** and gated at 100% in CI (`MIN_COVERAGE`) and `make test-coverage` (was 99.21%, gates 95% / 99%) (REQ-TEST-003). `NowoPasswordToggleBundle::getContainerExtension()` drops an unreachable `=== false` fallback branch (no behaviour change).
+
 ## [2.6.0] - 2026-10-23
 
 ### Changed
