@@ -7,7 +7,7 @@ on:
     branches: [main, master]
 
 env:
-  MIN_COVERAGE: 95
+  MIN_COVERAGE: 100
 
 jobs:
   git-hygiene:
@@ -106,7 +106,7 @@ jobs:
           echo "✅ All tests passed, validating minimum coverage (${MIN_COVERAGE}%)..."
 
           MIN_COVERAGE=${MIN_COVERAGE} php -r "
-          \$minCoverage = (float) (getenv('MIN_COVERAGE') ?: 95);
+          \$minCoverage = (float) (getenv('MIN_COVERAGE') ?: 100);
           if (!file_exists('coverage.xml')) {
               echo 'ERROR: coverage.xml file was not generated\n';
               exit(1);
@@ -262,7 +262,7 @@ jobs:
           echo "📊 Validating minimum coverage (${MIN_COVERAGE}%)..."
 
           MIN_COVERAGE=${MIN_COVERAGE} php -r "
-          \$minCoverage = (float) (getenv('MIN_COVERAGE') ?: 95);
+          \$minCoverage = (float) (getenv('MIN_COVERAGE') ?: 100);
           if (!file_exists('coverage.xml')) {
               echo 'ERROR: coverage.xml file was not generated\n';
               exit(1);

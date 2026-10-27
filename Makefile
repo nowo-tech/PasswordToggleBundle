@@ -90,7 +90,7 @@ test: ensure-up
 test-coverage: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer test-coverage | tee coverage-php.txt
 	./.scripts/php-coverage-percent.sh coverage-php.txt
-	sh .scripts/coverage-fail-under.sh coverage-php.txt 99
+	sh .scripts/coverage-fail-under.sh coverage-php.txt 100
 
 # Check code style
 cs-check: ensure-up
