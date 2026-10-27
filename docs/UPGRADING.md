@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Unreleased](#unreleased)
+- [To 2.6.1](#to-261)
 - [To 2.6.0](#to-260)
 - [To 2.5.0](#to-250)
 - [From 2.4.0 to 2.4.1](#from-240-to-241)
@@ -45,6 +46,14 @@
   - [Twig-CS-Fixer (maintainers)](#twig-cs-fixer-maintainers)
 
 ## Unreleased
+
+## To 2.6.1
+
+From **2.6.0**:
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
 
 From **2.6.0** (security patch, recommended):
 
