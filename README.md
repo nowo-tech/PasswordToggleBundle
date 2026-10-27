@@ -338,7 +338,7 @@ No `@codeCoverageIgnore` exclusions are used.
 
 - Tests: PHPUnit (PHP); the demo adds functional and Playwright e2e checks
 - PHP: **100%** lines (`make test-coverage`, gate 100%)
-- TS/JS: N/A (the shipped widget script / Stimulus controller have no unit-test suite; covered by the demo e2e)
+- JS: **94.94%** (min of statements/branches/functions/lines; `make test-js`, Vitest + happy-dom, gate ≥90%) for the widget script and the Stimulus controller; TS: N/A (no TypeScript)
 - Python: N/A
 
 ## License

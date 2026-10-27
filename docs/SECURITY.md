@@ -13,6 +13,7 @@
   - [Disclosure Policy](#disclosure-policy)
 - [Security fixes and recommended defaults](#security-fixes-and-recommended-defaults)
   - [2.3.2 — `always_empty` is honoured](#232--always_empty-is-honoured)
+  - [2.6.1 — revealed password re-masked; `stimulus_controller` validated per field](#261--revealed-password-re-masked-stimulus_controller-validated-per-field)
   - [Recommended defaults](#recommended-defaults)
 - [Preferred Languages](#preferred-languages)
 - [Contact](#contact)
@@ -23,10 +24,10 @@
 
 | Input | Where | Notes |
 | --- | --- | --- |
-| Submitted password | `PasswordType` (extends Symfony `PasswordType`) | Plain text in the request; never rendered back with `always_empty: true` |
+| Submitted password | `PasswordType` (extends Symfony `TextType`; `buildView()` blanks the value the same way Symfony's core `PasswordType` does) | Plain text in the request; never rendered back with `always_empty: true` |
 | Field options / bundle config | `nowo_password_toggle` YAML, form options | Developer-controlled (icons, labels, CSP nonce attribute, JS mode) |
-| CSP nonce | Request attribute (`csp_nonce_attribute`, default `csp_nonce`) | Read and stamped on the widget `<script>` only |
-| Widget JS | `public/js/nowo-password-toggle.js` (or the Stimulus `password_toggle_controller.js`) | Toggles the input `type` only; no network access |
+| CSP nonce | Request attribute (`csp_nonce_attribute`, default `csp_nonce`) | Read and stamped on the widget's external `<script src>` only |
+| Widget JS | `public/js/nowo-password-toggle.js` (or the Stimulus `password_toggle_controller.js`) | Toggles the input `type` only and re-masks it on form submit / `pagehide`; no network access |
 
 The bundle exposes **no HTTP routes**, performs no outbound HTTP, stores nothing and runs no subprocesses.
 
@@ -35,8 +36,9 @@ The bundle exposes **no HTTP routes**, performs no outbound HTTP, stores nothing
 | Threat | Mitigation |
 | --- | --- |
 | Password echoed into HTML / caches | `always_empty: true` by default (fixed in 2.3.2, see below) |
-| XSS through labels or icons | Twig auto-escaping; icon names are passed to `ux_icon()`, not rendered as raw HTML |
-| Inline script blocked by CSP / CSP bypass | Nonce read from the request attribute; `javascript: stimulus` / `none` modes avoid inline script entirely |
+| XSS through labels, classes or icons | Twig auto-escaping (regression-tested with `"` and `<` in labels and class options); icon names are passed to `ux_icon()`, not rendered as raw HTML; `stimulus_controller` must match the Stimulus identifier pattern (bundle config and per field, 2.6.1) because it is used inside attribute names |
+| Revealed password left visible | Since 2.6.1 the widget JS and the Stimulus controller set the input back to `type="password"` on the owning form's `submit` (capture phase) and on `pagehide`, so a revealed value is not left on screen, in the back/forward cache snapshot or offered to the browser as a plain text field |
+| Script blocked by CSP / CSP bypass | The widget only emits an external `<script src>` (never inline code), carrying the nonce read from the request attribute; `javascript: stimulus` / `none` emit no script at all |
 | Supply chain (shipped JS) | Small committed source, no third-party JS runtime dependency |
 
 ## Logging
@@ -95,11 +97,18 @@ Before **2.3.2**, `Nowo\PasswordToggleBundle\Form\Type\PasswordType` ignored `al
 
 Since 2.3.2 the type behaves like Symfony's core `PasswordType`: with `always_empty: true` (the default) the value is always rendered empty; with `always_empty: false` the submitted value is kept after a submit, and initial model data is never rendered. **Upgrade to 2.3.2 or later** (all 2.x releases from 2.3.2 include the fix).
 
+### 2.6.1 — revealed password re-masked; `stimulus_controller` validated per field
+
+- **L1:** a password revealed with the toggle stayed `type="text"` through form submission and page unload. Since 2.6.1 both the web component script and the Stimulus controller restore `type="password"`, remove `is-password-visible` and restore the "show" `aria-label` on the owning form's `submit` (capture phase) and on `pagehide`.
+- **L2:** the per-field `stimulus_controller` option was only type-checked, while the bundle-level option was validated against the Stimulus identifier pattern. Since 2.6.1 the form option uses the same pattern (`PasswordType::STIMULUS_IDENTIFIER_PATTERN`), so an invalid identifier fails at form build time.
+
 ### Recommended defaults
 
 - Keep **`always_empty: true`** (bundle config and per field). Only disable it if you have a concrete UX need and the page is served over HTTPS with `Cache-Control: no-store`.
 - Keep **`trim: false`**: whitespace is significant in passwords.
 - Set the right `autocomplete` attribute per field (`current-password` on login, `new-password` on registration / change forms) via `attr`.
+- Lock the UX icons in production (`php bin/console ux:icons:lock`): the Flex recipe installs `symfony/ux-icons` + `symfony/http-client`, and unlocked icons are fetched on demand from the Iconify API.
+- Do not HTTP-cache pages that carry a per-request CSP nonce (a cached nonce defeats the policy).
 - With a nonce-based Content Security Policy, store the nonce in the request attribute named by `csp_nonce_attribute` (default `csp_nonce`) so the widget's `<script>` carries it, or use `javascript: stimulus` / `none` and load the JS yourself. See [Usage → Content Security Policy](USAGE.md#content-security-policy-csp).
 
 ## Preferred Languages
@@ -120,15 +129,15 @@ Before tagging a release, confirm:
 | **SECURITY.md** | This document is current and linked from the README. |
 | **`.gitignore` and `.env`** | `.env` and local env files are ignored; the demo ships `.env.example` only; no committed secrets. |
 | **No secrets in repo** | No API keys, passwords or tokens in tracked files (fixtures use obvious placeholders). |
-| **Recipe / Flex** | The Flex recipe (`.symfony/recipes/nowo-tech/password-toggle-bundle/`) only registers the bundle, requires `symfony/ux-icons` + `symfony/http-client`, writes the default `nowo_password_toggle.yaml` and copies the tabler SVGs; it ships no secrets. |
-| **Input / output** | `always_empty: true` stays the default (password never rendered back); labels, help and attributes go through Twig auto-escaping; icon names are passed to `ux_icon()`, never rendered as raw HTML. |
+| **Recipe / Flex** | The Flex recipe (`.symfony/recipes/nowo-tech/password-toggle-bundle/`) only registers the bundle, requires `symfony/ux-icons` + `symfony/http-client`, writes the default `nowo_password_toggle.yaml` and copies the tabler SVGs; it ships no secrets. `ux_icons` fetches unlocked icons from the Iconify API, so the docs keep advising `ux:icons:lock` in production. |
+| **Input / output** | `always_empty: true` stays the default (password never rendered back); labels, classes and attributes go through Twig auto-escaping (`TogglePasswordWidgetRenderTest`); `stimulus_controller` is validated against the identifier pattern; icon names are passed to `ux_icon()`, never rendered as raw HTML; the JS re-masks revealed passwords on submit / `pagehide`. |
 | **Dependencies** | `composer audit` run; issues triaged ([Dependencies](#dependencies)). |
 | **No-secret logs** | [Logging](#logging) still holds: only the icon-support warning; never passwords, field values or request data (`grep -rn 'logger' src/`). |
 | **Cryptography** | Not applicable: the bundle performs no cryptography and stores nothing. |
 | **Permissions / exposure** | Still no HTTP routes, controllers, outbound HTTP, storage or subprocesses ([Attack surface](#attack-surface)); a release that adds any of these needs a new AI security audit. |
-| **CSP** | The inline widget `<script>` still carries the nonce from `csp_nonce_attribute`; `javascript: stimulus` / `none` still emit no inline script. |
+| **CSP** | The external widget `<script src>` still carries the nonce from `csp_nonce_attribute` (no inline code); `javascript: stimulus` / `none` still emit no script. |
 | **Limits / DoS** | No server-side processing beyond form rendering/submission; the widget JS only toggles the input `type` and makes no network calls. |
-| **AI security audit (REQ-SEC-004)** | Package **passes** the latest AI security audit, recorded in the Nowo monorepo `BUNDLES_SECURITY_ANALYSIS.md` (see [AI security audit](#ai-security-audit)). Do not release on a failing or missing grade; re-run the audit when the release adds attack surface. |
+| **AI security audit (REQ-SEC-004)** | Package **passes** the latest AI security audit: grade **Pass (good)** / risk **Low** (2026-10-27), recorded in the Nowo monorepo `BUNDLES_SECURITY_ANALYSIS.md` Appendix AJ (see [AI security audit](#ai-security-audit)). Do not release on a failing or missing grade; re-run the audit when the release adds attack surface. |
 
 Record confirmation in the release PR or tag notes.
 
@@ -143,8 +152,10 @@ make release-check
 
 | Field | Value |
 | ----- | ----- |
-| Latest recorded audit | 2026-07-29 |
+| Latest recorded audit | 2026-10-27 (re-audit of `main` `8e9e6d0`, v2.6.0 + PR #32) |
 | Grade | **Pass (good)** |
 | Risk | Low |
-| Record | `BUNDLES_SECURITY_ANALYSIS.md` (Nowo bundles monorepo), REQ-SEC-004 table |
-| Pending | Re-audit requested: the 2026-07-29 record predates the 2.3.2 `always_empty` fix, the 2.4 CSP nonce / `javascript` modes (inline, Stimulus, none) and the 2.6 `form_widget_simple` rendering. Update this table with the new date and grade once it is recorded. |
+| Method | Claude Code static security review (`src/`, widget Twig, JavaScript, Stimulus controller, Flex recipes, docs) |
+| Findings | **L1** revealed password not re-masked on submit / page unload — **Fixed in 2.6.1**. **L2** per-field `stimulus_controller` not validated against the identifier pattern — **Fixed in 2.6.1**. Info items: I1 `docs/SECURITY.md` accuracy (fixed in 2.6.1), I4 escaping regression test for labels and class options (added in 2.6.1); the remaining Info items need no code change (see Appendix AJ). |
+| Residuals | The host sets the right `autocomplete` and keeps `always_empty: true`; the host provides the CSP nonce and does not HTTP-cache pages carrying it; lock the UX icons in production (`ux:icons:lock`). |
+| Record | `BUNDLES_SECURITY_ANALYSIS.md` (Nowo bundles monorepo), Appendix AJ |

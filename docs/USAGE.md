@@ -45,8 +45,17 @@ $builder->add('password', PasswordType::class, [
     'hidden_label' => 'Hide',
     'button_classes' => ['input-group-text', 'cursor-pointer'],
     'toggle_container_classes' => ['form-password-toggle'],
+    // Recommended: tell password managers what the field is.
+    'attr' => ['autocomplete' => 'current-password'], // 'new-password' on registration / change forms
 ]);
 ```
+
+A revealed password is masked again automatically (input back to `type="password"`, "show" label restored) when its
+form is submitted and on `pagehide`, in both the web component script and the Stimulus controller. Scripts can also call
+`window.NowoPasswordToggle.conceal(host)` / `window.NowoPasswordToggle.concealAll()`.
+
+`stimulus_controller` (bundle config or per field) must be a lowercase Stimulus identifier such as `nowo-password-toggle`
+or `app--password-toggle`; anything else throws `InvalidOptionsException`.
 
 ## Disabling the toggle
 
