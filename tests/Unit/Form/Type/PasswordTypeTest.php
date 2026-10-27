@@ -6,6 +6,7 @@ namespace Nowo\PasswordToggleBundle\Tests\Form\Type;
 
 use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
@@ -383,6 +384,39 @@ final class PasswordTypeTest extends TestCase
 
         $this->expectException(InvalidOptionsException::class);
         $resolver->resolve(['javascript' => 'inline']);
+    }
+
+    public function testStimulusControllerOptionAcceptsValidIdentifiers(): void
+    {
+        $resolver = new OptionsResolver();
+        $this->formType->configureOptions($resolver);
+
+        foreach (['nowo-password-toggle', 'pw', 'my_app--password-toggle', '0toggle'] as $identifier) {
+            $this->assertSame($identifier, $resolver->resolve(['stimulus_controller' => $identifier])['stimulus_controller']);
+        }
+    }
+
+    /**
+     * @return iterable<string, array{string}>
+     */
+    public static function invalidStimulusIdentifierProvider(): iterable
+    {
+        yield 'empty' => [''];
+        yield 'uppercase' => ['PasswordToggle'];
+        yield 'quote' => ['x" onclick="alert(1)'];
+        yield 'markup' => ['x><script>'];
+        yield 'space' => ['a b'];
+        yield 'leading dash' => ['-toggle'];
+    }
+
+    #[DataProvider('invalidStimulusIdentifierProvider')]
+    public function testStimulusControllerOptionRejectsInvalidIdentifiers(string $identifier): void
+    {
+        $resolver = new OptionsResolver();
+        $this->formType->configureOptions($resolver);
+
+        $this->expectException(InvalidOptionsException::class);
+        $resolver->resolve(['stimulus_controller' => $identifier]);
     }
 
     public function testBuildViewPassesJavascriptAndNonceVars(): void
