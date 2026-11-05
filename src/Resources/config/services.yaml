@@ -13,6 +13,7 @@ services:
   Nowo\PasswordToggleBundle\Form\Type\PasswordType:
     arguments:
       $defaults: '%nowo_password_toggle.defaults%'
+      $translator: '@?translator'
 
   Nowo\PasswordToggleBundle\Form\Type\:
     resource: '../../Form/Type/*'

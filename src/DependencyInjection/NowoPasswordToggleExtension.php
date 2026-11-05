@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Nowo\PasswordToggleBundle\DependencyInjection;
 
 use Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber;
+use Nowo\PasswordToggleBundle\Form\Extension\CorePasswordTypeExtension;
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use Symfony\Component\Asset\Package;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -55,6 +57,14 @@ final class NowoPasswordToggleExtension extends Extension implements PrependExte
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+
+        if ($config['extend_core_password_type'] === true) {
+            $container->register(CorePasswordTypeExtension::class, CorePasswordTypeExtension::class)
+                ->setArgument('$defaults', '%nowo_password_toggle.defaults%')
+                ->setArgument('$iconSupportChecker', new Reference(IconSupportChecker::class))
+                ->setArgument('$translator', new Reference('translator', ContainerInterface::NULL_ON_INVALID_REFERENCE))
+                ->addTag('form.type_extension');
+        }
 
         if ($container->hasDefinition(IconSupportWarningSubscriber::class) && $container->hasExtension('monolog')) {
             $container->getDefinition(IconSupportWarningSubscriber::class)

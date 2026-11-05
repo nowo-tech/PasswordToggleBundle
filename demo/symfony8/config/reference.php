@@ -823,6 +823,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     javascript?: "web_component"|"stimulus"|"none"|Param, // How the toggle behaviour is attached (all CSP-safe, no inline handlers): "web_component" = widget emits one <script src> for nowo-password-toggle.js (with the CSP nonce); "stimulus" = no script tag, renders data-controller/data-action for the shipped Stimulus controller; "none" = no script tag, the host loads nowo-password-toggle.js itself. // Default: "web_component"
  *     stimulus_controller?: scalar|Param|null, // Stimulus controller identifier used when javascript is "stimulus". // Default: "nowo-password-toggle"
  *     csp_nonce_attribute?: scalar|Param|null, // Request attribute holding the CSP nonce; added as nonce="..." to the <script> the widget emits. Empty string disables. // Default: "csp_nonce"
+ *     extend_core_password_type?: bool|Param, // 2.7: also give Symfony's own PasswordType (and RepeatedType of it) the toggle, through a form type extension. Off by default (BC); a field opts out with toggle: false. // Default: false
+ *     translation_domain?: scalar|Param|null, // 2.7: translation domain of visible_label / hidden_label (null = printed as is). The bundle ships "NowoPasswordToggleBundle" (keys show / hide and Show / Hide, 7 locales). // Default: null
  *     invalid_message?: scalar|Param|null, // Invalid message (default) // Default: "The password is invalid."
  * }
  * @psalm-type NowoHotReloadConfig = array{

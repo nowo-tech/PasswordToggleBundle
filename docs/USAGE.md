@@ -6,6 +6,8 @@
 - [Basic usage](#basic-usage)
 - [With options](#with-options)
 - [Disabling the toggle](#disabling-the-toggle)
+- [Every password input (Symfony's PasswordType)](#every-password-input-symfonys-passwordtype)
+- [Translated labels](#translated-labels)
 - [Default icons (UX Icons)](#default-icons-ux-icons)
 - [Styling](#styling)
 - [Content Security Policy (CSP)](#content-security-policy-csp)
@@ -71,6 +73,50 @@ $builder->add('password', PasswordType::class, [
 ```
 
 When `toggle` is `false`, the field renders as a standard password input, compatible with any styling or JavaScript framework.
+
+## Every password input (Symfony's PasswordType)
+
+Since **2.7**. Forms built by other bundles (and `RepeatedType` of passwords) use Symfony's own `PasswordType`, which
+renders a bare `type="password"`. Turn the form type extension on to give every one of them the toggle:
+
+```yaml
+# config/packages/nowo_password_toggle.yaml
+nowo_password_toggle:
+    extend_core_password_type: true
+```
+
+`CorePasswordTypeExtension` inserts the `toggle_password` block prefix right after `password` (so a host
+`_<field>_widget` block still wins) and fills the widget variables from this configuration. Symfony's type gains the
+options `toggle` (default from the config), `visible_label` and `hidden_label`; Symfony's own `always_empty` keeps
+working. Opt a field out with `'toggle' => false`:
+
+```php
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+
+$builder
+    ->add('current', PasswordType::class)                                 // toggle
+    ->add('new', RepeatedType::class, ['type' => PasswordType::class])    // toggle on both fields
+    ->add('pin', PasswordType::class, ['toggle' => false]);               // bare input
+```
+
+The demo shows it at `/core-password`.
+
+## Translated labels
+
+Since **2.7**, `translation_domain` makes `visible_label` / `hidden_label` translation keys (bundle type and Symfony's
+type). The bundle ships the domain `NowoPasswordToggleBundle` in en, es, de, fr, it, nl and pt with `Show` / `Hide`
+(the default labels) and `show` / `hide` ("Show password" / "Hide password"):
+
+```yaml
+nowo_password_toggle:
+    translation_domain: NowoPasswordToggleBundle
+    visible_label: show        # optional: the long labels
+    hidden_label: hide
+```
+
+Your own domain works too (e.g. `translation_domain: messages` with `visible_label: password_toggle.show`). Without
+`translation_domain` (default) the labels are printed as is.
 
 ## Default icons (UX Icons)
 

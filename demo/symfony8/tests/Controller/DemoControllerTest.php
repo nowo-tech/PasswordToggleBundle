@@ -98,5 +98,21 @@ final class DemoControllerTest extends WebTestCase
         $this->assertSelectorExists('button[type="submit"]');
         $this->assertSelectorTextContains('button[type="submit"]', 'Submit');
     }
-}
 
+    /**
+     * 2.7: extend_core_password_type gives Symfony's PasswordType (and a RepeatedType of it) the toggle.
+     */
+    public function testCorePasswordTypeGetsTheToggle(): void
+    {
+        $client  = static::createClient();
+        $crawler = $client->request('GET', '/core-password');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('nowo-password-toggle input[name="form[current]"][type="password"]');
+        $this->assertSelectorExists('nowo-password-toggle input[name="form[new][first]"][type="password"]');
+        $this->assertSelectorExists('nowo-password-toggle input[name="form[new][second]"][type="password"]');
+        $this->assertSelectorExists('input[name="form[pin]"][type="password"]');
+        $this->assertSelectorNotExists('nowo-password-toggle input[name="form[pin]"]');
+        $this->assertCount(3, $crawler->filter('nowo-password-toggle'));
+    }
+}

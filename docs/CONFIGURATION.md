@@ -31,6 +31,8 @@ When installed via Symfony Flex, a default file is created at `config/packages/n
 | `javascript` | `string` | `'web_component'` | How behaviour is attached (all CSP-safe, no inline handlers): `web_component` = widget emits one `<script src>` per request for `nowo-password-toggle.js` carrying the CSP nonce; `stimulus` = no `<script>`, renders `data-controller` / `data-action` for the shipped Stimulus controller; `none` = no `<script>`, load the JS yourself. |
 | `stimulus_controller` | `string` | `'nowo-password-toggle'` | Stimulus identifier used when `javascript: stimulus`. |
 | `csp_nonce_attribute` | `string\|null` | `'csp_nonce'` | Request attribute holding the CSP nonce; added as `nonce="…"` to the emitted `<script>`. `''`/`null` disables. |
+| `extend_core_password_type` | `bool` | `false` | (2.7) Also give Symfony's own `Symfony\Component\Form\Extension\Core\Type\PasswordType` the toggle (form type extension `CorePasswordTypeExtension`): every password input of the application, including `RepeatedType` children and other bundles' forms, renders through `toggle_password_widget` with these defaults. Adds the options `toggle`, `visible_label`, `hidden_label` to Symfony's type. Off by default (BC). |
+| `translation_domain` | `string\|null` | `null` | (2.7) Translation domain of `visible_label` / `hidden_label` (both types). `null` prints them as is. The bundle ships `NowoPasswordToggleBundle` (en, es, de, fr, it, nl, pt) with the keys `show` / `hide` (long: "Show password") and `Show` / `Hide` (the default labels). |
 
 ## Example
 

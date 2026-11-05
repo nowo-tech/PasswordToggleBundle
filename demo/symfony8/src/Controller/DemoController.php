@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType as CorePasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,5 +89,51 @@ class DemoController extends AbstractController
             'data'      => $data,
         ]);
     }
-}
 
+    /**
+     * 2.7: Symfony's own PasswordType (alone and in a RepeatedType) gets the toggle through
+     * `nowo_password_toggle.extend_core_password_type: true` (config/packages/nowo_password_toggle.yaml);
+     * `toggle: false` opts a field out.
+     */
+    #[Route('/core-password', name: 'demo_core_password')]
+    public function corePassword(Request $request): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('username', TextType::class, [
+                'label'    => 'Username',
+                'row_attr' => ['class' => 'mb-3'],
+                'attr'     => ['class' => 'form-control'],
+            ])
+            ->add('current', CorePasswordType::class, [
+                'label'    => 'Current password (Symfony PasswordType)',
+                'row_attr' => ['class' => 'mb-3'],
+                'attr'     => ['class' => 'form-control'],
+            ])
+            ->add('new', RepeatedType::class, [
+                'type'           => CorePasswordType::class,
+                'first_options'  => ['label' => 'New password (RepeatedType)', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
+                'second_options' => ['label' => 'Repeat it', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
+            ])
+            ->add('pin', CorePasswordType::class, [
+                'label'    => 'PIN (toggle: false, opted out)',
+                'toggle'   => false,
+                'row_attr' => ['class' => 'mb-3'],
+                'attr'     => ['class' => 'form-control'],
+            ])
+            ->add('submit', SubmitType::class, [
+                'label'    => 'Submit',
+                'row_attr' => ['class' => 'd-grid'],
+                'attr'     => ['class' => 'btn btn-primary'],
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+        $submitted = $form->isSubmitted() && $form->isValid();
+
+        return $this->render('demo/form.html.twig', [
+            'form'      => $form->createView(),
+            'submitted' => $submitted,
+            'data'      => $submitted ? $form->getData() : null,
+        ]);
+    }
+}
