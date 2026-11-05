@@ -6,14 +6,20 @@ namespace Nowo\PasswordToggleBundle\Tests\DependencyInjection;
 
 use Nowo\PasswordToggleBundle\DependencyInjection\NowoPasswordToggleExtension;
 use Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber;
+use Nowo\PasswordToggleBundle\Form\Extension\CorePasswordTypeExtension;
 use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\Yaml\Yaml;
+
+use function dirname;
 
 final class MonologExtensionStub extends Extension
 {
@@ -52,6 +58,45 @@ final class NowoPasswordToggleExtensionTest extends TestCase
     protected function setUp(): void
     {
         $this->extension = new NowoPasswordToggleExtension();
+    }
+
+    public function testCorePasswordTypeExtensionIsOptIn(): void
+    {
+        $container = new ContainerBuilder();
+        $this->extension->load([], $container);
+        $this->assertFalse($container->hasDefinition(CorePasswordTypeExtension::class));
+        $defaults = $container->getParameter('nowo_password_toggle.defaults');
+        $this->assertIsArray($defaults);
+        $this->assertFalse($defaults['extend_core_password_type']);
+        $this->assertNull($defaults['translation_domain']);
+
+        $container = new ContainerBuilder();
+        $this->extension->load([['extend_core_password_type' => true, 'translation_domain' => 'NowoPasswordToggleBundle']], $container);
+        $definition = $container->getDefinition(CorePasswordTypeExtension::class);
+        $this->assertTrue($definition->hasTag('form.type_extension'));
+        $this->assertSame('%nowo_password_toggle.defaults%', $definition->getArgument('$defaults'));
+        $this->assertEquals(new Reference('translator', ContainerInterface::NULL_ON_INVALID_REFERENCE), $definition->getArgument('$translator'));
+        $defaults = $container->getParameter('nowo_password_toggle.defaults');
+        $this->assertIsArray($defaults);
+        $this->assertSame('NowoPasswordToggleBundle', $defaults['translation_domain']);
+    }
+
+    public function testTranslationDomainMustBeANonEmptyString(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->extension->load([['translation_domain' => ' ']], new ContainerBuilder());
+    }
+
+    public function testShippedTranslationsHaveTheSameKeysInEveryLocale(): void
+    {
+        $dir   = dirname(__DIR__, 3) . '/src/Resources/translations';
+        $files = glob($dir . '/NowoPasswordToggleBundle.*.yaml') ?: [];
+        $this->assertCount(7, $files);
+        foreach ($files as $file) {
+            $messages = Yaml::parseFile($file);
+            $this->assertIsArray($messages);
+            $this->assertSame(['show', 'hide', 'Show', 'Hide'], array_keys($messages), basename($file));
+        }
     }
 
     public function testGetAlias(): void

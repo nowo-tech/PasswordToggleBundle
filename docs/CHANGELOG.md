@@ -49,6 +49,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Every password input (opt-in `extend_core_password_type`, default `false`).** Form type extension
+  `Form\Extension\CorePasswordTypeExtension` on Symfony's own `PasswordType`: in `finishView` it inserts the
+  `toggle_password` block prefix after `password` and fills the widget variables from the configuration, so every
+  `PasswordType` of the application (including `RepeatedType` children and other bundles' forms) renders the toggle.
+  Adds the options `toggle` (opt-out per field), `visible_label`, `hidden_label` to Symfony's type.
+- **Translated labels (`translation_domain`, default `null`).** When set, `visible_label` / `hidden_label` are
+  translated in that domain (both types; `Form\ToggleLabels`). The bundle ships `NowoPasswordToggleBundle` in en, es,
+  de, fr, it, nl, pt (`Show` / `Hide`, `show` / `hide`). `PasswordType` takes an optional translator (3rd argument).
+- Demo page `/core-password` (Symfony `PasswordType`, a `RepeatedType` of it, an opted-out field) and its test.
+
 ## [2.6.1] - 2026-10-27
 
 SEC-004 hardening: re-mask revealed password on submit/pagehide, validate per-field stimulus_controller, JS tests See [UPGRADING](UPGRADING.md#to-261).

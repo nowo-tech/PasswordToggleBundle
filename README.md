@@ -28,6 +28,8 @@ It is **100% compatible** with FrankenPHP **worker** mode when the host runs wit
 ## Features
 
 - ✅ Password form type with toggle visibility
+- ✅ **Every password input** (opt-in, 2.7): `extend_core_password_type: true` gives Symfony's own `PasswordType` (also inside `RepeatedType` and other bundles' forms) the toggle
+- ✅ Translated show / hide labels (2.7, `translation_domain: NowoPasswordToggleBundle`, 7 locales)
 - ✅ Customizable icons and labels
 - ✅ **Web Component** `<nowo-password-toggle>` — CSP-safe script (no inline `onclick`); event delegation stays compatible with Live Components
 - ✅ **Strict CSP ready** — the widget's `<script>` carries the nonce from request attribute `csp_nonce`; optional **Stimulus** mode (`javascript: stimulus`) or `javascript: none` to load the JS yourself. See [docs/USAGE.md#content-security-policy-csp](docs/USAGE.md#content-security-policy-csp)

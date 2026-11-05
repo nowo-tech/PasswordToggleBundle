@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Nowo\PasswordToggleBundle\Form\Type;
 
+use Nowo\PasswordToggleBundle\Form\ToggleLabels;
 use Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 use function array_key_exists;
+use function is_string;
 
 /**
  * Form type for password fields with toggle visibility functionality.
@@ -68,6 +71,7 @@ final class PasswordType extends AbstractType
          */
         private readonly array $defaults = [],
         ?IconSupportChecker $iconSupportChecker = null,
+        private readonly ?TranslatorInterface $translator = null,
     ) {
         $this->iconSupportChecker = $iconSupportChecker ?? new IconSupportChecker();
     }
@@ -154,12 +158,14 @@ final class PasswordType extends AbstractType
         $view->vars['button_classes']           = $options['button_classes'];
         $view->vars['visible_icon']             = $options['visible_icon'];
         $view->vars['hidden_icon']              = $options['hidden_icon'];
-        $view->vars['visible_label']            = $options['visible_label'];
-        $view->vars['hidden_label']             = $options['hidden_label'];
-        $view->vars['icons_available']          = $this->iconSupportChecker->isIconRenderingSupported();
-        $view->vars['javascript']               = $options['javascript'] ?? self::JAVASCRIPT_WEB_COMPONENT;
-        $view->vars['stimulus_controller']      = $options['stimulus_controller'] ?? 'nowo-password-toggle';
-        $view->vars['csp_nonce_attribute']      = array_key_exists('csp_nonce_attribute', $options) ? ($options['csp_nonce_attribute'] ?? '') : 'csp_nonce';
+        // 2.7: translated in nowo_password_toggle.translation_domain when set.
+        $domain                            = is_string($this->defaults['translation_domain'] ?? null) ? $this->defaults['translation_domain'] : null;
+        $view->vars['visible_label']       = ToggleLabels::label($options['visible_label'], $domain, $this->translator);
+        $view->vars['hidden_label']        = ToggleLabels::label($options['hidden_label'], $domain, $this->translator);
+        $view->vars['icons_available']     = $this->iconSupportChecker->isIconRenderingSupported();
+        $view->vars['javascript']          = $options['javascript'] ?? self::JAVASCRIPT_WEB_COMPONENT;
+        $view->vars['stimulus_controller'] = $options['stimulus_controller'] ?? 'nowo-password-toggle';
+        $view->vars['csp_nonce_attribute'] = array_key_exists('csp_nonce_attribute', $options) ? ($options['csp_nonce_attribute'] ?? '') : 'csp_nonce';
     }
 
     /**

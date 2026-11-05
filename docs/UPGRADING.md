@@ -47,6 +47,21 @@
 
 ## Unreleased
 
+**No change unless you opt in.** Both new options default to the previous behaviour; the bundle's `PasswordType`
+renders exactly as before (its constructor gains an optional 3rd argument, a translator).
+
+- **`extend_core_password_type: true`** changes every form that uses Symfony's
+  `Symfony\Component\Form\Extension\Core\Type\PasswordType` (yours, `RepeatedType` children, other bundles):
+  their input is wrapped in `<nowo-password-toggle>` with the toggle button (and, in `javascript: web_component` mode,
+  the bundle script is emitted once per request). Check host form themes that customise those fields: a
+  `_<field>_widget` block still wins; a theme block `password_widget` no longer applies to them (`toggle_password_widget`
+  renders the input through `form_widget_simple`). Fields that must stay bare: `'toggle' => false`. A host extension
+  that did the same (e.g. Beacon's `PasswordToggleEverywhereExtension`) must be removed when you turn this on.
+- **`translation_domain: NowoPasswordToggleBundle`** translates the default `Show` / `Hide` labels (7 locales); set
+  `visible_label: show` / `hidden_label: hide` for "Show password" / "Hide password". Custom labels become translation
+  keys of that domain (untranslated keys print as is).
+- Hosts that pin this bundle (CORE): nothing changes on update; turn the options on deliberately.
+
 ## To 2.6.1
 
 From **2.6.0**:
