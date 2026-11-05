@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Unreleased](#unreleased)
+- [To 2.7.0](#to-270)
 - [To 2.6.1](#to-261)
 - [To 2.6.0](#to-260)
 - [To 2.5.0](#to-250)
@@ -46,6 +47,14 @@
   - [Twig-CS-Fixer (maintainers)](#twig-cs-fixer-maintainers)
 
 ## Unreleased
+
+## To 2.7.0
+
+From **2.6.1**:
+
+```bash
+composer update nowo-tech/password-toggle-bundle
+```
 
 **No change unless you opt in.** Both new options default to the previous behaviour; the bundle's `PasswordType`
 renders exactly as before (its constructor gains an optional 3rd argument, a translator).
