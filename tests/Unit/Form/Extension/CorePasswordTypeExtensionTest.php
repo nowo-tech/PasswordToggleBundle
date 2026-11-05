@@ -46,7 +46,7 @@ final class CorePasswordTypeExtensionTest extends TestCase
 
         self::assertSame(1, substr_count($html, '<nowo-password-toggle'));
         self::assertStringContainsString('type="password"', $html);
-        self::assertStringContainsString('data-nowo-password-toggle-visible-label="Show"', $html);
+        self::assertStringContainsString('toggle-visible-label="Show"', $html);
         self::assertStringContainsString('aria-label="Show"', $html);
     }
 
@@ -112,8 +112,8 @@ final class CorePasswordTypeExtensionTest extends TestCase
         $translator = $this->translator();
         $html       = $this->render($this->factory(['javascript' => 'none', 'translation_domain' => ToggleLabels::DOMAIN], $translator), PasswordType::class);
 
-        self::assertStringContainsString('data-nowo-password-toggle-visible-label="Mostrar"', $html);
-        self::assertStringContainsString('data-nowo-password-toggle-hidden-label="Ocultar"', $html);
+        self::assertStringContainsString('toggle-visible-label="Mostrar"', $html);
+        self::assertStringContainsString('toggle-hidden-label="Ocultar"', $html);
 
         $custom = $this->render($this->factory(['javascript' => 'none', 'translation_domain' => ToggleLabels::DOMAIN], $translator), PasswordType::class, ['visible_label' => 'show', 'hidden_label' => 'hide']);
         self::assertStringContainsString('aria-label="Mostrar contraseña"', $custom);

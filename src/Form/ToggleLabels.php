@@ -24,7 +24,7 @@ final class ToggleLabels
      */
     public static function label(string $label, ?string $domain, ?TranslatorInterface $translator): string
     {
-        if ($translator === null || $domain === null || $domain === '' || $label === '') {
+        if (!$translator instanceof TranslatorInterface || $domain === null || $domain === '' || $label === '') {
             return $label;
         }
 

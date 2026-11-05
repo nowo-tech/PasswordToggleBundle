@@ -112,7 +112,7 @@ class DemoController extends AbstractController
             ->add('new', RepeatedType::class, [
                 'type'           => CorePasswordType::class,
                 'first_options'  => ['label' => 'New password (RepeatedType)', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
-                'second_options' => ['label' => 'Repeat the new password', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
+                'second_options' => ['label' => 'Repeat it', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
             ])
             ->add('pin', CorePasswordType::class, [
                 'label'    => 'PIN (toggle: false, opted out)',
