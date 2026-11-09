@@ -12,6 +12,7 @@
 - [Styling](#styling)
 - [Content Security Policy (CSP)](#content-security-policy-csp)
 - [Overriding bundle templates](#overriding-bundle-templates)
+- [Using it from a DDD / hexagonal application](#using-it-from-a-ddd--hexagonal-application)
 - [See also](#see-also)
 
 ## Screenshots
@@ -222,6 +223,24 @@ twig:
 | `Form/toggle_password_widget.html.twig` | Form widget for the password field with visibility toggle. |
 
 After adding or changing overrides, clear the Twig cache if needed: `php bin/console cache:clear`.
+
+## Using it from a DDD / hexagonal application
+
+The bundle is a **presentation** component only: a form widget that shows or hides the typed password. It has no
+entities, no Doctrine mapping, no events of its own, and it does not hash, validate or store passwords. Your domain
+never depends on it.
+
+- Bind the field to a string property of a form DTO or command (for example `ChangePassword::$newPassword`), not to
+  your `User` entity; hash it in your application service with your own `PasswordHasher` port.
+- To keep even the form classes free of the bundle, use Symfony's own `PasswordType` and set
+  `extend_core_password_type: true`: every `PasswordType` (including `RepeatedType` of passwords and forms from other
+  bundles) gets the toggle, and opting out is `'toggle' => false`.
+- Labels can be translation keys (`translation_domain`); icons, classes and the JS loading mode (`javascript:
+  web_component | stimulus | none`) are configuration only.
+
+Known limitations: the bundle's `Nowo\PasswordToggleBundle\Form\Type\PasswordType` extends `TextType`, not Symfony's
+`PasswordType`, so extensions of Symfony's type (such as `hash_property_path`) do not apply to it; use Symfony's type
+with `extend_core_password_type` when you need them.
 
 ## See also
 
