@@ -11,7 +11,7 @@ const outDir = process.env.SCREENSHOT_DIR
   : resolve(__dirname, '../../../../docs/images/demo');
 
 function useCasePanel(page: import('@playwright/test').Page) {
-  return page.locator('.demo-container').first();
+  return page.locator('[data-testid="demo-case"]').first();
 }
 
 function toggleHost(page: import('@playwright/test').Page) {
