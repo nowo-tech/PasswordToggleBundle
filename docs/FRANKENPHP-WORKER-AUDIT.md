@@ -3,7 +3,7 @@
 | Field | Value |
 |-------|-------|
 | Package | `nowo-tech/password-toggle-bundle` (`symfony-bundle`) |
-| Audited revision | `v2.7.0` (re-checked 2026-11-12; runtime code unchanged since the previous audit) |
+| Audited revision | `v2.7.0` (reviewed again on 2026-11-12 at this version; all shared services are stateless, see the services table) |
 | Audit date | 2026-11-12 (earlier passes kept in the history) |
 | Target runtime | FrankenPHP **worker** with **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel / “Friendly Worker”) |
 | Method | Manual review of every file under `src/` (form type, event subscriber, icon support checker, DI extension, configuration, compiler pass, `services.yaml`, Twig widget, public JS) + PHPStan classic + worker-strict + hardening |
@@ -64,6 +64,8 @@ Worker demos: `demo/symfony8` and `demo/symfony8-php85` default to `FRANKENPHP_M
 | `Nowo\PasswordToggleBundle\Form\Type\PasswordType` (`form.type`) | yes | none (`readonly array $defaults`; `readonly` checker) | ✅ | ✅ |
 | `Nowo\PasswordToggleBundle\IconSupport\IconSupportChecker` | yes | none (`final readonly`; `class_exists` / `interface_exists`) | ✅ | ✅ |
 | `Nowo\PasswordToggleBundle\EventSubscriber\IconSupportWarningSubscriber` | yes | `bool $warned` (log de-duplication only) | ✅ (not reset, warn once per worker) | ✅ (stays `true`, warn once per worker) |
+| `Nowo\PasswordToggleBundle\Form\Extension\CorePasswordTypeExtension` (`form.type_extension`) | yes | none (`readonly` defaults, `readonly` checker, optional `readonly` translator) | ✅ | ✅ |
+| `Nowo\PasswordToggleBundle\Form\ToggleLabels` | not a service | none (`final` class with one pure static method, no static properties) | ✅ | ✅ |
 
 `NowoPasswordToggleExtension`, `Configuration`, and `TwigPathsPass` only run at container compile time. The Twig widget writes only into the current request’s HTML and request attributes (`_nowo_password_toggle_js` for single script include). Frontend JS does not share PHP worker memory.
 
