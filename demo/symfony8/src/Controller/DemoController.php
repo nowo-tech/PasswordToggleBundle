@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Nowo\PasswordToggleBundle\Form\Type\PasswordType;
+use App\Form\CorePasswordDemoType;
+use App\Form\PasswordToggleDemoType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType as CorePasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -38,39 +35,7 @@ class DemoController extends AbstractController
     #[Route('/', name: 'demo_form')]
     public function form(Request $request): Response
     {
-        $form = $this->createFormBuilder()
-            ->add('username', TextType::class, [
-                'label'    => 'Username',
-                'row_attr' => ['class' => 'mb-3'],
-                'attr'     => [
-                    'class'       => 'form-control',
-                    'placeholder' => 'Enter your username',
-                ],
-            ])
-            ->add('password', PasswordType::class, [
-                'label'     => 'Password',
-                'row_attr'  => ['class' => 'mb-3'],
-                'help'      => 'Click the eye icon to toggle password visibility',
-                'help_attr' => ['class' => 'form-text text-muted'],
-                'attr'      => [
-                    'class'       => 'form-control',
-                    'placeholder' => 'Enter your password',
-                ],
-                'toggle'                   => true,
-                'visible_icon'             => 'tabler:eye-off',
-                'hidden_icon'              => 'tabler:eye',
-                'visible_label'            => 'Show password',
-                'hidden_label'             => 'Hide password',
-                'toggle_container_classes' => ['form-password-toggle'],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label'    => 'Submit',
-                'row_attr' => ['class' => 'd-grid'],
-                'attr'     => [
-                    'class' => 'btn btn-primary',
-                ],
-            ])
-            ->getForm();
+        $form = $this->createForm(PasswordToggleDemoType::class);
 
         $form->handleRequest($request);
 
@@ -84,7 +49,7 @@ class DemoController extends AbstractController
         }
 
         return $this->render('demo/form.html.twig', [
-            'form'      => $form->createView(),
+            'form'      => $form,
             'submitted' => $submitted,
             'data'      => $data,
         ]);
@@ -98,40 +63,13 @@ class DemoController extends AbstractController
     #[Route('/core-password', name: 'demo_core_password')]
     public function corePassword(Request $request): Response
     {
-        $form = $this->createFormBuilder()
-            ->add('username', TextType::class, [
-                'label'    => 'Username',
-                'row_attr' => ['class' => 'mb-3'],
-                'attr'     => ['class' => 'form-control'],
-            ])
-            ->add('current', CorePasswordType::class, [
-                'label'    => 'Current password (Symfony PasswordType)',
-                'row_attr' => ['class' => 'mb-3'],
-                'attr'     => ['class' => 'form-control'],
-            ])
-            ->add('new', RepeatedType::class, [
-                'type'           => CorePasswordType::class,
-                'first_options'  => ['label' => 'New password (RepeatedType)', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
-                'second_options' => ['label' => 'Repeat it', 'row_attr' => ['class' => 'mb-3'], 'attr' => ['class' => 'form-control']],
-            ])
-            ->add('pin', CorePasswordType::class, [
-                'label'    => 'PIN (toggle: false, opted out)',
-                'toggle'   => false,
-                'row_attr' => ['class' => 'mb-3'],
-                'attr'     => ['class' => 'form-control'],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label'    => 'Submit',
-                'row_attr' => ['class' => 'd-grid'],
-                'attr'     => ['class' => 'btn btn-primary'],
-            ])
-            ->getForm();
+        $form = $this->createForm(CorePasswordDemoType::class);
 
         $form->handleRequest($request);
         $submitted = $form->isSubmitted() && $form->isValid();
 
         return $this->render('demo/form.html.twig', [
-            'form'      => $form->createView(),
+            'form'      => $form,
             'submitted' => $submitted,
             'data'      => $submitted ? $form->getData() : null,
         ]);

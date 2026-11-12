@@ -1,17 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+{#- REQ-DEMO-014: the demo shell is UiKit's admin layout with UiKit's default theme (nowo-ui.css from the bundle's own
+    asset package, no CSS framework, no CDN). The toggle stylesheet is the PasswordToggleBundle's own asset. -#}
+{% extends '@NowoUiKit/layout/admin.html.twig' %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+{% block nowo_ui_document_title %}{% block title %}Password Toggle Bundle - Demo{% endblock %}{% endblock %}
+
+{% block nowo_ui_styles %}
+    {{ parent() }}
+    {# PasswordToggleBundle: one eye at a time is driven by this stylesheet (without it both icons show). #}
+    <link href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+{% endblock %}
+
+{% block nowo_ui_navigation %}
+    {% set _route = app.request.attributes.get('_route') %}
+    <header class="nowo-ui-header" data-testid="demo-masthead">
+        <a class="nowo-ui-brand" href="{{ path('demo_form') }}">Password Toggle Bundle</a>
+        <nav class="nowo-ui-menu" aria-label="Demos">
+            <a class="nowo-ui-link" href="{{ path('demo_form') }}"{% if _route == 'demo_form' %} aria-current="page"{% endif %}>Toggle field</a>
+            <a class="nowo-ui-link" href="{{ path('demo_core_password') }}"{% if _route == 'demo_core_password' %} aria-current="page"{% endif %}>Symfony PasswordType</a>
+        </nav>
+    </header>
+{% endblock %}
+
+{% block nowo_ui_content %}{% block body %}{% endblock %}{% endblock %}
