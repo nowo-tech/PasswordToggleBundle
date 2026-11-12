@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|-------|
 | Package | `nowo-tech/password-toggle-bundle` (`symfony-bundle`) |
-| Audited revision | `v2.2.1` (post–`v2.2.0` web component) |
-| Audit date | 2026-09-24 |
+| Audited revision | `v2.7.0` (re-checked 2026-11-12; runtime code unchanged since the previous audit) |
+| Audit date | 2026-11-12 (earlier passes kept in the history) |
 | Target runtime | FrankenPHP **worker** with **`FRANKENPHP_RESET_KERNEL=false`** (sticky Kernel / “Friendly Worker”) |
 | Method | Manual review of every file under `src/` (form type, event subscriber, icon support checker, DI extension, configuration, compiler pass, `services.yaml`, Twig widget, public JS) + PHPStan classic + worker-strict + hardening |
 | **Verdict** | ✅ **100% compatible** under Scenario B (`reset_kernel: false`) — no remediations required for sticky Kernel |
@@ -16,6 +16,7 @@
 - [Services reviewed](#services-reviewed)
 - [Findings](#findings)
   - [Info — W-01 — One-time icon warning (Low / informational)](#info--w-01--one-time-icon-warning-low--informational)
+- [Kept-alive kernel test](#kept-alive-kernel-test)
 - [Usage recommendations in worker mode](#usage-recommendations-in-worker-mode)
 - [Re-audit triggers](#re-audit-triggers)
 
@@ -77,6 +78,14 @@ No open findings that block Scenario B.
 - **Action:** install the icon packages or lower the `nowo_password_toggle` Monolog channel in production.
 
 Covered by unit regression `PasswordTypeTest::testSharedInstanceDoesNotLeakOptionsAcrossConsecutiveBuilds`.
+
+## Kept-alive kernel test
+
+The bundle is **safe with kernel reset false**: no shared service keeps request data. `IconSupportWarningSubscriber::$warned` is the only mutable property: a log-once flag with no user data, intentionally kept for the worker lifetime.
+
+`tests/Integration/Worker/WorkerKeptAliveKernelTest::testFormRenderAndSubmitInOneKernelWithoutResetCarriesNoStateAndKeepsMemoryFlat` (REQ-RUNTIME-002) boots ONE kernel (FrameworkBundle, TwigBundle and this bundle, host kernel in `tests/Fixtures/Worker/`) and never calls `services_resetter` or `kernel.reset`. Through `http_kernel` (`handle()` + `terminate()`) it renders (GET) and submits (POST) a host form with a `PasswordType` field 1000 times (2000 requests), alternating two inputs with different options (labels, JavaScript mode web component / Stimulus, CSS classes) and locales (`en` / `es`). Every response must contain only its own labels, classes and script tags (the once-per-request `_nowo_password_toggle_js` request attribute never suppresses the script of a later request), the submitted password is never echoed into the HTML and never appears in the other input's response. Memory growth after a 100-iteration warm-up must stay under 4 MiB.
+
+Rule 7 (host entity manager): the bundle has no persistence and never flushes or clears an entity manager; a host must never clear the default entity manager from a reset hook for this bundle's sake.
 
 ## Usage recommendations in worker mode
 

@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Documentation
 
+- Tests (REQ-RUNTIME-002): `WorkerKeptAliveKernelTest` renders and submits a host form 1000 times in ONE kernel without any reset, alternating two inputs and locales, and asserts no state carries over and flat memory. `docs/FRANKENPHP-WORKER-AUDIT.md` refreshed (version, test, reset-false statement, rule 7).
 - USAGE: new section "Using it from a DDD / hexagonal application" (where the bundle sits in a hexagonal host, the ports, events and DTOs to build an anti-corruption layer on, and the known limitations).
 
 ## [2.7.0] - 2026-11-05
