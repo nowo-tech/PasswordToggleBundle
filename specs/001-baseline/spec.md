@@ -101,6 +101,13 @@ As an integrator, I set bundle-wide defaults in YAML and override per field in f
 
 - **FR-FORM-001**: `PasswordType` MUST extend `TextType`, set `type=password` by default, expose toggle/icon/label/class options, inject `IconSupportChecker`, and pass vars to Twig widget block.
 
+- **FR-FORM-002** (2.7): with `extend_core_password_type: true`, `CorePasswordTypeExtension` MUST add the toggle to Symfony's core `PasswordType` in `finishView()` only (block prefix, toggle vars, labels, widget defaults), never touching `value`, `always_empty` or `attr`; the `toggle` option (default `true`) turns it off per field. Not registered when the flag is `false` (default).
+
+### Translations
+
+- **FR-I18N-001** (2.7): `ToggleLabels::label()` MUST return the label as is unless a translator and a non-empty `translation_domain` are set, then `trans($label, [], $domain)` with no parameters. Applies to both form types.
+- **FR-I18N-002** (2.7): the bundle MUST ship the domain `NowoPasswordToggleBundle` (`ToggleLabels::DOMAIN`) in en, de, es, fr, it, nl and pt with identical keys (`Show`, `Hide`, `show`, `hide`); hosts override keys in `translations/NowoPasswordToggleBundle.<locale>.yaml`.
+
 ### Icons & warnings
 
 - **FR-ICON-001**: `IconSupportChecker` MUST detect whether Symfony UX Icons Twig functions are callable.

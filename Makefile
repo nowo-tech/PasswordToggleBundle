@@ -8,7 +8,7 @@ COMPOSE_BIN := $(shell docker compose version >/dev/null 2>&1 && echo "docker co
 COMPOSE     := $(COMPOSE_BIN) -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
-.PHONY: check-open-prs check-no-raw-html-form help up down down-dev build shell install test test-coverage coverage-php-percent test-js cs-check cs-fix rector rector-dry phpstan igor qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra
+.PHONY: check-open-prs check-no-raw-html-form help up down down-dev build shell install test test-coverage coverage-php-percent test-js cs-check cs-fix rector rector-dry phpstan igor qa release-check release-check-demos demo-smoke composer-sync clean update validate assets setup-hooks check-no-cursor-coauthor strip-cursor-coauthor-from-history check-twig-extra validate-translations
 
 # Default target
 help:
@@ -32,8 +32,9 @@ help:
 	@echo "  rector-dry    Run Rector in dry-run mode"
 	@echo "  phpstan       Run PHPStan static analysis"
 	@echo "  igor          Run Igor worker-state audit (REQ-CS-008)"
+	@echo "  validate-translations  Translation YAML syntax + key parity (7 locales)"
 	@echo "  qa            Run all QA checks (cs-check + test)"
-	@echo "  release-check Pre-release: cs-fix, cs-check, rector-dry, phpstan, igor, test-coverage, demo healthchecks"
+	@echo "  release-check Pre-release: cs-fix, cs-check, rector-dry, phpstan, igor, validate-translations, test-coverage, demo healthchecks"
 	@echo "  demo-smoke    REQ-TEST-011: boot demo + HTTP 200 (make -C demo demo-smoke)"
 	@echo "  composer-sync Validate composer.json and align composer.lock (no install)"
 	@echo "  clean         Remove vendor and cache"
@@ -136,7 +137,7 @@ check-twig-extra:
 # Run Igor worker-state audit (REQ-CS-008)
 igor: ensure-up
 	$(COMPOSE) exec -T php composer igor
-release-check: ensure-up check-no-cursor-coauthor check-open-prs check-twig-extra check-no-raw-html-form composer-sync cs-fix cs-check rector-dry phpstan igor test-coverage test-js release-check-demos
+release-check: ensure-up check-no-cursor-coauthor check-open-prs check-twig-extra check-no-raw-html-form composer-sync cs-fix cs-check rector-dry phpstan igor validate-translations test-coverage test-js release-check-demos
 
 release-check-demos:
 	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-check; else echo "No demo/Makefile — skip release-check-demos"; fi
@@ -162,6 +163,10 @@ update: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer update
 
 # Validate composer.json
+# REQ-MAKE-004 / REQ-I18N-002: YAML syntax + key parity of the 7 required locales
+validate-translations: ensure-up
+	$(COMPOSE) exec -T $(SERVICE_PHP) php .scripts/validate-translations.php
+
 validate: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer validate --strict
 
