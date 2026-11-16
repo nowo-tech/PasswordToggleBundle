@@ -119,6 +119,16 @@ nowo_password_toggle:
 Your own domain works too (e.g. `translation_domain: messages` with `visible_label: password_toggle.show`). Without
 `translation_domain` (default) the labels are printed as is.
 
+**Overriding the bundle translations.** Application catalogues win over the bundle's, and missing keys fall back to the
+bundle. To change a label, create `translations/NowoPasswordToggleBundle.<locale>.yaml` in your app with only the keys
+you want to change, then clear the cache:
+
+```yaml
+# translations/NowoPasswordToggleBundle.es.yaml
+show: 'Ver contraseña'
+hide: 'Ocultar contraseña'
+```
+
 ## Default icons (UX Icons)
 
 The bundled widget `toggle_password_widget.html.twig` renders icons with `ux_icon()` (`tabler:eye-off` / `tabler:eye` by default). You need:

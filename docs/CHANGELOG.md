@@ -54,8 +54,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Demo uses the UiKit base style and FormKit forms (REQ-DEMO-014/015)
 - docs: demo screenshots regenerated on the UiKit base style
+- `make validate-translations` (YAML syntax + key parity of the 7 `NowoPasswordToggleBundle` catalogues), also run by `make release-check` (REQ-MAKE-004)
 
 ### Documentation
+
+- USAGE: how to override the bundle's `NowoPasswordToggleBundle` translations from the app (REQ-I18N-001)
+- Spec Kit: `specs/001-baseline` maps the 2.7 sources (`CorePasswordTypeExtension`, `ToggleLabels`, translation catalogues; FR-FORM-002, FR-I18N-001/002)
 
 - Tests (REQ-RUNTIME-002): `WorkerKeptAliveKernelTest` renders and submits a host form 1000 times in ONE kernel without any reset, alternating two inputs and locales, and asserts no state carries over and flat memory. `docs/FRANKENPHP-WORKER-AUDIT.md` refreshed (version, test, reset-false statement, rule 7).
 - USAGE: new section "Using it from a DDD / hexagonal application" (where the bundle sits in a hexagonal host, the ports, events and DTOs to build an anti-corruption layer on, and the known limitations).
