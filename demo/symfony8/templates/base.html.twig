@@ -1,25 +1,21 @@
-{#- REQ-DEMO-014: the demo shell is UiKit's admin layout with UiKit's default theme (nowo-ui.css from the bundle's own
-    asset package, no CSS framework, no CDN). The toggle stylesheet is the PasswordToggleBundle's own asset. -#}
-{% extends '@NowoUiKit/layout/admin.html.twig' %}
-
+{#- REQ-DEMO-014: the demo runs inside UiKit's shared demo platform shell. This file only declares the demo. The toggle
+    stylesheet is the PasswordToggleBundle's own asset. -#}
+{% extends '@NowoUiKit/demo_platform/layout.html.twig' %}
+{% set nowo_ui_demo_platform = {
+    bundle: 'Password Toggle',
+    home_route: 'demo_form',
+    repository: 'https://github.com/nowo-tech/PasswordToggleBundle',
+    translation_domain: false,
+    nav: [
+        {label: 'Toggle field', route: 'demo_form', section: 'Demos'},
+        {label: 'Symfony PasswordType', route: 'demo_core_password', section: 'Demos'},
+    ],
+} %}
 {% block nowo_ui_document_title %}{% block title %}Password Toggle Bundle - Demo{% endblock %}{% endblock %}
 
 {% block nowo_ui_styles %}
     {{ parent() }}
     {# PasswordToggleBundle: one eye at a time is driven by this stylesheet (without it both icons show). #}
-    <link href="{{ asset('css/toggle_password.css', 'nowo_password_toggle') }}" rel="stylesheet">
+    <link href="{{ asset('/bundles/nowopasswordtoggle/css/toggle_password.css') }}" rel="stylesheet">
     {% block stylesheets %}{% endblock %}
 {% endblock %}
-
-{% block nowo_ui_navigation %}
-    {% set _route = app.request.attributes.get('_route') %}
-    <header class="nowo-ui-header" data-testid="demo-masthead">
-        <a class="nowo-ui-brand" href="{{ path('demo_form') }}">Password Toggle Bundle</a>
-        <nav class="nowo-ui-menu" aria-label="Demos">
-            <a class="nowo-ui-link" href="{{ path('demo_form') }}"{% if _route == 'demo_form' %} aria-current="page"{% endif %}>Toggle field</a>
-            <a class="nowo-ui-link" href="{{ path('demo_core_password') }}"{% if _route == 'demo_core_password' %} aria-current="page"{% endif %}>Symfony PasswordType</a>
-        </nav>
-    </header>
-{% endblock %}
-
-{% block nowo_ui_content %}{% block body %}{% endblock %}{% endblock %}
