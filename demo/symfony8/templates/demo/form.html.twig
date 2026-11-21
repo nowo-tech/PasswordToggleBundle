@@ -1,32 +1,33 @@
 {% extends 'base.html.twig' %}
 
+{% set _core = app.request.attributes.get('_route') == 'demo_core_password' %}
+
 {% block nowo_ui_page_header %}
     {{ include(nowo_ui_partial('page_header'), {
         title: 'Password Toggle Bundle',
-        intro: 'Symfony bundle demo: a password field with a show/hide toggle.',
+        intro: _core ? "Symfony's own PasswordType gets the toggle through extend_core_password_type; toggle: false opts a field out." : 'Symfony bundle demo: a password field with a show/hide toggle.',
     }) }}
 {% endblock %}
 
-{% block body %}
-    {% if submitted %}
-        <div class="nowo-ui-flash nowo-ui-flash--success" role="alert">
-            <strong>Form submitted successfully!</strong>
-            Username: {{ data.username }}. Password: ******** (hidden for security). The password toggle functionality is working correctly!
-        </div>
-    {% endif %}
+{% block nowo_ui_flashes %}
+    {{ include('@NowoUiKit/demo_platform/_flashes.html.twig', {flash_messages: submitted ? {success: ['Form submitted successfully! Username: ' ~ data.username ~ '. Password: ******** (hidden for security). The password toggle functionality is working correctly!']} : null}) }}
+{% endblock %}
 
-    <section class="nowo-ui-card" data-testid="demo-case">
-        <div class="nowo-ui-card__body">
-            {{ form_start(form, { attr: { novalidate: 'novalidate' } }) }}
+{% block body %}
+    {% embed '@NowoUiKit/demo_platform/_section.html.twig' with {title: _core ? 'Symfony PasswordType' : 'Toggle field', kind: 'form', testid: 'demo-case'} %}
+        {% block section_body %}
+            {{ form_start(form, { attr: { id: 'demo-form', class: 'nowo-ui-form', novalidate: 'novalidate' } }) }}
                 {# REQ-TWIG-003: child loop #}
                 {% for child in form %}
-                    {% if not child.rendered %}
+                    {% if not child.rendered and child.vars.name != 'submit' %}
                         {{ form_row(child) }}
                     {% endif %}
                 {% endfor %}
+                {% do form.submit.setRendered %}
             {{ form_end(form) }}
-        </div>
-    </section>
-
-    <p class="nowo-ui-muted">Powered by <a class="nowo-ui-link" href="https://github.com/nowo-tech/PasswordToggleBundle" target="_blank" rel="noopener">Password Toggle Bundle</a></p>
+        {% endblock %}
+        {% block section_footer %}
+            <button type="submit" form="demo-form" class="nowo-ui-btn nowo-ui-btn--primary">{{ form.submit.vars.label }}</button>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

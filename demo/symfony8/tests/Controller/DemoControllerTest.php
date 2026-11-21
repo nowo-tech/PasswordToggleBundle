@@ -37,7 +37,7 @@ final class DemoControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('input[name="form[username]"]');
+        $this->assertSelectorExists('input[name="password_toggle_demo[username]"]');
     }
 
     /**
@@ -49,7 +49,7 @@ final class DemoControllerTest extends WebTestCase
         $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('input[name="form[password]"][type="password"]');
+        $this->assertSelectorExists('input[name="password_toggle_demo[password]"][type="password"]');
         $this->assertSelectorExists('.form-password-toggle');
         $this->assertSelectorExists('.input-group-text.cursor-pointer');
     }
@@ -63,14 +63,14 @@ final class DemoControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/');
 
         $form = $crawler->selectButton('Submit')->form([
-            'form[username]' => 'testuser',
-            'form[password]' => 'testpassword123',
+            'password_toggle_demo[username]' => 'testuser',
+            'password_toggle_demo[password]' => 'testpassword123',
         ]);
 
         $client->submit($form);
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('.alert-success', 'Form Submitted Successfully');
+        $this->assertSelectorTextContains('.nowo-ui-flash--success', 'Form submitted successfully');
     }
 
     /**
@@ -108,11 +108,11 @@ final class DemoControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/core-password');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('nowo-password-toggle input[name="form[current]"][type="password"]');
-        $this->assertSelectorExists('nowo-password-toggle input[name="form[new][first]"][type="password"]');
-        $this->assertSelectorExists('nowo-password-toggle input[name="form[new][second]"][type="password"]');
-        $this->assertSelectorExists('input[name="form[pin]"][type="password"]');
-        $this->assertSelectorNotExists('nowo-password-toggle input[name="form[pin]"]');
+        $this->assertSelectorExists('nowo-password-toggle input[name="core_password_demo[current]"][type="password"]');
+        $this->assertSelectorExists('nowo-password-toggle input[name="core_password_demo[new][first]"][type="password"]');
+        $this->assertSelectorExists('nowo-password-toggle input[name="core_password_demo[new][second]"][type="password"]');
+        $this->assertSelectorExists('input[name="core_password_demo[pin]"][type="password"]');
+        $this->assertSelectorNotExists('nowo-password-toggle input[name="core_password_demo[pin]"]');
         $this->assertCount(3, $crawler->filter('nowo-password-toggle'));
     }
 }
