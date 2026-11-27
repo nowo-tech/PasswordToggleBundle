@@ -15,7 +15,7 @@ This guide covers installing Password Toggle Bundle in a Symfony application.
 
 ## Requirements
 
-- **PHP** >= 8.2, < 8.6
+- **PHP** >= 8.2, < 8.7
 - **Symfony** ^7.4 || ^8.0
 - **symfony/form**, **symfony/framework-bundle**, **symfony/twig-bundle**
 - **symfony/ux-icons** ^2.0 || ^3.0 and **symfony/http-client** (matching your Symfony major) — **required for the default Twig widget** (`ux_icon()` with `tabler:eye` / `tabler:eye-off`). The bundle only lists them as `suggest`; Symfony Flex installs both automatically via the recipe. Without Flex:
